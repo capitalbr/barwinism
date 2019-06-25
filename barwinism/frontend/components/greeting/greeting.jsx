@@ -32,16 +32,25 @@ class Greeting extends React.Component {
           <button onClick={this.props.logout} >Log Out</button>
         </div>)
       } else {
-        navBar = () => (<div>
-          <Link className="border" to="/login">SIGN IN</Link>
-          <Link to="/signup">SIGN UP</Link>
-          <h1>BARWINISM</h1>
-        </div>)
+        navBar = () => (<div className="header-container">
+              <h1>BARWINISM</h1>
+              <div className="session-links-container">
+                <Link className="border" to="/login">SIGN IN</Link>
+                <Link to="/signup">SIGN UP</Link>
+              </div>
+              
+              
+          </div>)
       }
     return(
-      <nav>
+      <div className="h-top2">
+        
+        <nav>
+        
         {navBar()}
-      </nav>
+        </nav>
+      </div>
+      
     )
   }
   
