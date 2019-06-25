@@ -11,8 +11,9 @@ const Greeting = (props) => {
     </div>
   } else {
     return <nav>
-      <Link to="/login">Login</Link>
-      <Link to="/signup">Sign Up</Link>
+      <Link className="border" to="/login">SIGN IN</Link>
+      <Link to="/signup">SIGN UP</Link>
+      <h1>BARWINISM</h1>
     </nav>
   }
 }

@@ -49,7 +49,7 @@ class SessionForm extends React.Component {
       <div>
         <h1>{message}</h1>
         <br/>
-        <h2>To {otherFormType} {this.props.link}</h2>
+        {/* <h2>To {otherFormType} {this.props.link}</h2> */}
           
         <br/>
         {this.renderErrors()}
