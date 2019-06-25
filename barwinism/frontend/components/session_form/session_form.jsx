@@ -5,8 +5,9 @@ class SessionForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
+      field: "",
       email: "",
+      username: "",
       password: ""
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -35,43 +36,90 @@ class SessionForm extends React.Component {
     }
   }
 
-  render(){
-    let message;
-    let otherFormType;
-    if (this.props.formType === "login"){
-      message = "Please Login!";
-      otherFormType = "Signup";
+  guestUser(e) {
+    e.preventDefault();
+    if (this.props.formType === 'login') {
+      this.props.processForm({ field: 'testing', password: 'testing' });
     } else {
-      message = "Please Signup!";
-      otherFormType = "Login"
+      this.props.guestLogin({ field: 'testing', password: 'testing' });
     }
+    
+  }
+
+
+  renderSignup(){
     return(
       <div>
-        <h1>{message}</h1>
-        <br/>
-        {/* <h2>To {otherFormType} {this.props.link}</h2> */}
-          
-        <br/>
-        {this.renderErrors()}
+        <label>
+          USERNAME
+          <br />
+          <input onChange={this.update("username")} type="text" value={this.state.username} />
+          <br />
+        </label>
+
+        <label>
+          EMAIL
+          <br />
+          <input onChange={this.update("email")} type="text" value={this.state.email} />
+          <br />
+        </label>
+      </div>
+      )
+  }
+  
+  
+
+  renderLogin(){
+    return(
+      <label>
+        USERNAME or EMAIL
+              <br />
+        <input onChange={this.update("field")} type="text" value={this.state.field} />
+        <br />
+      </label>
+    )
+  }
+
+  render(){
+    let message;
+    let formType;
+    let otherFormType;
+    if (this.props.formType === "login"){
+      message = "L O G I N";
+      otherFormType = "Signup";
+      formType = this.renderLogin();
+    } else {
+      message = "S I G N  U P";
+      otherFormType = "Login"
+      formType = this.renderSignup();
+    }
+              
+  
+    return(
+      <div>
+        <h1 className="form">{message}</h1>
+        
+        
+        
         <form onSubmit={this.handleSubmit}>
-          <label>
-            Username
-            <input onChange={this.update("username")} type="text" value={this.state.username}/>
-          </label>
 
-          <label>
-            Email
-            <input onChange={this.update("email")} type="text" value={this.state.email} />
-          </label>
+          <div>
+            {formType}
 
-          <label>
-            Password
-            <input onChange={this.update("password")} type="password" value={this.state.password}/>
-          </label>
+            <label>
+              PASSWORD
+              <br/>
+              <input onChange={this.update("password")} type="password" value={this.state.password}/>
+              <br/>
+            </label>
 
-
-          <button>Submit</button>
+            <div className="button">
+              <button>SUBMIT</button>
+              <button onClick={this.guestUser.bind(this)}>GUEST LOGIN</button>
+            </div>
+          </div>
         </form>
+        <div className="errors">{this.renderErrors()}</div>
       </div>
     )
   }  
