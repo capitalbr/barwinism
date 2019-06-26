@@ -28,8 +28,8 @@ class Greeting extends React.Component {
     let navBar;
     if (this.props.currentUser) {
         navBar = () => (<div>
-          <h1>Hello {this.props.currentUser.username}! </h1>
-          <button onClick={this.props.logout} >Log Out</button>
+          {/* <h1>Hello {this.props.currentUser.username}! </h1> */}
+          <button onClick={this.props.logout.bind(this)} >Log Out</button>
         </div>)
       } else {
         navBar = () => (<div className="header-container">
@@ -44,10 +44,8 @@ class Greeting extends React.Component {
       }
     return(
       <div className="h-top2">
-        
         <nav>
-        
-        {navBar()}
+          {navBar()}
         </nav>
       </div>
       

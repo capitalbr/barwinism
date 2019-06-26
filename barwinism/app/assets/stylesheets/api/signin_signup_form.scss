@@ -99,8 +99,7 @@ form div.button button{
 div.toggle-button{
   display: flex;
   justify-content: center;
-  margin-top: 100px;
-}
+  margin-top: 18px;}
 div.toggle-button div{
   max-width: 370px;
   width: 100%;
@@ -146,6 +145,11 @@ button.button-signup.google{
 .material-icons{
   margin-right: 7px;
   font-size: 21px;
+}
+
+div.message-2 p{
+  font-size: 20px;
+  margin-top: 5px;
 }
 
 
