@@ -63,20 +63,44 @@ class SessionForm extends React.Component {
           <input onChange={this.update("email")} type="text" value={this.state.email} />
           <br />
         </label>
+
+        <label>
+          PASSWORD
+              <br />
+          <input onChange={this.update("password")} type="password" value={this.state.password} />
+          <br />
+        </label>
+
       </div>
       )
+  }
+
+  buttonSignup(){
+    return (
+        <button onClick={this.renderSignup()}>Sign up with email</button>
+    )
   }
   
   
 
   renderLogin(){
     return(
-      <label>
+      <div>
+        <label>
         USERNAME or EMAIL
               <br />
         <input onChange={this.update("field")} type="text" value={this.state.field} />
         <br />
       </label>
+
+      <label>
+        PASSWORD
+              <br />
+        <input onChange={this.update("password")} type="password" value={this.state.password} />
+        <br />
+      </label>
+      </div>
+      
     )
   }
 
@@ -91,7 +115,7 @@ class SessionForm extends React.Component {
     } else {
       message = "S I G N  U P";
       otherFormType = "Login"
-      formType = this.renderSignup();
+      formType = this.buttonSignup();
     }
               
   
@@ -106,12 +130,7 @@ class SessionForm extends React.Component {
           <div>
             {formType}
 
-            <label>
-              PASSWORD
-              <br/>
-              <input onChange={this.update("password")} type="password" value={this.state.password}/>
-              <br/>
-            </label>
+            
 
             <div className="button">
               <button>SUBMIT</button>
