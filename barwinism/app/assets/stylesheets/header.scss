@@ -29,6 +29,8 @@ header .h-top nav{
 .h-top2{
   display: flex;
   justify-content: flex-end;
+  /* position: relative; */
+  /* width: 100vw; */
 }
 
 header .h-top nav a{
@@ -61,14 +63,17 @@ header .h-top nav h1{
     display: inline;
     color: black;
     margin: 0px;
-    position: absolute;
+    // position: absolute;
     padding-top: 7px;
     transform: translate(-65px, 0px);
+        margin-right: 164px;
 }
 
 .header-container {
-  text-align: center;
-  width: 100vw;
+  display: flex;
+    justify-content: space-between;
+    text-align: center;
+    width: 100vw;
 }
 
 .session-links-container{

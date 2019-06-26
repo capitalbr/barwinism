@@ -27,9 +27,12 @@ class Greeting extends React.Component {
   render(){
     let navBar;
     if (this.props.currentUser) {
-        navBar = () => (<div>
+      navBar = () => (<div className="header-container">
+          <h1>BARWINISM</h1>
           {/* <h1>Hello {this.props.currentUser.username}! </h1> */}
-          <button onClick={this.props.logout.bind(this)} >Log Out</button>
+          <div className="session-links-container">
+            <Link onClick={this.props.logout.bind(this)} >LOG OUT</Link>
+          </div> 
         </div>)
       } else {
         navBar = () => (<div className="header-container">
