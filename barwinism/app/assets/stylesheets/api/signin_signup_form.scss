@@ -29,6 +29,8 @@ form input {
     width: 255px;
     height: 20px;
     margin-bottom: 7px;
+    background-color: rgb(48, 45, 45);
+    border-color: rgb(48, 45, 45);
   
 }
 
@@ -88,12 +90,15 @@ div.errors ul{
 form div.button{
   display: flex;
   justify-content: space-between;
+
 }
 
 form div.button button{
   width: 180px;
   height: 28px;
   color: #ede8e9;
+  background-color: rgb(48, 45, 45);
+  border-color: rgb(48, 45, 45);
 }
 
 div.toggle-button{
