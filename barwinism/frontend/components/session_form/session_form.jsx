@@ -11,6 +11,8 @@ class SessionForm extends React.Component {
       password: ""
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.formToggle = undefined;
+    this.formPaddingState = "padding-active";
   }
 
   handleSubmit(e){
@@ -71,13 +73,53 @@ class SessionForm extends React.Component {
           <br />
         </label>
 
+        <div className="button">
+          <button onClick={this.handleSubmit} >SUBMIT</button>
+          <button onClick={this.guestUser.bind(this)}>GUEST LOGIN</button>
+        </div>
+
       </div>
       )
   }
 
   buttonSignup(){
     return (
-        <button onClick={this.renderSignup()}>Sign up with email</button>
+      // <button onClick={this.toggle.bind(this)}>Sign up with email</button>
+      // <button onClick={this.toggle.bind(this)}>Sign up with email <i className="material-icons">email</i></button>
+      <div>
+        <button className="button-signup fb" onClick={this.toggle.bind(this)}>
+          <div>
+            <i className="material-icons">email</i>
+            <p>Sign up with Facebook</p>
+          </div> 
+        </button>
+
+        <button className="button-signup twitter" onClick={this.toggle.bind(this)}>
+          <div>
+            <i className="material-icons">email</i>
+            <p>Sign up with Twitter</p>
+          </div>
+        </button>
+
+        <button className="button-signup google" onClick={this.toggle.bind(this)}>
+          <div>
+            <i className="material-icons">email</i>
+            <p>Sign up with Google</p>
+          </div>
+        </button>
+
+        <button className="button-signup" onClick={this.toggle.bind(this)}>
+          <div>
+            <i className="material-icons">email</i>
+            <p>Sign up with email</p>
+          </div>
+        </button>
+
+
+      </div>
+   
+
+
     )
   }
   
@@ -99,43 +141,65 @@ class SessionForm extends React.Component {
         <input onChange={this.update("password")} type="password" value={this.state.password} />
         <br />
       </label>
+        <div className="button">
+          <button onClick={this.handleSubmit} >SUBMIT</button>
+          <button onClick={this.guestUser.bind(this)}>GUEST LOGIN</button>
+        </div>
       </div>
       
     )
   }
 
+  toggle(e){
+    e.preventDefault();
+    if (!this.formToggle) {
+      this.formToggle = this.renderSignup();
+    } else {
+      this.formToggle = undefined;
+    }
+    // this.setState({ field: this.state.field })
+    this.formPadding();
+    this.forceUpdate();
+  }
+
+  formPadding(){
+    if (!this.formPaddingState){
+      if (this.state.field === "" && this.state.email === ""  && this.state.username === "" && this.state.password === "") {
+      this.formPaddingState = "padding-active";
+      }
+    } else {
+        this.formPaddingState = "";
+      }
+  }
+
+
+
   render(){
     let message;
+    let message2;
     let formType;
-    let otherFormType;
     if (this.props.formType === "login"){
-      message = "L O G I N";
-      otherFormType = "Signup";
-      formType = this.renderLogin();
+      message = "Sign In";
+      formType = () => {};
+      this.formToggle = this.renderLogin();
+      this.formPadding();
     } else {
-      message = "S I G N  U P";
-      otherFormType = "Login"
-      formType = this.buttonSignup();
+      message2 = "Sign  Up";
+      formType = this.buttonSignup.bind(this);
     }
               
-  
+ 
     return(
-      <div>
-        <h1 className="form">{message}</h1>
-        
-        
-        
-        <form onSubmit={this.handleSubmit}>
+      <div className="auth-parent">
+        <h1 className="one">{message}</h1>
+        <h1 className="two">{message2}</h1>
 
-          <div>
-            {formType}
+        <div className="toggle-button">{formType()}</div>
+       
+        <form className={this.formPaddingState}>
 
-            
-
-            <div className="button">
-              <button>SUBMIT</button>
-              <button onClick={this.guestUser.bind(this)}>GUEST LOGIN</button>
-            </div>
+          <div>  
+           {this.formToggle}
           </div>
         </form>
         <div className="errors">{this.renderErrors()}</div>

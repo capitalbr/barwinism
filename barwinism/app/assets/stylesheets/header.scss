@@ -46,16 +46,12 @@ header .h-top nav a{
     border-right-style: none;
     border-left-style: none;
     border-top-style: none;
-    border-bottom-color: #FFFF64;
+    // border-bottom-color: #FFFF64;
 }
 
-
-
-
 header .h-top nav a:hover{
-    border-bottom-color: #FF1264;
-    
-  
+  border-width: 6px;
+  border-bottom-color: #FF1264;
 }
 
 header .h-top nav h1{
