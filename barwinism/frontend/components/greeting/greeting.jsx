@@ -24,6 +24,9 @@ class Greeting extends React.Component {
   }
 
 
+  
+      
+
   render(){
     let navBar;
     if (this.props.currentUser) {
@@ -46,11 +49,15 @@ class Greeting extends React.Component {
           </div>)
       }
     return(
-      <div className="h-top2">
-        <nav>
-          {navBar()}
-        </nav>
-      </div>
+      <header>
+        <div className="h-top">
+          <div className="h-top2">
+            <nav>
+              {navBar()}
+            </nav>
+          </div>
+        </div>
+      </header>
       
     )
   }
