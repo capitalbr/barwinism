@@ -51,9 +51,18 @@ header .h-top nav a{
     // border-bottom-color: #FFFF64;
 }
 
+header .h-top nav a.logo-link{
+  padding: 0px;
+}
+
+
 header .h-top nav a:hover{
   border-width: 6px;
   border-bottom-color: #FF1264;
+}
+
+div.session-links-container a{
+  padding: 0px;
 }
 
 header .h-top nav h1{

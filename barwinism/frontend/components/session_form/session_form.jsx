@@ -194,6 +194,7 @@ class SessionForm extends React.Component {
     // // this.setState({ field: this.state.field })
     // // this.formPadding();
     // this.forceUpdate();
+    this.props.clearErrors()
     const newValue = !this.state.showForm;
     this.setState({showForm: newValue});
   }

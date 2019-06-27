@@ -39,10 +39,10 @@ form label {
   font-style: bold;
 }
 
-form:hover{
-  border-right-color: rgb(71, 26, 246); 
+// form:hover{
+//   border-right-color: rgb(71, 26, 246); 
 
-}
+// }
 
 div h1.one{
   text-align: center;
@@ -93,6 +93,10 @@ form div.button{
   display: flex;
   justify-content: space-between;
 
+}
+
+form div.button button:hover{
+  cursor: pointer;
 }
 
 form div.button button{
