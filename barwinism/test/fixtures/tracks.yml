@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  body: MyString
+  artist_id: 1
+  album_id: 1
+  song_art_url: MyString
+  header_background_url: MyString
+  sound_cloud_url: MyString
+  youtube_url: MyString
+  primary_tag: MyString
+
+two:
+  title: MyString
+  body: MyString
+  artist_id: 1
+  album_id: 1
+  song_art_url: MyString
+  header_background_url: MyString
+  sound_cloud_url: MyString
+  youtube_url: MyString
+  primary_tag: MyString

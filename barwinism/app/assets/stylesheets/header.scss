@@ -71,12 +71,33 @@ header .h-top nav h1{
 
 .header-container {
   display: flex;
-    justify-content: space-between;
-    text-align: center;
-    width: 100vw;
+  // justify-content: space-between;
+  justify-content: space-between;
+  text-align: center;
+  width: 100vw;
 }
 
 .session-links-container{
   display: flex;
   justify-content: flex-end;
+}
+
+form.search{
+  margin: 0px;
+  padding: 0px;
+  height: 0px;
+}
+form.search input{
+  margin: 0px;
+  padding: 15px;
+  
+  width: 100%;
+  height: 2px;
+  width: 100%;
+  background: white;
+  border: none;
+  margin: 5px;
+  font-size: 14px;
+  font-weight: 700;
+  margin-left: 20px;
 }

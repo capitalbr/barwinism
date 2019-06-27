@@ -133,27 +133,53 @@ class SessionForm extends React.Component {
 
   renderLogin(){
     return(
-      <form onSubmit={this.handleSubmit}>
-        <div>
-          <label>
-          USERNAME or EMAIL
-                <br />
-          <input onChange={this.update("field")} type="text" value={this.state.field} />
-          <br />
-        </label>
+      <div>
+        <div className="toggle-button toggle-2">
+          <button className="button-signup fb" onClick={this.guestUser.bind(this)}>
+            <div>
+              <i className="material-icons">email</i>
+              <p>Sign up with Facebook</p>
+            </div>
+          </button>
 
-        <label>
-          PASSWORD
-                <br />
-          <input onChange={this.update("password")} type="password" value={this.state.password} />
-          <br />
-        </label>
-          <div className="button">
-            <button onClick={this.handleSubmit} >SUBMIT</button>
-            <button onClick={this.guestUser.bind(this)}>GUEST LOGIN</button>
-          </div>
+          <button className="button-signup twitter" onClick={this.guestUser.bind(this)}>
+            <div>
+              <i className="material-icons">email</i>
+              <p>Sign up with Twitter</p>
+            </div>
+          </button>
+
+          <button className="button-signup google" onClick={this.guestUser.bind(this)}>
+            <div>
+              <i className="material-icons">email</i>
+              <p>Sign up with Google</p>
+            </div>
+          </button>
         </div>
-      </form>
+
+        <form onSubmit={this.handleSubmit}>
+          <div>
+            <label>
+            USERNAME or EMAIL
+                  <br />
+            <input onChange={this.update("field")} type="text" value={this.state.field} />
+            <br />
+          </label>
+
+          <label>
+            PASSWORD
+                  <br />
+            <input onChange={this.update("password")} type="password" value={this.state.password} />
+            <br />
+          </label>
+            <div className="button">
+              <button onClick={this.handleSubmit} >SUBMIT</button>
+              <button onClick={this.guestUser.bind(this)}>GUEST LOGIN</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      
     )
   }
 

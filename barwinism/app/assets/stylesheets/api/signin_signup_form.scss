@@ -31,6 +31,7 @@ form input {
     margin-bottom: 7px;
     background-color: rgb(48, 45, 45);
     border-color: rgb(48, 45, 45);
+    color: white;
   
 }
 
@@ -54,8 +55,9 @@ div h1.one{
   // color: #fff;
   font-weight: 700;
   line-height: 100%;
-  padding-top: 1px;
-  margin-bottom: 10px;
+  padding-top: 60px;
+ 
+  
 }
 
 div h1.two{
@@ -69,7 +71,7 @@ div h1.two{
   // color: #fff;
   font-weight: 700;
   line-height: 100%;
-  padding-top: 1px;
+  
   margin-bottom: 10px;
 }
 
@@ -94,11 +96,12 @@ form div.button{
 }
 
 form div.button button{
-  width: 180px;
+  width: 125px;
   height: 28px;
   color: #ede8e9;
   background-color: rgb(48, 45, 45);
   border-color: rgb(48, 45, 45);
+  margin-top: 10px;
 }
 
 div.toggle-button{
@@ -108,6 +111,13 @@ div.toggle-button{
 div.toggle-button div{
   max-width: 370px;
   width: 100%;
+}
+
+div.toggle-2{
+  
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
 }
 
 
@@ -134,16 +144,37 @@ button.button-signup div{
     justify-content: center;
 }
 
+button.button-signup:hover{
+    background-color: rgb(92, 85, 85);
+    border: 1px solid rgb(92, 85, 85);
+}
+
 button.button-signup.fb{
-    background-color: rgb(95, 126, 193)
+    background-color: rgb(95, 126, 193);
+}
+
+button.button-signup.fb:hover{
+    background-color: rgb(92, 134, 226);
+    border: 1px solid rgb(92, 134, 226);
 }
 
 button.button-signup.twitter{
-    background-color: rgb(43, 170, 225)
+    background-color: rgb(43, 170, 225);
+}
+
+button.button-signup.twitter:hover{
+    background-color: rgb(43, 191, 255);
+    border: 1px solid rgb(43, 191, 255);
 }
 
 button.button-signup.google{
-    background-color: rgb(232, 133, 122)
+    background-color: rgb(232, 133, 122);
+    
+}
+
+button.button-signup.google:hover{
+    background-color: rgb(255, 138, 125);
+    border: 1px solid rgb(255, 138, 125);
 }
 
 
