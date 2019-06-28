@@ -5,3 +5,10 @@ export const createTrack = (track) => {
     data: {track}
   })
 }
+
+export const fetchTrack = (id) => {
+  return $.ajax({
+    method: "GET",
+    url: `/api/tracks/${id}`
+  })
+}

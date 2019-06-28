@@ -5,7 +5,8 @@ import configureStore from "./store/store";
 
 // begin window stuff
 import { signup, login, logout } from "./actions/session_actions"
-import { createTrack } from "./util/track_util"
+import { createTrack } from "./actions/track_actions"
+import { fetchAlbum } from "./actions/album_actions"
 // import { signup, login, logout } from "./util/session_api_util"
 // end window stuff 
 
@@ -30,7 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.logout = logout;
   window.getState = store.getState;
   window.dispatch = store.dispatch;
-  window.createTrack = createTrack
+  window.createTrack = createTrack;
+  window.fetchAlbum = fetchAlbum;
   // end window stuff
 
   const root = document.getElementById('root');

@@ -50,7 +50,7 @@ class Greeting extends React.Component {
               placeholder="Search lyrics & more"
             />
           </form>
-          <Link className="logo-link" to="/"><img src={window.logo} /></Link>
+          <Link className="logo-link" to="/"><img className="logo" src={window.logo} /></Link>
           {/* <h1>Hello {this.props.currentUser.username}! </h1> */}
           <div className="session-links-container">
             <Link className="logout" onClick={this.props.logout.bind(this)} >LOG OUT</Link>
@@ -63,7 +63,7 @@ class Greeting extends React.Component {
               placeholder="Search lyrics & more"
             />
           </form>
-          <Link className="logo-link" to="/"><img src={window.logo} /></Link>
+          <Link className="logo-link" to="/"><img className="logo" src={window.logo} /></Link>
               <div className="session-links-container">
                 <Link onClick={this.props.clearErrors} className="border" to="/login">SIGN IN</Link>
                 <Link onClick={this.props.clearErrors} to="/signup">SIGN UP</Link>

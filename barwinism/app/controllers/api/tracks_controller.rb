@@ -1,21 +1,28 @@
 class Api::TracksController < ApplicationController
+  def show
+    # @track = Track.includes(:artist).find(params[:id])
+    @track = Track.find(params[:id])
+  end
   def create
     @track = Track.new(track_params)
-    @track.user_id = current_user.id;
-    # artist = Artist.find_by_name(params[:track][:artist])
-    # album = Album.find_by_name(params[:track][:album])
+    @track.user_id = current_user.id
+    artist = Artist.find_by_name(params[:track][:artist])
     
-    # if !artist
-    #   artist = Artist.create!({name: artist})
-    # end
-
-    # if !album
-    #   album = Album.create!({title: album, artist_id: artist.id})
-    # end
-
-    # @track.artist_id = artist.id
-    # @track.album_id = album.id
-
+    
+    if !artist
+      artist = Artist.create!({name: params[:track][:artist]})
+    end
+    
+    @track.artist = artist
+    
+    if params[:track][:album]
+      album = Album.find_by_name(params[:track][:album])
+      if !album
+        album = Album.create!({title: params[:track][:album], artist_id: artist.id})
+      end
+      @track.album = album
+    end
+    
     if @track.save
       render "api/tracks/show"
     else
@@ -34,8 +41,6 @@ class Api::TracksController < ApplicationController
       :sound_cloud_url,
       :youtube_url,
       :primary_tag,
-      :artist,
-      :album,
       :artist_id,
       :album_id
       )

@@ -1,9 +1,5 @@
 class Track < ApplicationRecord
-  validates :artist, length: {minimum: 1, allow_nil: true}
-  validates :album, length: {minimum: 1, allow_nil: true}
-  attr_reader :artist, :album
-  # def initialize(params)
-  #   @artist = params[:track][:artist]
-  #   @album = params[:track][:album]
-  # end
+  validates_length_of :body, :maximum => 20000
+  belongs_to :artist
+  belongs_to :album
 end
