@@ -14,7 +14,7 @@ class Footer extends React.Component {
   
     
     return (
-      <footer>
+      
         <div className="footer-top">
           <div>
             <a href="#">About Genius</a>
@@ -36,10 +36,8 @@ class Footer extends React.Component {
           </div>
           <div>© 2019 Barwinism Media Group Inc.</div>
         </div>
-        <div>
-
-        </div>
-      </footer>
+       
+    
 
     )
   }

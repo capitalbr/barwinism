@@ -1,24 +1,26 @@
-footer{
-  background-color: black
-}
 
-footer div.footer-top{
+
+div.footer-top{
   -webkit-font-smoothing: antialiased;
   text-align: center;
   color: #ccc;
-  padding: 2.25rem .75rem;
+  padding-top: 2.25rem;
+  padding-bottom: 2.25rem;
   font-family: Programme,sans-serif;
   line-height: 1.65;
   position: relative;
+  bottom: 0px;
+  width: 100vw;
+  background-color: black;
 }
 
-footer div.footer-top a{
+div.footer-top a{
   color: #ffff64;
   text-decoration: none;
   margin-left: 10px;
   margin-right: 10px;
 }
 
-footer div.footer-top a:hover{
+div.footer-top a:hover{
   color: #99a7ee;
 }
