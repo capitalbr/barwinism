@@ -33,16 +33,16 @@ header .h-top nav{
   /* width: 100vw; */
 }
 
-header .h-top nav a{
+header .h-top nav a.header-top{
     background: #FFFF64; //from website pallete
     cursor: pointer;
-    font-family: 'Space Mono', monospace;
+    font-family: Programme,sans-serif;
     // color: #A33ACB; from website pallete
     color: black;
     text-decoration: none;
     height: 41px;
     font-size: 12px;
-    padding: 11px;
+    padding: 14px;
     box-sizing: border-box;
     border-style: solid;
     border-right-style: none;
@@ -114,4 +114,56 @@ form.search input{
 header img.logo{
   position: absolute;
   transform: translate(-90px, 0px);
+}
+
+
+// testing
+.h-top2 nav{
+  flex-direction: column;
+}
+
+.header-container-bottom{
+  min-height: 38px;
+  min-width: 100vw;
+  z-index: 1;
+}
+
+.header-container-bottom div{
+  min-height: 38px;
+  min-width: 100vw;
+  background-color: black;
+
+  display: flex;
+  align-items: center;
+  vertical-align: center;
+  color: white;
+  justtify-content: spa;
+  justify-content: space-around;
+}
+
+header .h-top nav a.header-bottom{
+    background: black; //from website pallete
+    cursor: pointer;
+    font-family: Programme,sans-serif;
+    // color: #A33ACB; from website pallete
+    color: white;
+    text-decoration: none;
+    height: 38px;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 0px;
+    // box-sizing: border-box;
+    // border-style: solid;
+    // border-right-style: none;
+    // border-left-style: none;
+    // border-top-style: none;
+    // border-bottom-color: #FFFF64;
+}
+
+header .h-top nav a.header-bottom:hover{
+  color: #FFFF64;
+}
+
+header .h-top nav a.invisible{
+  opacity: 0;
 }

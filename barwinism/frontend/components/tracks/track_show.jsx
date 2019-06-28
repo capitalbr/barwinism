@@ -27,7 +27,7 @@ export default class TrackShow extends React.Component {
   render(){
     if (this.props.track && this.props.artist && this.props.album){
        return(
-        <div>
+         <div className="track-show-header-parent">
           <div className="track-show-header fade-in">
             <div className='shadow'>
               <div className="inner-track-show-header">
