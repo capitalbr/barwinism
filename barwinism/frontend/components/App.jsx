@@ -6,6 +6,7 @@ import LoginFormContainer from './session_form/login_form_container';
 import SignupFormContainer from "./session_form/signup_form_container";
 import TrackShowContainer from "./tracks/track_show_container";
 import FooterContainer from "./footer/footer"
+import CreateTrackContainer from "./tracks/create_track_container"
 
 const App = () => (
   <div>   
