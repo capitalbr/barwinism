@@ -30,6 +30,19 @@ export default class CreateTrack extends React.Component {
     
   }
 
+  albumScript(e){
+    let ele = document.getElementById("add-album-script");
+    let outerDiv = document.createElement("div");
+    let innerInput = document.createElement("input");
+    innerInput.setAttribute('size', '30');
+    innerInput.setAttribute('type', 'text');
+    let innerDiv = document.createElement("div");
+    innerDiv.appendChild(innerInput);
+    outerDiv.appendChild(innerDiv);
+    
+    ele.appendChild(outerDiv);
+  }
+
   render() {
     return(
       <div className="add-track-color">
@@ -165,9 +178,13 @@ export default class CreateTrack extends React.Component {
                   </div>
                   <div className="additional-info-audio-video album">
                     <div className="heading">Albums, and additional tags</div>
-                    <label>Album:</label>
-                    <br/>
-                    <a href="#">Add album</a> 
+                      <div>
+                        <label>Album:</label>
+                        <br/>
+                        <a onClick={this.albumScript} href="#/add-song">Add album</a>
+                    <div id="add-album-script"></div> 
+                      </div>
+                      
                     <label className="tags">Tags:</label>
                     <div className="tags-div">
                       <select className="tags-select">
