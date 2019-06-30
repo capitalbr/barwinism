@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchTrack } from "../../actions/track_actions";
 import { fetchArtist } from "../../actions/artist_actions";
-import { fetchAlbum } from "../../actions/album_actions"
+import { fetchTrackAlbums } from "../../actions/album_actions"
 import { Link } from "react-router-dom";
 
 
@@ -19,18 +19,18 @@ const mapStateToProps = (state, ownProps) => {
       artist = null
     }
 
-    let album;
+    let albums;
     if (theTrack) {
-      album = state.entities.albums[theTrack.album_id]
+      albums = Object.values(state.entities.albums)
     } else {
-      album = null
+      albums = null
     }
 
   
   return ({
     track: state.entities.tracks[trackId],
     artist: artist,
-    album: album
+    albums: albums
   })
 }
 
@@ -38,7 +38,7 @@ const mapDispatchToProps = (dispatch) => {
   return ({
     fetchTrack: (id) => dispatch(fetchTrack(id)),
     fetchArtist: (id) => dispatch(fetchArtist(id)),
-    fetchAlbum: (id) => dispatch(fetchAlbum(id))
+    // fetchTrackAlbums: (id) => dispatch(fetchTrackAlbums(id))
   })
 }
 

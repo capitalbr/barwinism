@@ -5,7 +5,7 @@ const tracksReducer = (oldState = {}, action) => {
   Object.freeze(oldState);
   switch (action.type) {
     case RECEIVE_TRACK:
-      return merge({}, oldState, { [action.track.id]: action.track });
+      return merge({}, oldState, { [action.payload.track.id]: action.payload.track });
     default:
       return oldState;
   }

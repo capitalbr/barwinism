@@ -11,7 +11,7 @@ export default class CreateTrack extends React.Component {
       youtube_url: "",
       primary_tag: "",
       artist_input: "",
-      album_input: "temp album"
+      album_input: {}
     }
   }
  
@@ -24,18 +24,29 @@ export default class CreateTrack extends React.Component {
   handleSubmit(e){
     e.preventDefault();
     this.props.createTrack(this.state)
-    .then(track => {
-      return this.props.history.push(`/tracks/${track.id}`)
+    .then(payload => {
+      debugger
+      return this.props.history.push(`/tracks/${payload.track.id}`)
     })
     
   }
 
   albumScript(e){
+    let id = Object.keys(this.state.album_input).length;
+    this.state.album_input[id] = "";
     let ele = document.getElementById("add-album-script");
     let outerDiv = document.createElement("div");
     let innerInput = document.createElement("input");
     innerInput.setAttribute('size', '30');
     innerInput.setAttribute('type', 'text');
+    let that = this;
+    innerInput.addEventListener('change', (e) => {
+      let id = Object.keys(that.state.album_input).length;
+      let dummy = that.state.album_input;
+      dummy[id-1] = e.target.value;
+      that.setState({album_input: dummy});
+      // that.setState({ album_input: { [id-1]: e.target.value } });
+    });
     let innerDiv = document.createElement("div");
     innerDiv.appendChild(innerInput);
     outerDiv.appendChild(innerDiv);
@@ -181,7 +192,7 @@ export default class CreateTrack extends React.Component {
                       <div>
                         <label>Album:</label>
                         <br/>
-                        <a onClick={this.albumScript} href="#/add-song">Add album</a>
+                        <a onClick={this.albumScript.bind(this)} href="#/add-song">Add album</a>
                     <div id="add-album-script"></div> 
                       </div>
                       

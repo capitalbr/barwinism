@@ -1,0 +1,3 @@
+class TrackAlbumJoinsController < ApplicationController
+  
+end

@@ -35,7 +35,6 @@ class SessionForm extends React.Component {
 
   update(field){
     return (e) => {
-      // debugger
       e.preventDefault();
       this.setState({[field]: e.target.value});
     }
@@ -184,7 +183,6 @@ class SessionForm extends React.Component {
   }
 
   toggle(e){
-    // debugger
     e.preventDefault();
     // if (!this.formToggle) {
     //   this.formToggle = this.renderSignup();
@@ -230,7 +228,6 @@ class SessionForm extends React.Component {
     if (this.state.showForm === true) {
       formToggle = this.renderSignup();
     }          
-//  debugger
     return(
 
       <div className="auth-parent">

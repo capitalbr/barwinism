@@ -14,13 +14,8 @@ export default class TrackShow extends React.Component {
       if (!this.props.artist) {
         this.props.fetchArtist(this.props.track.artist_id);
       }
-      if (!this.props.album) {
-        this.props.fetchAlbum(this.props.track.album_id);
-      }
-      
-      
-      // if (this.state.count === 0) {
-      //   this.setState({update: true, count: 1});
+      // if (!this.props.albums) {
+      //   this.props.fetchTrackAlbums(this.props.track.id);
       // }
     }
 
@@ -33,20 +28,28 @@ export default class TrackShow extends React.Component {
       <iframe width="560" 
         height="315" 
         src={url} 
-        frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
-        allowfullscreen></iframe>
+        frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+        allowFullScreen></iframe>
     )
   }  
 
   render(){
-  
+    let albumsHolder;
+    if (this.props.albums) {
+      albumsHolder = this.props.albums.map(album => {
+        return <li><h4>{album.title}</h4></li>
+      })
+    } else {
+      albumsHolder = <li></li>
+    }
+
     let youTube;
     if (this.props.track && this.props.track.youtube_url) {
       youTube = this.embedYoutube();
     } else {
       youTube = ""
     }
-    if (this.props.track && this.props.artist && this.props.album){
+    if (this.props.track && this.props.artist){
        return(
          <div className="track-show-header-parent">
           <div className="track-show-header fade-in">
@@ -59,7 +62,7 @@ export default class TrackShow extends React.Component {
                 <div className="track-show-info">
                   <h1>{this.props.track.title}</h1>
                   <h2>{this.props.artist.name}</h2>
-                  <h4>Album <div>{this.props.album.title}</div></h4>
+                  <ul>{albumsHolder}</ul>
                 </div>
               </div>
               <div className="inner-track-show-header-right"></div>

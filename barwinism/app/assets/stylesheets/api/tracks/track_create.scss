@@ -259,7 +259,7 @@
 
 .additional-info-audio-video.album label.tags{
   position: absolute;
-  transform: translate(0px, 36px);
+  transform: translate(0px, -3px);
 }
 
 .tags-select{
@@ -267,7 +267,7 @@
   background: #666;
   cursor: text;
   width: 100%;
-  margin-top: 58px;
+  margin-top: 19px;
   height: 31px;
 }
 
@@ -296,6 +296,6 @@
 }
 
 #add-album-script{
-  margin-bottom: 39px;
+  margin-top: 39px;
 }
     

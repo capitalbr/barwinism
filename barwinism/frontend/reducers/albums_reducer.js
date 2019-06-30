@@ -1,4 +1,5 @@
-import { RECEIVE_ALBUM } from "../actions/album_actions";
+import { RECEIVE_ALBUM, RECEIVE_ALBUMS } from "../actions/album_actions";
+import { RECEIVE_TRACK } from "../actions/track_actions"
 import merge from 'lodash/merge';
 
 const albumsReducer = (oldState = {}, action) => {
@@ -6,6 +7,11 @@ const albumsReducer = (oldState = {}, action) => {
   switch (action.type) {
     case RECEIVE_ALBUM:
       return merge({}, oldState, { [action.album.id]: action.album })
+    case RECEIVE_ALBUMS:
+      return action.albums
+    case RECEIVE_TRACK:
+      debugger
+      return merge({}, oldState, action.payload.albums);
     default:
       return oldState;
   }

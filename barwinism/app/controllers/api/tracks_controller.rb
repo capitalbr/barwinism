@@ -3,18 +3,15 @@ class Api::TracksController < ApplicationController
     # @track = Track.includes(:artist).find(params[:id])
     @track = Track.find(params[:id])
   end
+
   def create
+    debugger
     @track = Track.new(track_params)
     @track.user_id = current_user.id
     artist = Artist.find_by_name(params[:track][:artist_input])
-    
-    
     # incase user does uppercase letters.
     # lower_case = params([:track][:artist]).downcase
     # artist = Artist.find_by_name(lower_case)
-
-    
-    
     if !artist
       artist = Artist.create!({name: params[:track][:artist_input]})
 
@@ -24,20 +21,35 @@ class Api::TracksController < ApplicationController
     
     @track.artist_id = artist.id
     
-    if params[:track][:album_input]
-      album = Album.find_by_name(params[:track][:album_input])
-      if !album
-        album = Album.create!({title: params[:track][:album_input], artist_id: artist.id})
-      end
-      @track.album_id = album.id
-    end
+    
+  
     
     if @track.save
+      if params[:track][:album_input]
+        params[:track][:album_input].values.each do |ele|
+          temp_album = Album.find_by_name(ele)
+          if !temp_album
+            temp_album = Album.create!({title: ele, artist_id: artist.id})
+          end
+          TrackAlbumJoin.create!({track_id: @track.id, album_id: temp_album.id})
+        end
+      end
       render "api/tracks/show"
     else
       render json: @track.errors.full_messages, status: 422
     end
+
+
+
+
+
   end
+
+  # def track_albums
+  #   @track = Track.find(params[:id])
+  #   @albums = @track.albums
+  #   render "api/tracks/track_albums"
+  # end
 
   private
    def track_params
@@ -51,7 +63,7 @@ class Api::TracksController < ApplicationController
       :youtube_url,
       :primary_tag,
       :artist_input,
-      :album_input
+      album_input: []
       )
   end
  

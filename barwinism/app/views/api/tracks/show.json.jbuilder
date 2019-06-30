@@ -1,21 +1,4 @@
-json.extract!(
-    @track,
-    :id,
-    :title,
-    :body,
-    :song_art_url,
-    :header_background_url,
-    :sound_cloud_url,
-    :youtube_url,
-    :primary_tag,
-    :artist_id,
-    :album_id,
-    :created_at,
-    :updated_at
-    )
-
-# json.set! :track do 
-#   json.extract!(
+# json.extract!(
 #     @track,
 #     :id,
 #     :title,
@@ -30,11 +13,39 @@ json.extract!(
 #     :created_at,
 #     :updated_at
 #     )
+
+json.set! :track do 
+  json.extract!(
+    @track,
+    :id,
+    :title,
+    :body,
+    :song_art_url,
+    :header_background_url,
+    :sound_cloud_url,
+    :youtube_url,
+    :primary_tag,
+    :artist_id,
+    :album_id,
+    :created_at,
+    :updated_at
+    )
+end
+
+# json.set! :albums do
+#   json.extract! @track.albums, :title, :id
 # end
 
-# json.set! :artist do
-#   json.extract! @track.artist, :name, :id
-# end
+json.albums(@albums) do |album|
+  json.set! album.id do
+    json.id = album.id
+    json.title album.title
+    json.artist_id album.artist_id
+    json.cover_art_url
+  end
+end
+
+
 
 
 # the action creator will put it under a key of track
