@@ -4,7 +4,10 @@ export const RECEIVE_TRACK = "RECEIVE_TRACK";
 
 export const createTrack = track => {
   return dispatch => {
-    return TrackAPIUtil.createTrack(track).then(track => dispatch({type: RECEIVE_TRACK, track}))
+    return TrackAPIUtil.createTrack(track).then(track => {
+      dispatch({type: RECEIVE_TRACK, track})
+      return track
+    })
   }
 }
 

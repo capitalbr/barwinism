@@ -6,21 +6,30 @@ class Api::TracksController < ApplicationController
   def create
     @track = Track.new(track_params)
     @track.user_id = current_user.id
-    artist = Artist.find_by_name(params[:track][:artist])
+    artist = Artist.find_by_name(params[:track][:artist_input])
+    
+    
+    # incase user does uppercase letters.
+    # lower_case = params([:track][:artist]).downcase
+    # artist = Artist.find_by_name(lower_case)
+
     
     
     if !artist
-      artist = Artist.create!({name: params[:track][:artist]})
+      artist = Artist.create!({name: params[:track][:artist_input]})
+
+      # incase user does uppercase letters.
+      # artist = Artist.create!({name: lower_case})
     end
     
-    @track.artist = artist
+    @track.artist_id = artist.id
     
-    if params[:track][:album]
-      album = Album.find_by_name(params[:track][:album])
+    if params[:track][:album_input]
+      album = Album.find_by_name(params[:track][:album_input])
       if !album
-        album = Album.create!({title: params[:track][:album], artist_id: artist.id})
+        album = Album.create!({title: params[:track][:album_input], artist_id: artist.id})
       end
-      @track.album = album
+      @track.album_id = album.id
     end
     
     if @track.save
@@ -41,8 +50,8 @@ class Api::TracksController < ApplicationController
       :sound_cloud_url,
       :youtube_url,
       :primary_tag,
-      :artist_id,
-      :album_id
+      :artist_input,
+      :album_input
       )
   end
  

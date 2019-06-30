@@ -4,9 +4,31 @@ export default class CreateTrack extends React.Component {
 
   constructor(props) {
     super(props);
-  
+    this.state = {
+      title: "",
+      body: "",
+      sound_cloud_url: "",
+      youtube_url: "",
+      primary_tag: "",
+      artist_input: "",
+      album_input: "temp album"
+    }
   }
  
+  update(field){
+    return (e) => {
+      this.setState({[field]: e.target.value})
+    }
+  }
+
+  handleSubmit(e){
+    e.preventDefault();
+    this.props.createTrack(this.state)
+    .then(track => {
+      return this.props.history.push(`/tracks/${track.id}`)
+    })
+    
+  }
 
   render() {
     return(
@@ -15,7 +37,7 @@ export default class CreateTrack extends React.Component {
           <div className="add-track-main">
             <h1>Add Song</h1>
             <small>* required</small>
-            <form>
+            <form onSubmit={this.handleSubmit.bind(this)}>
               <h3>Primary Info</h3>
               <div className="add-track-primary-info">
                 <div>
@@ -23,6 +45,8 @@ export default class CreateTrack extends React.Component {
                     By * <br/>
                     <input type="text" 
                       placeholder="The primary artist, author, creator, etc."
+                      value={this.state.artist_input}
+                      onChange={this.update("artist_input")}
                     />
                   </label>
                   <br/>
@@ -30,41 +54,58 @@ export default class CreateTrack extends React.Component {
                     Title * <br/>
                     <input type="text"
                       placeholder="Title"
+                      value={this.state.title}
+                      onChange={this.update("title")}
                     />
                   </label>
                   <label className="add-track-primary-info-primary-tag">Primary tag *</label>
                   <div className="primary-tag-radio">
                     <div>
                       <label>
-                        <input type="radio" name="tag"/>
+                        <input type="radio" name="tag"
+                          value="rap"
+                          onClick={this.update("primary_tag")}
+                        />
                         Rap
                       </label>
                     </div>
 
                     <div>
                       <label>
-                        <input type="radio" name="tag" />
+                        <input type="radio" name="tag" 
+                          value="pop"
+                          onClick={this.update("primary_tag")}
+                        />
                         Pop
                       </label>
                     </div>
 
                     <div>
                       <label>
-                        <input type="radio" name="tag"/>
+                        <input type="radio" name="tag"
+                          value="r&b"
+                          onClick={this.update("primary_tag")}
+                        />
                         R&B
                       </label>
                     </div>
 
                     <div>
                       <label>
-                        <input type="radio" name="tag"/>
+                        <input type="radio" name="tag"
+                          value="rock"
+                          onClick={this.update("primary_tag")}
+                        />
                          Rock
                       </label>
                     </div>
 
                     <div>
                       <label>
-                        <input type="radio" name="tag"/>
+                        <input type="radio" name="tag"
+                          value="country"
+                          onClick={this.update("primary_tag")}
+                        />
                          Country
                       </label>
                     </div>
@@ -72,7 +113,10 @@ export default class CreateTrack extends React.Component {
                     {/* <div className="create-track-next-row"> */}
                       <div>
                         <label>
-                          <input type="radio" name="tag"/>
+                          <input type="radio" name="tag"
+                          value="non music"
+                          onClick={this.update("primary_tag")}
+                          />
                           Non Music
                         </label>
                       </div>
@@ -91,9 +135,12 @@ export default class CreateTrack extends React.Component {
               </div>
               <div className="add-track-lyrics">
                 <div className="add-track-lyrics-column-1">
-                  <label for="create-song-form-lyrics-section">Lyrics *</label>
+                  <label htmlFor="create-song-form-lyrics-section">Lyrics *</label>
                   <br/>
-                  <textarea></textarea>
+                  <textarea 
+                    onChange={this.update("body")}
+                    value={this.state.body}
+                  ></textarea>
                 </div>
                 <div></div>
                 </div>
@@ -102,12 +149,18 @@ export default class CreateTrack extends React.Component {
                   <div className="additional-info-audio-video">
                     <label>
                       SOUNDCLOUD URL:
-                      <input/>
+                      <input 
+                        onChange={this.update("sound_cloud_url")}
+                        value={this.state.soundCloudUrl}
+                        />
                     </label>
 
                     <label>
                       YOUTUBE URL:
-                        <input />
+                        <input 
+                        onChange={this.update("youtube_url")}
+                        value={this.state.youtubeUrl}
+                        />
                     </label>
                   </div>
                   <div className="additional-info-audio-video album">

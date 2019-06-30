@@ -77,7 +77,7 @@ class Greeting extends React.Component {
     let navBarBottom;
     if (this.props.currentUser) {
       navBarBottom = () => (<div className="header-container-bottom">
-        <div><ul><li><Link className="header-bottom" onClick={this.props.clearErrors} to="/signup">ADD A SONG</Link></li></ul></div>
+        <div><ul><li><Link className="header-bottom" onClick={this.props.clearErrors} to="/add-song">ADD A SONG</Link></li></ul></div>
       </div>)
     } else {
       navBarBottom = () => (<div className="header-container-bottom">

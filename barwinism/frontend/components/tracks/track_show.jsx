@@ -24,7 +24,28 @@ export default class TrackShow extends React.Component {
       // }
     }
 
+
+  embedYoutube(){
+    let i = this.props.track.youtube_url.indexOf("watch?");
+    let front = "https://www.youtube.com/";
+    let url = front + "embed/" + this.props.track.youtube_url.slice(i+8);
+    return(
+      <iframe width="560" 
+        height="315" 
+        src={url} 
+        frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen></iframe>
+    )
+  }  
+
   render(){
+  
+    let youTube;
+    if (this.props.track && this.props.track.youtube_url) {
+      youTube = this.embedYoutube();
+    } else {
+      youTube = ""
+    }
     if (this.props.track && this.props.artist && this.props.album){
        return(
          <div className="track-show-header-parent">
@@ -68,7 +89,9 @@ export default class TrackShow extends React.Component {
                </div>
             </div>
               <div className="track-show-body-right">
-              
+                <div>
+                  {youTube}
+                </div>
             </div>
           </div>
         </div>
