@@ -5,7 +5,7 @@ class Api::TracksController < ApplicationController
   end
 
   def create
-    debugger
+    # debugger
     @track = Track.new(track_params)
     @track.user_id = current_user.id
     artist = Artist.find_by_name(params[:track][:artist_input])

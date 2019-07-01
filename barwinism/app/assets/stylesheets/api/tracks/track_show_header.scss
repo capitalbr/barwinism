@@ -100,16 +100,42 @@
   font-size: 22px;
 }
 
-.track-show-info h4{
-  color: #9A9A9A;
-  font-size: 15px;
+// .track-show-info h4{
+//   color: #9A9A9A;
+//   font-size: 15px;
+// }
+// .track-show-info h4 div{
+//   display: inline;
+//   color: #7d8fe8;
+// }
+
+.track-show-info div{
+  font-size: 100%;
+  font-weight: 400;
+  display: flex;
 }
-.track-show-info h4 div{
-  display: inline;
+
+.track-show-info div span{
+  color: #9a9a9a;
+  font-family: Programme,sans-serif;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  
+}
+
+.track-show-info div a{
   color: #7d8fe8;
+  text-decoration: none;
+}
+
+.track-show-info div a h4{
+  padding-left: 4px;
+  transform: translate(0px, -1px);
+
 }
 
 // creating header bottom
 .track-show-header-parent{
   margin-top: 38px;
 }
+

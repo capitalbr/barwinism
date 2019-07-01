@@ -36,14 +36,26 @@ end
 #   json.extract! @track.albums, :title, :id
 # end
 
-json.albums(@albums) do |album|
-  json.set! album.id do
-    json.id = album.id
-    json.title album.title
-    json.artist_id album.artist_id
-    json.cover_art_url
+# json.albums(@track.albums) do |album|
+#   json.set! album.id do
+#     json.id album.id
+#     json.title album.title
+#     json.artist_id album.artist_id
+#     json.cover_art_url album.cover_art_url
+#   end
+# end
+
+json.set! :albums do
+  @track.albums.each do |album|
+    json.set! album.id do
+      json.id album.id
+      json.title album.title
+      json.artist_id album.artist_id
+      json.cover_art_url album.cover_art_url
+    end
   end
 end
+
 
 
 

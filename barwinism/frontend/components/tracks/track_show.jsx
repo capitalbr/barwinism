@@ -10,10 +10,17 @@ export default class TrackShow extends React.Component {
       this.props.fetchTrack(this.props.match.params.trackId);
     }
 
-    componentDidUpdate(){
-      if (!this.props.artist) {
+    componentDidUpdate(prevProps){
+      if (!this.props.artist && this.props.track) {
         this.props.fetchArtist(this.props.track.artist_id);
       }
+      if (!this.props.track){
+        this.props.fetchTrack(this.props.match.params.trackId);
+      }
+      
+      // if (prevProps.track.id != this.props.match.params.trackId) {
+      //   this.props.fetchTrack(this.props.match.params.trackId);
+      // }
       // if (!this.props.albums) {
       //   this.props.fetchTrackAlbums(this.props.track.id);
       // }
@@ -35,7 +42,7 @@ export default class TrackShow extends React.Component {
 
   render(){
     let albumsHolder;
-    if (this.props.albums) {
+    if (this.props.albums && this.props.albums.length > 0) {
       albumsHolder = this.props.albums.map(album => {
         return <li><h4>{album.title}</h4></li>
       })
@@ -62,7 +69,11 @@ export default class TrackShow extends React.Component {
                 <div className="track-show-info">
                   <h1>{this.props.track.title}</h1>
                   <h2>{this.props.artist.name}</h2>
-                  <ul>{albumsHolder}</ul>
+                  <div>
+                    <span>Album</span>
+                    <ul><a href={`#/tracks/${this.props.track.id}`}>{albumsHolder[0]}</a></ul>
+                  </div>
+                  
                 </div>
               </div>
               <div className="inner-track-show-header-right"></div>
