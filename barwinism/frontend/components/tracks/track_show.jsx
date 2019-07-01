@@ -32,13 +32,28 @@ export default class TrackShow extends React.Component {
     let front = "https://www.youtube.com/";
     let url = front + "embed/" + this.props.track.youtube_url.slice(i+8);
     return(
-      <iframe width="560" 
-        height="315" 
+      <iframe width="100%" 
+        height="100%" 
         src={url} 
         frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
-        allowFullScreen></iframe>
+        allowFullScreen="1"
+        ></iframe>
     )
   }  
+
+  highlighter(e) {
+
+    const selection = window.getSelection();
+    if (selection.rangeCount) {
+      const replacement = document.createElement('span');
+      replacement.setAttribute('class', 'highlight')
+      replacement.textContent = selection.toString();
+      const range = selection.getRangeAt(0);
+      range.deleteContents();
+      range.insertNode(replacement);
+    }
+
+  }
 
   render(){
     let albumsHolder;
@@ -85,7 +100,7 @@ export default class TrackShow extends React.Component {
                 <button>Edit Lyrics</button>
               </div>
               <div className="track-show-body-lyrics">
-                <p>{this.props.track.body}</p>
+                 <p onMouseUp={this.highlighter.bind(this)}>{this.props.track.body}</p>
               </div>
                 <div className="track-show-body-end-flex">
                   
@@ -103,7 +118,12 @@ export default class TrackShow extends React.Component {
                </div>
             </div>
               <div className="track-show-body-right">
-                <div>
+                <img className="logo" src={window.annotation_arrow} />
+                <div className="hidden">
+                 
+                </div>
+                <div className="youTube">
+                  <div>Music Video</div>
                   {youTube}
                 </div>
             </div>

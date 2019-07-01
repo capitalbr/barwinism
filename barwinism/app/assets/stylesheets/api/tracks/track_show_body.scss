@@ -20,7 +20,54 @@
   box-sizing: border-box;
 }
 
-.track-show-body-right{}
+.track-show-body-right{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 406px;
+  flex-wrap: wrap;
+  // border-style: solid;
+  // border-width: 1px;
+}
+
+.track-show-body-right img{
+  height: 30px;
+  transform: translate(-201px, 179px);
+  position: absolute;
+}
+
+.track-show-body-right div.hidden{
+  border-style: solid;
+   /* display: none; */
+  height: 400px;
+  width: 391px;
+  border-color: #99a7ee;
+  border-width: 4px;
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
+}
+
+.track-show-body-right div.youTube{
+  // height: fit-content;
+  height: 200px;
+  width: 360px;
+  margin-top: 50px;
+  border: .15rem solid #f7f7f7;
+  padding: 12px;
+  padding-bottom: 33px;
+  padding-top: 18px;
+  
+}
+
+.track-show-body-right div.youTube div{
+  font-size: .75rem;
+  margin-bottom: .5rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  font-family: Programme,sans-serif;
+  transform: translate(0px, -2px);
+}
 
 .track-show-body-left-edit{
   background: linear-gradient(to bottom,#fff 80%,rgba(255,255,255,0));
@@ -51,6 +98,11 @@
   font-family: 'Ropa Sans', sans-serif;
   font-size: 1.125em;
   font-weight: 100;
+}
+
+.track-show-body-lyrics span.highlight{
+  background-color: #fff2ac;
+    background-image: linear-gradient(to right, #ffe359 0%, #fff2ac 100%)
 }
 
 
