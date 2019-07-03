@@ -106,9 +106,9 @@ export default class TrackShow extends React.Component {
 
       // GIVING THE NEW SPAN A UNIQUE ID
       // debugger
-      // using [0] here refers to the entire body which only has one span tag as a child
-      // using [1] gets the inner tag with all the actual children
-      let count = document.getElementsByClassName('theBody')[1].children.length;
+      // SOMETIMES THIS ALSO MISTAKES ID'S FOR CLASS NAMES SO YOU HAVE TO BE CAREFUL
+      // YESTERDAY I HAD TO USE [1] TODAY I HAVE TO USE [0]
+      let count = document.getElementsByClassName('theBody')[0].children.length;
       id = `${this.props.track.id}-${count + 1}`;
       replacement.setAttribute('id', id);
 
@@ -147,9 +147,9 @@ export default class TrackShow extends React.Component {
       // let id;
 
     //  let count = document.getElementsByClassName('theBody')[0].childElementCount;
-     // MUST USE [1] HERE OR BECAUSE [0] REFERS TO THE OUTER BODY THAT ONLY HAS 
-     // ONE CHILD!
-     let parent = document.getElementsByClassName('theBody')[1];
+     // SOMETIMES THIS ALSO MISTAKES ID'S FOR CLASS NAMES SO YOU HAVE TO BE CAREFUL
+     // YESTERDAY I HAD TO USE [1] TODAY I HAVE TO USE [0]
+     let parent = document.getElementsByClassName('theBody')[0];
     //  const oldChild = parent.lastChild;
      let count = parent.children.length;
     //  const oldChild = parent.children[count-1];
