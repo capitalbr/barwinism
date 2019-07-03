@@ -130,6 +130,9 @@ export default class TrackShow extends React.Component {
      // Replace existing node sp2 with the new span element sp1
      parent.replaceChild(replacement, oldChild);
 
+     // DELETES THE FORM OFF OF THE PAGE
+     this.deleteAPopupEditor();
+
 
   //     if (selection.rangeCount && selection.toString().length > 0) {
   //       const replacement = document.createTextNode(selection.toString());
@@ -191,6 +194,7 @@ export default class TrackShow extends React.Component {
   // }
 
   annotationPopupEditor(id){
+    //ADDS HIGHLIGHTING TO THE NEWLY CREATED LYRIC SPAN
     document.getElementById(id).classList.add('highlight');
 
     let popupEditor = document.createElement('div');
@@ -252,9 +256,9 @@ export default class TrackShow extends React.Component {
 
     let button2 = document.createElement('button')
     button2.classList.add("annotation-cancel");
-    // TESTING
+    //GIVES CANCEL BUTTON ABILITY TO DELETE LATEST CREATED LYRIC SPAN
     button2.addEventListener("click", this.deleteHighlighted.bind(this));
-    // END TESTING
+    
 
     let textNode6 = document.createTextNode("Cancel");
     button2.appendChild(textNode6);
@@ -303,6 +307,12 @@ export default class TrackShow extends React.Component {
     // debugger
     let ele = document.getElementsByClassName('track-show-body-right')[0];
     ele.appendChild(popupEditor)
+  }
+
+  deleteAPopupEditor(){
+    let parent = document.getElementsByClassName('track-show-body-right')[0];
+    let child = document.getElementsByClassName('hidden')[0];
+    parent.removeChild(child);
   }
 
   annotationPopupOnSave(){
