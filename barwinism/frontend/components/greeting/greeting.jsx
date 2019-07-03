@@ -42,6 +42,7 @@ class Greeting extends React.Component {
   }
 
   render(){
+    // return null;
     let navBar;
     if (this.props.currentUser) {
       navBar = () => (<div className="header-container">

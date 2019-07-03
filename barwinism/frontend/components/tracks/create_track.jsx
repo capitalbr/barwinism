@@ -25,7 +25,6 @@ export default class CreateTrack extends React.Component {
     e.preventDefault();
     this.props.createTrack(this.state)
     .then(payload => {
-      debugger
       return this.props.history.push(`/tracks/${payload.track.id}`)
     })
     

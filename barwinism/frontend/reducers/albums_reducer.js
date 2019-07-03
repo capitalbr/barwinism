@@ -11,7 +11,12 @@ const albumsReducer = (oldState = {}, action) => {
       return action.albums
     case RECEIVE_TRACK:
       // return merge({}, oldState, action.payload.albums);
-      return action.payload.albums;
+      let newState = action.payload.albums
+      if (!newState) {
+        newState = {}
+      }
+      
+      return newState;
     default:
       return oldState;
   }
