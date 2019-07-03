@@ -9,7 +9,7 @@ import FooterContainer from "./footer/footer"
 import CreateTrackContainer from "./tracks/create_track_container"
 
 const App = () => (
-  <div>   
+  <div className="body-main-div">   
     <GreetingContainer />
     <Switch>
       <ProtectedRoute exact path="/tracks/:trackId" component={TrackShowContainer}/>

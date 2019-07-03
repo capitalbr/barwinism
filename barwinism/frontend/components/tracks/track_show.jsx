@@ -7,6 +7,8 @@ export default class TrackShow extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {annotation: ""};
+    this.toggle = true;
   }
     componentDidMount(){
       
@@ -45,6 +47,16 @@ export default class TrackShow extends React.Component {
       
     }
 
+  update(field){
+    return e => {
+      this.setState({[field]: e.target.value});
+    }
+  }
+
+  onSave(e){
+    e.preventDefault();
+    this.props.createAnnotation(this.state);
+  }
 
   embedYoutube(){
     let i = this.props.track.youtube_url.indexOf("watch?");
@@ -111,7 +123,7 @@ export default class TrackShow extends React.Component {
 
  }
    deleteHighlighted(){
-     debugger
+     
       // const selection = window.getSelection();
       // let id;
 
@@ -133,6 +145,9 @@ export default class TrackShow extends React.Component {
      // DELETES THE FORM OFF OF THE PAGE
      this.deleteAPopupEditor();
 
+     // toggles the boolean so it will be ready to allow 
+     //the next form that pops up
+     this.toggle = !this.toggle;
 
   //     if (selection.rangeCount && selection.toString().length > 0) {
   //       const replacement = document.createTextNode(selection.toString());
@@ -158,8 +173,48 @@ export default class TrackShow extends React.Component {
 
  
 
-  hider(){
-    // debugger
+  hider(e){
+    debugger
+    const oldForm = document.getElementsByClassName('hidden')[0];
+    const textarea = document.getElementById('editor')
+    const img = document.getElementsByClassName('logo')[0];
+    const anno = document.getElementsByClassName('annotation')[0];
+    const innerForm = document.getElementById('editor-form')
+    const tools = document.getElementsByClassName('tools')[0];
+    const toolsTitle = document.getElementsByClassName('tools-title')[0];
+    const toolsContent = document.getElementsByClassName('tools-content')[0];
+
+    const toolsOptions = document.getElementsByClassName('tools-options')[0];
+    const toolsContent2one = document.getElementsByClassName('tools-content2')[0];
+    const toolsContent2two = document.getElementsByClassName('tools-content2')[1];
+    const toolsContent2three = document.getElementsByClassName('tools-content2')[2];
+
+
+    const annoSave = document.getElementsByClassName('annotation-save')[0];
+    const annoCancel = document.getElementsByClassName('annotation-cancel')[0];
+
+    const formDivOuter = document.getElementsByClassName('form-div-outer')[0];
+    const buttonDiv = document.getElementsByClassName('button-div')[0];
+    const hr = document.getElementsByClassName('hr')[0];
+
+
+
+
+
+
+
+
+    if (e.target === oldForm || e.target === textarea
+        || e.target === img || e.target === anno || e.target === innerForm
+        || e.target === tools || e.target === toolsTitle
+        || e.target === toolsContent || e.target === toolsOptions
+        || e.target === toolsContent2one || e.target === toolsContent2two
+        || e.target === annoSave || e.target === annoCancel
+        || e.target === formDivOuter || e.target === buttonDiv
+        || e.target === hr || e.target === toolsContent2three) {
+       return;
+    }
+     
 
     const oldPopup = document.getElementsByClassName('click-to-annotate')[0];
     if (oldPopup) {
@@ -168,6 +223,12 @@ export default class TrackShow extends React.Component {
       // const parent = document.getElementsByClassName('parent'[0]);
     }
     
+    
+    if (oldForm && !this.toggle) {
+      oldForm.remove();
+      
+    }
+    this.toggle = !this.toggle;
 
   }
 
@@ -206,10 +267,14 @@ export default class TrackShow extends React.Component {
     let divAnnotation = document.createElement('div');
     divAnnotation.classList.add('annotation');
     let form = document.createElement('form');
+    form.setAttribute('id', 'editor-form')
     let formDivOuter = document.createElement('div');
+    formDivOuter.classList.add('form-div-outer');
     let textarea = document.createElement('textarea');
     textarea.setAttribute('id', 'editor');
     textarea.setAttribute('placeholder', "Don't just put the lyric in your own words-drop some knowledge!");
+    textarea.addEventListener("change", this.update("annotation"));
+    // $(textarea).unbind('focusout');
     formDivOuter.appendChild(textarea);
     let toolsDiv = document.createElement('div');
     toolsDiv.classList.add('tools');
@@ -246,15 +311,18 @@ export default class TrackShow extends React.Component {
     formDivOuter.appendChild(toolsDiv);
 
     let hr = document.createElement('hr');
+    hr.classList.add('hr')
     formDivOuter.appendChild(hr);
     let buttonDiv = document.createElement('div');
+    buttonDiv.classList.add('button-div');
     let button1 = document.createElement('button')
     button1.classList.add("annotation-save");
     let textNode5 = document.createTextNode("Save");
     button1.appendChild(textNode5);
+    //SAVE BUTTON ABILITY TO CREATE ANNOTATION IN DATABASE
     buttonDiv.appendChild(button1)
 
-    let button2 = document.createElement('button')
+    let button2 = document.createElement('button');
     button2.classList.add("annotation-cancel");
     //GIVES CANCEL BUTTON ABILITY TO DELETE LATEST CREATED LYRIC SPAN
     button2.addEventListener("click", this.deleteHighlighted.bind(this));
@@ -305,14 +373,27 @@ export default class TrackShow extends React.Component {
     //   </div>
     // )
     // debugger
+
+    // TRYING TO MAKE FORM DISSAPPEAR IN NOT THE FOCUSED ELEMENT
+    // let focusForm = document.getElementById('editor-form')
+    // focusForm.addEventListener('focusout', this.deleteAPopupEditor.bind(this));
+    // popupEditor.addEventListener('focusout', this.deleteAPopupEditor.bind(this));
+
+    //FINAL STEPS OF FUNCTION:  ADDING THE ELEMENT TO THE PAGE
     let ele = document.getElementsByClassName('track-show-body-right')[0];
-    ele.appendChild(popupEditor)
+    ele.appendChild(popupEditor);
+    // document.getElementById('editor-form').focus();
+    // focusForm.focus();
+
+    
+    
   }
 
   deleteAPopupEditor(){
     let parent = document.getElementsByClassName('track-show-body-right')[0];
     let child = document.getElementsByClassName('hidden')[0];
     parent.removeChild(child);
+    // this.deleteHighlighted();
   }
 
   annotationPopupOnSave(){

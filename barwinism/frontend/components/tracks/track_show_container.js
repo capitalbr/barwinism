@@ -5,6 +5,8 @@ import { fetchTrack } from "../../actions/track_actions";
 import { fetchArtist } from "../../actions/artist_actions";
 import { fetchTrackAlbums } from "../../actions/album_actions"
 import { Link } from "react-router-dom";
+// Doesn't exist yet
+import { createAnnotation } from "../../actions/annotation_actions"
 
 
 const mapStateToProps = (state, ownProps) => {
@@ -38,6 +40,7 @@ const mapDispatchToProps = (dispatch) => {
   return ({
     fetchTrack: (id) => dispatch(fetchTrack(id)),
     fetchArtist: (id) => dispatch(fetchArtist(id)),
+    createAnnotation: (annotation) => dispatch(createAnnotation(annotation))
     // fetchTrackAlbums: (id) => dispatch(fetchTrackAlbums(id))
   })
 }
