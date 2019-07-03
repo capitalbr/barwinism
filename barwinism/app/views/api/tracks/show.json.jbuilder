@@ -56,6 +56,19 @@ json.set! :albums do
   end
 end
 
+json.set! :annotations do
+  @track.annotations.each do |anno|
+    json.set! anno.anno_id do
+      json.id anno.id
+      json.anno_id anno.anno_id
+      json.user_id anno.user_id
+      json.track_id anno.track_id
+      json.body anno.body
+      json.upvotes anno.upvotes
+    end
+  end
+end
+
 
 
 

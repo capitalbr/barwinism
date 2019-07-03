@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_30_062921) do
+ActiveRecord::Schema.define(version: 2019_07_03_174757) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,10 +29,10 @@ ActiveRecord::Schema.define(version: 2019_06_30_062921) do
     t.integer "user_id", null: false
     t.integer "track_id", null: false
     t.string "body", null: false
-    t.string "highlighted_text", null: false
     t.integer "upvotes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "anno_id", null: false
     t.index ["track_id"], name: "index_annotations_on_track_id"
     t.index ["upvotes"], name: "index_annotations_on_upvotes"
     t.index ["user_id"], name: "index_annotations_on_user_id"

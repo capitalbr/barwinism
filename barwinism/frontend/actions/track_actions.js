@@ -23,3 +23,12 @@ export const fetchTrack = id => {
     return TrackAPIUtil.fetchTrack(id).then(payload => dispatch({ type: RECEIVE_TRACK, payload }))
   }
 }
+
+export const updateTrack = track => {
+  return dispatch => {
+    return TrackAPIUtil.updateTrack(track).then(track => {
+      dispatch({ type: RECEIVE_TRACK, payload: track })
+      return track
+    })
+  }
+}

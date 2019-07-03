@@ -7,7 +7,12 @@ export default class TrackShow extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {annotation: ""};
+    this.state = {
+      body: "",
+      track_id: this.props.match.params.trackId,
+      upvotes: "",
+      anno_id: ""
+    };
     this.toggle = true;
   }
     componentDidMount(){
@@ -29,7 +34,7 @@ export default class TrackShow extends React.Component {
 
       
       $(bodyTag).empty()
-      $(htmlLyrics).addClass("theBody");
+      // $(htmlLyrics).addClass("theBody");
       $(bodyTag).append($(htmlLyrics).addClass("theBody"));
       }
         
@@ -55,7 +60,19 @@ export default class TrackShow extends React.Component {
 
   onSave(e){
     e.preventDefault();
-    this.props.createAnnotation(this.state);
+    const annotation = {
+      body: this.state.body,
+      track_id: this.state.track_id,
+      anno_id: e.target.getAttribute("data-anno-id"),
+      upvotes: this.state.upvotes
+
+    }
+    this.props.createAnnotation(annotation);
+    let body = document.getElementById("theBody").innerHTML;
+    this.props.updateTrack({
+      body: body,
+      id: this.props.track.id
+    });
   }
 
   embedYoutube(){
@@ -88,7 +105,10 @@ export default class TrackShow extends React.Component {
       
 
       // GIVING THE NEW SPAN A UNIQUE ID
-      let count = document.getElementsByClassName('theBody')[0].childElementCount;
+      // debugger
+      // using [0] here refers to the entire body which only has one span tag as a child
+      // using [1] gets the inner tag with all the actual children
+      let count = document.getElementsByClassName('theBody')[1].children.length;
       id = `${this.props.track.id}-${count + 1}`;
       replacement.setAttribute('id', id);
 
@@ -100,7 +120,7 @@ export default class TrackShow extends React.Component {
       range.deleteContents();
       range.insertNode(replacement);
 
-
+      
       // let annotation = document.getElementById(id);
       let popup = document.createElement('span');
       popup.addEventListener("click", this.annotationPopupEditor.bind(this, id));
@@ -112,7 +132,6 @@ export default class TrackShow extends React.Component {
 
       // AFTER I SETUP THE HIDING OF THE RIGHT COLUMN ELEMENTS ON CLICK 
       //I'M GOING TO PUT THE 'textNode' IN THE RIGHT COLUMN
-      // debugger
       let y = window.scrollY + replacement.getBoundingClientRect().top;
       popup.style.marginTop = `${y-380}px`;
       
@@ -122,16 +141,20 @@ export default class TrackShow extends React.Component {
     }
 
  }
-   deleteHighlighted(){
-     
+   deleteHighlighted(id){
+    //  debugger
       // const selection = window.getSelection();
       // let id;
 
     //  let count = document.getElementsByClassName('theBody')[0].childElementCount;
-     let parent = document.getElementsByClassName('theBody')[0];
+     // MUST USE [1] HERE OR BECAUSE [0] REFERS TO THE OUTER BODY THAT ONLY HAS 
+     // ONE CHILD!
+     let parent = document.getElementsByClassName('theBody')[1];
     //  const oldChild = parent.lastChild;
      let count = parent.children.length;
-     const oldChild = parent.children[count-1];
+    //  const oldChild = parent.children[count-1];
+     const oldChild = document.getElementById(id)
+
      
      
      
@@ -174,7 +197,7 @@ export default class TrackShow extends React.Component {
  
 
   hider(e){
-    debugger
+    
     const oldForm = document.getElementsByClassName('hidden')[0];
     const textarea = document.getElementById('editor')
     const img = document.getElementsByClassName('logo')[0];
@@ -203,7 +226,7 @@ export default class TrackShow extends React.Component {
 
 
 
-
+    // debugger
     if (e.target === oldForm || e.target === textarea
         || e.target === img || e.target === anno || e.target === innerForm
         || e.target === tools || e.target === toolsTitle
@@ -255,6 +278,7 @@ export default class TrackShow extends React.Component {
   // }
 
   annotationPopupEditor(id){
+    
     //ADDS HIGHLIGHTING TO THE NEWLY CREATED LYRIC SPAN
     document.getElementById(id).classList.add('highlight');
 
@@ -273,7 +297,7 @@ export default class TrackShow extends React.Component {
     let textarea = document.createElement('textarea');
     textarea.setAttribute('id', 'editor');
     textarea.setAttribute('placeholder', "Don't just put the lyric in your own words-drop some knowledge!");
-    textarea.addEventListener("change", this.update("annotation"));
+    textarea.addEventListener("change", this.update("body"));
     // $(textarea).unbind('focusout');
     formDivOuter.appendChild(textarea);
     let toolsDiv = document.createElement('div');
@@ -319,13 +343,15 @@ export default class TrackShow extends React.Component {
     button1.classList.add("annotation-save");
     let textNode5 = document.createTextNode("Save");
     button1.appendChild(textNode5);
+    button1.setAttribute("data-anno-id", id)
+    button1.addEventListener("click", this.onSave.bind(this));
     //SAVE BUTTON ABILITY TO CREATE ANNOTATION IN DATABASE
     buttonDiv.appendChild(button1)
 
     let button2 = document.createElement('button');
     button2.classList.add("annotation-cancel");
     //GIVES CANCEL BUTTON ABILITY TO DELETE LATEST CREATED LYRIC SPAN
-    button2.addEventListener("click", this.deleteHighlighted.bind(this));
+    button2.addEventListener("click", this.deleteHighlighted.bind(this, id));
     
 
     let textNode6 = document.createTextNode("Cancel");
@@ -334,6 +360,19 @@ export default class TrackShow extends React.Component {
     formDivOuter.appendChild(buttonDiv);
 
     form.appendChild(formDivOuter);
+
+    // CREATING HIDDEN INPUTS TO PASS UP anno_id AND track_id
+    // AND EVENTUALLY upvotes
+    // let anno_idInput = document.createElement("INPUT");
+    // anno_idInput.setAttribute("type", "hidden");
+    // anno_idInput.setAttribute("value", id);
+    // anno_idInput.addEventListener("change", this.update("anno_id"));
+
+    // let track_idInput = document.createElement("INPUT");
+    // track_idInput.setAttribute("type", "hidden");
+    // track_idInput.setAttribute("value", this.props.match.params.trackId);
+    // track_idInput.addEventListener("change", this.update("anno_id"))
+
     divAnnotation.appendChild(form);
     popupEditor.appendChild(divAnnotation);
     
@@ -372,7 +411,6 @@ export default class TrackShow extends React.Component {
     //     </div>
     //   </div>
     // )
-    // debugger
 
     // TRYING TO MAKE FORM DISSAPPEAR IN NOT THE FOCUSED ELEMENT
     // let focusForm = document.getElementById('editor-form')
@@ -517,7 +555,10 @@ export default class TrackShow extends React.Component {
                 <button>Edit Lyrics</button>
               </div>
               <div className="track-show-body-lyrics">
-                 <p id="theBody" onMouseUp={this.highlighter.bind(this)}></p>
+                <pre>
+                  <p id="theBody" onMouseUp={this.highlighter.bind(this)}></p>
+                </pre>
+                 
               </div>
                 <div className="track-show-body-end-flex">
                   

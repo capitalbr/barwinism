@@ -1,0 +1,9 @@
+json.extract!(
+    @anno,
+    :id,
+    :anno_id,
+    :user_id,
+    :track_id,
+    :body,
+    :upvotes
+    )

@@ -13,6 +13,8 @@ class Track < ApplicationRecord
   through: :track_album_joins,
   source: :album
 
+  has_many :annotations
+
   attr_reader :artist_input, :album_input
  
 

@@ -8,6 +8,7 @@ class User < ApplicationRecord
 
   after_initialize :ensure_session_token
 
+  has_many :annotations
 
   def self.find_by_credentials(field, password)
     user = User.find_by(username: field) || User.find_by(email: field)

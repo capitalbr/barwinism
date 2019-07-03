@@ -12,3 +12,11 @@ export const fetchTrack = (id) => {
     url: `/api/tracks/${id}`
   })
 }
+
+export const updateTrack = (track) => {
+  return $.ajax({
+    method: "PATCH",
+    url: `/api/tracks/${track.id}`,
+    data: { track }
+  })
+}
