@@ -1,3 +1,4 @@
+# Barwinism
 
 [See it live](https://barwinism.herokuapp.com/#/)
 
@@ -24,13 +25,6 @@ by an event listener on the parent element of the lyric and hiding elements
 in the adjacent element to provide room for a popup for the user to click if 
 they want to proceed with the annotation.
 
-```javascript
-const selection = window.getSelection();
-if (window.getSelection().toString().length > 0) {
-  document.getElementsByClassName('youTube')[0].classList.add('display-none');
-}
-```
-
 The called function then, among other things, had to auto-generate a DOM element
 that replaced the highlighted selection with the text of the selection injected 
 into it.  
@@ -52,13 +46,6 @@ if (selection.rangeCount && selection.toString().length > 0) {
 
 Plus it had to give each one a unique id as well as another temporary identifier
 for garbage collection if it wasn't saved.
-
-```javascript
-  id = `${this.props.track.id}-${Math.random()}`;
-  replacement.setAttribute('id', id);
-  replacement.setAttribute('class', 'parent');
-  replacement.setAttribute('class', 'delete-selected');
-```
 
 It also auto-generates another DOM element in the parent element adjacent to 
 the lyric that must pop up right next to the selection.
@@ -84,10 +71,6 @@ $(right).append($(popup));
 
 Once the adjacent element is clicked css must be auto generated to highlight the
 lyric.  
-
-```javascript
-document.getElementById(id).classList.add('highlight');
-```
 
 Upon clicking save the annotation must be persisted to the database
 where it will be stored a string, and reconverted back to html upon retrieval.  The css class for garbage collection should also be removed.
@@ -143,4 +126,14 @@ onSave(e){
 * Upload Youtube video for each track.
 * Annotate highlighted selections as seen on Genius.com
 * Use markdown to udd pictures, links, & more to annotations.
-* Navigate to each track via the Charts page.
+* Navigate to each track via the Charts page (index).
+
+### Upcoming Features:
+
+* Edit track transcriptions and annotations.
+* User profile, album, and artist pages.
+* Comments section of track page.
+* Upvotes on annotations and comments.
+* Tags
+* List of user contributions shown on profile page.
+* Latest contribution page showcasing recent user contributions.
