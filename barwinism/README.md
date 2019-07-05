@@ -4,9 +4,8 @@
 
 Barwinism, a Genius clone, allows users to provide annotations and 
 interpretation of song lyrics, news stories, sources, poetry, and documents.
-The backend was created on Rails & Postgres while Rea
-Rails and Postgres handle the backend, while Javascript powered by React/Redux
-takes care of the frontend.
+The backend was created on Rails & Postgres, while Javascript powered by 
+React/Redux takes care of the frontend.
 
 This project was designed and built in under two weeks.
 
