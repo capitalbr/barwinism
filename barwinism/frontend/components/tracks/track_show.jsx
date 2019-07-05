@@ -60,7 +60,7 @@ export default class TrackShow extends React.Component {
   }
 
   onSave(e){
-    
+    document.getElementById(id).classList.remove('delete-selected');
     document.getElementsByClassName('youTube')[0].classList.remove('display-none');
 
     e.preventDefault();
@@ -327,7 +327,7 @@ deleteHighlighted(id){
     //ADDS HIGHLIGHTING TO THE NEWLY CREATED LYRIC SPAN
     
     document.getElementById(id).classList.add('highlight');
-    document.getElementById(id).classList.remove('delete-selected');
+    // document.getElementById(id).classList.remove('delete-selected');
 
     let body = document.getElementsByClassName("theBody")[0].innerHTML;
     // this.props.updateTrack({
