@@ -61,6 +61,8 @@ export default class TrackShow extends React.Component {
 
   onSave(e){
     
+    document.getElementsByClassName('youTube')[0].classList.remove('display-none');
+
     e.preventDefault();
     this.deleteSelected();
     const annotation = {
@@ -71,13 +73,28 @@ export default class TrackShow extends React.Component {
 
     }
     this.props.createAnnotation(annotation);
+    // let returnedAnno = this.props.createAnnotation(annotation).then(annotation => {
+    //   return annotation
+    // })
+    
     let body = document.getElementsByClassName("theBody")[0].innerHTML;
     this.props.updateTrack({
       body: body,
       id: this.props.track.id
     });
     
-    
+    let annoEditor = document.getElementsByClassName('hidden')[0];
+    annoEditor.remove();
+
+    // debugger
+    //testing
+    // let biggest = 0;
+    // this.props.annotations.forEach(el => {
+    //   if (el.id > biggest) {
+    //     biggest = el.id;
+    //   }
+    // })
+    // this.state.formType = "displayAnno";
   }
 
   embedYoutube(){
@@ -104,6 +121,10 @@ export default class TrackShow extends React.Component {
       oldPopup.remove();
     }
     const selection = window.getSelection();
+    if (window.getSelection().toString().length > 0) {
+      document.getElementsByClassName('youTube')[0].classList.add('display-none');
+    }
+    
     let id;
     if (selection.rangeCount && selection.toString().length > 0) {
       const replacement = document.createElement('span');
@@ -173,6 +194,7 @@ registerOutsideClick(){
 
 
 deleteHighlighted(id){
+  document.getElementsByClassName('youTube')[0].classList.remove('display-none');
   let parent = document.getElementsByClassName('theBody')[0];
 
   const oldChild = document.getElementById(id);
@@ -219,8 +241,22 @@ deleteHighlighted(id){
  
 
   hider(e){
-    // debugger
-   
+    if (!e.target.classList.contains('click-to-annotate') &&
+      !e.target.parentElement.classList.contains('track-show-body-right') &&
+      !e.target.parentElement.parentElement.classList.contains('track-show-body-right') &&
+      !e.target.parentElement.parentElement.parentElement.classList.contains('track-show-body-right') &&
+      !e.target.parentElement.parentElement.parentElement.parentElement.classList.contains('track-show-body-right') &&
+      !e.target.parentElement.parentElement.parentElement.parentElement.parentElement.classList.contains('track-show-body-right') &&
+      !e.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.classList.contains('track-show-body-right') &&
+      !e.target.classList.contains("tools-content2")
+    ) {
+      let temp = document.getElementsByClassName('youTube')[0];
+      if ( temp ){
+        document.getElementsByClassName('youTube')[0].classList.remove('display-none');
+      }
+    }
+    
+
     this.setState({ formType: "", current_anno: "", lyrics: document.getElementsByClassName('theBody')[0].innerHTML });
     
   
