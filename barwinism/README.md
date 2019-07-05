@@ -10,6 +10,8 @@ takes care of the frontend.
 
 This project was designed and built in under two weeks.
 
+![Screen Shot 2019-07-05 at 12 28 19 PM](https://user-images.githubusercontent.com/48269593/60737480-8cb5b800-9f20-11e9-95e1-2403d35ccc72.png)
+
 ### Annotation Functionality
 
 The main feature of the app is annotating sections of a lyric. Giving a user 
