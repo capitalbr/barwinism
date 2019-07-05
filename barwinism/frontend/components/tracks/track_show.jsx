@@ -13,12 +13,18 @@ export default class TrackShow extends React.Component {
       anno_id: "",
       formType: "",
       current_anno: "",
-      editForm: false
+      editForm: false,
+      lyrics: "",
+      anno_body: ""
     };
     this.toggle = true;
   }
     componentDidMount(){
-      this.props.fetchTrack(this.props.match.params.trackId);
+      this.props.fetchTrack(this.props.match.params.trackId)
+        .then(() => {
+          this.setState({
+          lyrics: this.props.track.body})
+        })
     }
     
 
@@ -29,7 +35,7 @@ export default class TrackShow extends React.Component {
 
       const bodyTag = document.getElementById('theBody');
       if (bodyTag) {
-        const htmlLyrics = `<span>${this.props.track.body}</span>`;
+        const htmlLyrics = `<span>${this.state.lyrics}</span>`;
         $(bodyTag).empty();
         $(bodyTag).append($(htmlLyrics).addClass("theBody"));
       }
@@ -56,6 +62,7 @@ export default class TrackShow extends React.Component {
   onSave(e){
     
     e.preventDefault();
+    this.deleteSelected();
     const annotation = {
       body: document.getElementsByTagName("textarea")[0].value,
       track_id: this.state.track_id,
@@ -69,6 +76,8 @@ export default class TrackShow extends React.Component {
       body: body,
       id: this.props.track.id
     });
+    
+    
   }
 
   embedYoutube(){
@@ -85,7 +94,11 @@ export default class TrackShow extends React.Component {
     )
   }  
 
-  highlighter(e) {
+  highlighter(e) { 
+    
+    // document.removeEventListener('mouseup', this.registerDelete.bind(this), true);
+
+    
     const oldPopup = document.getElementsByClassName('click-to-annotate')[0];
     if (oldPopup) {
       oldPopup.remove();
@@ -94,15 +107,17 @@ export default class TrackShow extends React.Component {
     let id;
     if (selection.rangeCount && selection.toString().length > 0) {
       const replacement = document.createElement('span');
-      
       // GIVING THE NEW SPAN A UNIQUE ID
-      let count = document.getElementsByClassName('theBody')[0].children.length;
+      // let count = document.getElementsByClassName('theBody')[0].children.length;
       // let count = this.htmlLyrics.children.length;
-      id = `${this.props.track.id}-${count + 1}`;
-      debugger
+      id = `${this.props.track.id}-${Math.random()}`;
+      
       replacement.setAttribute('id', id);
       replacement.setAttribute('class', 'parent');
+
+      replacement.setAttribute('class', 'delete-selected');
       // replacement.classList.add('highlight');
+      console.log(`NEWLY CREATED SPAN: ${id}`);
       replacement.textContent = selection.toString();
       const range = selection.getRangeAt(0);
       range.deleteContents();
@@ -118,32 +133,97 @@ export default class TrackShow extends React.Component {
       //I'M GOING TO PUT THE 'textNode' IN THE RIGHT COLUMN
       let y = window.scrollY + replacement.getBoundingClientRect().top;
       popup.style.marginTop = `${y-380}px`;
+      popup.style.height = 'fit-content';
+
+      // let y = window.scrollY + selection.getBoundingClientRect().top;
+      // popup.style.marginTop = `${y - 380}px`;
+
+
+
       let right = document.getElementsByClassName('track-show-body-right');
       $(right).append($(popup));
+      // this.deleteHighlighted(id)    
+     
+      // this.registerOutsideClick();
+      
     }
 
  }
-   deleteHighlighted(id){
-     let parent = document.getElementsByClassName('theBody')[0];
-     let count = parent.children.length;
-     const oldChild = document.getElementById(id);
-     const replacement = document.createTextNode(oldChild.textContent);
-     
-     // Replace existing node sp2 with the new span element sp1
-     parent.replaceChild(replacement, oldChild);
 
-     // DELETES THE FORM OFF OF THE PAGE
-     this.deleteAPopupEditor();
+registerDelete(e){
+  
+ 
+    var container = $(".track-show-body-right");
+    
+    // if the target of the click isn't the container nor a descendant of the container
+    if (!container.is(e.target) && container.has(e.target).length === 0) {
 
-     // toggles the boolean so it will be ready to allow 
-     //the next form that pops up
-     this.toggle = !this.toggle;
+
+      this.deleteSelected();
+
+
+    }
+
+}
+
+registerOutsideClick(){
+ 
+  document.addEventListener('mouseup', this.registerDelete.bind(this), true);
+}
+
+
+deleteHighlighted(id){
+  let parent = document.getElementsByClassName('theBody')[0];
+
+  const oldChild = document.getElementById(id);
+  console.log(`parent:${parent}`);
+  console.log(`oldChild:${oldChild}`);
+  console.log(`id:${id}`);
+  const replacement = document.createTextNode(oldChild.textContent);
+  // Replace existing node sp2 with the new span element sp1
+  parent.replaceChild(replacement, oldChild);
+
+  // DELETES THE FORM OFF OF THE PAGE
+  this.deleteAPopupEditor();
+
+  
+
+  // toggles the boolean so it will be ready to allow 
+  //the next form that pops up
+  this.toggle = !this.toggle;
+  this.deleteSelected();
+}   
+
+  deleteSelected() {
+    let parent = document.getElementsByClassName('theBody')[0];
+    
+    const oldChildren = $('.delete-selected');
+    
+    oldChildren.each((i, child) => {
+      const replacement = document.createTextNode(child.textContent);
+          // Replace existing node sp2 with the new span element sp1
+      parent.replaceChild(replacement, child);
+
+    })
+    
+    // let body = document.getElementsByClassName("theBody")[0].innerHTML;
+    this.props.updateTrack({
+      body: parent.innerHTML,
+      id: this.state.track_id
+    }).then(this.setState({lyrics: parent.innerHTML}))
+
   }   
+
+
 
  
 
   hider(e){
-    this.setState({formType: "", current_anno: ""});
+    // debugger
+   
+    this.setState({ formType: "", current_anno: "", lyrics: document.getElementsByClassName('theBody')[0].innerHTML });
+    
+  
     const oldForm = document.getElementsByClassName('hidden')[0];
     const textarea = document.getElementById('editor')
     const img = document.getElementsByClassName('logo')[0];
@@ -181,8 +261,9 @@ export default class TrackShow extends React.Component {
       console.log('popup being deleted')
     }
     
-    
-    if (oldForm && !this.toggle) {
+    // debugger
+    let val = e.target;
+    if (oldForm && !this.toggle && !val.classList.contains('click-to-annotate')) {
       oldForm.remove();
       
     }
@@ -208,13 +289,15 @@ export default class TrackShow extends React.Component {
 
   annotationPopupEditor(id){
     //ADDS HIGHLIGHTING TO THE NEWLY CREATED LYRIC SPAN
-    debugger
+    
     document.getElementById(id).classList.add('highlight');
+    document.getElementById(id).classList.remove('delete-selected');
+
     let body = document.getElementsByClassName("theBody")[0].innerHTML;
-    this.props.updateTrack({
-      body: body,
-      id: this.props.track.id
-    });
+    // this.props.updateTrack({
+    //   body: body,
+    //   id: this.props.track.id
+    // });
     let popupEditor = document.createElement('div');
     popupEditor.classList.add('hidden');
     let img = document.createElement('img');
@@ -326,41 +409,89 @@ export default class TrackShow extends React.Component {
     // popupEditor.addEventListener('focusout', this.deleteAPopupEditor.bind(this));
 
     //FINAL STEPS OF FUNCTION:  ADDING THE ELEMENT TO THE PAGE
+    let anno = document.getElementById(id);
+    let y = window.scrollY + anno.getBoundingClientRect().top;
+    let val = y - 565;
+    if ((y - 565) < 0) {
+      val = 0;
+    }
+    popupEditor.style.marginTop = `${val}px`;
+
     let ele = document.getElementsByClassName('track-show-body-right')[0];
     ele.appendChild(popupEditor);
     // document.getElementById('editor-form').focus();
     // focusForm.focus();  
+    
+    
   }
 
   deleteAPopupEditor(){
     let parent = document.getElementsByClassName('track-show-body-right')[0];
     let child = document.getElementsByClassName('hidden')[0];
-    parent.removeChild(child);
+    if (parent instanceof Node && child instanceof Node) {
+      parent.removeChild(child);
+    }
+    
     // this.deleteHighlighted();
   }
 
   getAnno(e){
-    
+    // if (this.state.formType === "displayAnno") {
+    //   this.setState({ formType: "", current_anno: "" });
+    // }
     e.preventDefault();
     if (e.target.id === "theBody" || e.target.id === "") {
       return
     } else {
-      this.setState({formType: "displayAnno", current_anno: e.target.id});
+      this.hider(e);
+      
+      this.setState({ formType: "displayAnno" });
+      this.setState({ current_anno: e.target.id });
+      const current_annotation = this.props.annotations[e.target.id];
+      let current_annotation_marked = $(marked(current_annotation.body));
+      this.setState({
+        anno_body: current_annotation_marked.html()
+      })
+   
     }
-    
+    console.log(this.state.anno_body);
+    // debugger
   }
 
   showAnno(){
     
    
-    let anno = this.props.annotations[this.state.current_anno];
-    if (anno) {
-      anno = anno.body;
-    } else {
-      return;
+    // let anno = this.props.annotations[this.state.current_anno];
+    // let annoBody;
+    // if (anno) {
+    //   // anno = anno.body;
+    //   annoBody = anno.body;
+
+    // } else {
+    //   return;
+    // }
+
+    let annoMargin = document.getElementById(this.state.current_anno);
+    let y = window.scrollY + annoMargin.getBoundingClientRect().top;
+    let val = y - 565;
+    if ((y - 565) < 0) {
+      val = 0;
     }
 
-    return (<div className="hidden">
+    let styles = {
+      marginTop: `${val}px`,
+    };
+
+    // let ele = document.getElementById('display-anno');
+    // debugger
+    // if (ele){
+    //   ele.innerHTML = marked(annoBody);
+    // }
+    
+
+    return (<div className="hidden2"
+        style={styles}>
+      <img src={window.annotation_arrow}/>
       <div className="title-and-contributors">
         <span>Genius Annotation</span>
         <span>1 Contributor</span>
@@ -368,26 +499,26 @@ export default class TrackShow extends React.Component {
       <div className="annotation">
         <form>
           <div>
-            <p readOnly id="display-anno">
-              {marked(anno)}
+            <p readOnly id="display-anno" dangerouslySetInnerHTML={{__html: this.state.anno_body} }>
+              {/* {marked(anno)} */}
+              {/* {marked('[google](google.com)')} */}
+              
             </p>
-            <div className="tools">
-              <div className="tools-title">
-                <span className="tools-content">Tools:</span>
-              </div>
-              <div className="tools-options">
-                <span className="tools-content2">Add Image</span>
-                <span className="tools-content2">Formatting Help</span>
-                <a className="tools-content2">How To Annotate</a>
-              </div>
-
-            </div>
+           
             <hr></hr>
             <div>
-              <button className="annotation-save">Save</button>
-              <button className="annotation-cancel">Cancel</button>
+              <button className="annotation-edit">Edit</button>
             </div>
-            {/* <div id="preview"></div> */}
+            <div>
+              <div>
+                <div></div>
+                <div></div>
+              </div>
+              <div>
+                <svg></svg>
+              </div>
+            </div>
+            
 
           </div>
         </form>
@@ -409,7 +540,7 @@ export default class TrackShow extends React.Component {
   }
  
   showEdit(e){
-    debugger
+    
     e.preventDefault();
     if (this.state.editForm === false) {
       this.setState({editForm: true});
@@ -420,8 +551,8 @@ export default class TrackShow extends React.Component {
   }
 
   renderEditBody(){
-    debugger
-      const htmlLyrics = `<span>${this.props.track.body}</span>`;
+    
+      const htmlLyrics = `<span>${this.state.body}</span>`;
       
       let ele = document.createElement('div');
       ele.innerHTML = htmlLyrics;
@@ -444,10 +575,11 @@ export default class TrackShow extends React.Component {
   
 
   render(){
-    debugger
+    
     let formOutput;
-   
+    
     if (this.state.formType === "displayAnno") {
+      
       formOutput = this.showAnno();
     }
 

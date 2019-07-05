@@ -7,11 +7,11 @@
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  height: 700px;
+  height: 100%;
 }
 
 .track-show-body p{
-  height: 530px;
+  height: 100%;
 }
 
 // switch back to textarea if submitting
@@ -53,13 +53,14 @@
   justify-content: center;
   width: 406px;
   flex-wrap: wrap;
+  // min-height: 398px;
   // border-style: solid;
   // border-width: 1px;
 }
 
 .track-show-body-right img{
   height: 30px;
-  transform: translate(-201px, 179px);
+  transform: translate(-24px, 179px);
   position: absolute;
 }
 
@@ -76,7 +77,24 @@
   border-top: none;
   border-bottom: none;
   border-right: none;
+  // margin-left: 82px;
+  margin-left: 13px;
 }
+
+.track-show-body-right div.hidden2{
+  border-style: solid;
+   /* display: none; */
+  height: fit-content;
+  width: 391px;
+  border-color: #99a7ee;
+  border-width: 4px;
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
+  // margin-left: 82px;
+  margin-left: 13px;
+}
+
 
 .track-show-body-right div.title-and-contributors{
   font-size: .875em;
@@ -124,11 +142,10 @@
   margin-left: -.5rem;
   margin-right: -.5rem;
   padding: .5rem;
-  background-color: rgba(204, 204, 204, 0.2);
   width: 100%;
   overflow-x: hidden;
   overflow-wrap: break-word;
-  height: 184px;
+  height: fit-content;
   color: black;
   font: 100 1em/1.45 Programme,sans-serif;
   margin-left: 8px;
@@ -412,5 +429,21 @@ div.tools span.tools-content{
    display: none;
  }
 
+
+ .annotation-edit{
+  border-style: solid;
+  border-radius: 0;
+  border-width: .15rem;
+  color: black;
+  border-color: black;
+  padding-right: 3rem;
+  font-family: Programme,sans-serif;
+  font-size: 1rem;
+  line-height: 1.4rem;
+  padding: .25rem .5rem;
+  width: 48px;
+  margin-left: 19px;
+  cursor: default;
+ }
 
 
