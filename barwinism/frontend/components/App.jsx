@@ -16,10 +16,11 @@ const App = () => (
     <Switch>
       <ProtectedRoute exact path="/tracks/:trackId" component={TrackShowContainer}/>
       <ProtectedRoute exact path="/add-song" component={CreateTrackContainer}/>
-      <ProtectedRoute exact path="/charts" component={ChartsContainer}/>
+      <ProtectedRoute exact path="/charts" component={ChartsContainer} />
+      <ProtectedRoute exact path="/" component={ChartsContainer}/>
       <AuthRoute exact path="/login" component={LoginFormContainer} />
       <AuthRoute exact path="/signup" component={SignupFormContainer} />
-      <Route exact path="/" render={()=>{}}/>
+      {/* <Route exact path="/" render={()=>{}}/> */}
       <Redirect to="/"/>
     </Switch>
     <FooterContainer />
