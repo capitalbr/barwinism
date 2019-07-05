@@ -613,10 +613,14 @@ deleteHighlighted(id){
            <div className="track-show-header fade-in" onClick={this.hider.bind(this)}>
             <div className='shadow'>
               <div className="inner-track-show-header">
-                <div className="inner-track-show-header-left">
+                <div className="outer-track-show-header-left">
+                  <div className="inner-track-show-header-left">
+                   <img src={this.props.track.song_art_url} />
                   <div className="track-show-song-art">
                   </div>
                 </div>
+                </div>
+                
                 <div className="track-show-info">
                   <h1>{this.props.track.title}</h1>
                   <h2>{this.props.artist.name}</h2>
