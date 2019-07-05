@@ -4,6 +4,10 @@ class Api::TracksController < ApplicationController
     @track = Track.find(params[:id])
   end
 
+  def index
+    @tracks = Track.all
+  end
+
   def create
     # debugger
     @track = Track.new(track_params)

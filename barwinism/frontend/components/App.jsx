@@ -8,12 +8,15 @@ import TrackShowContainer from "./tracks/track_show_container";
 import FooterContainer from "./footer/footer"
 import CreateTrackContainer from "./tracks/create_track_container"
 
+import ChartsContainer from "./tracks/charts_container"
+
 const App = () => (
   <div className="body-main-div">   
     <GreetingContainer />
     <Switch>
       <ProtectedRoute exact path="/tracks/:trackId" component={TrackShowContainer}/>
       <ProtectedRoute exact path="/add-song" component={CreateTrackContainer}/>
+      <ProtectedRoute exact path="/charts" component={ChartsContainer}/>
       <AuthRoute exact path="/login" component={LoginFormContainer} />
       <AuthRoute exact path="/signup" component={SignupFormContainer} />
       <Route exact path="/" render={()=>{}}/>

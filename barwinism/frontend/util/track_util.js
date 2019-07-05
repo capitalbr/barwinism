@@ -20,3 +20,10 @@ export const updateTrack = (track) => {
     data: { track }
   })
 }
+
+export const fetchTracks = () => {
+  return $.ajax({
+    method: "GET",
+    url: "/api/tracks"
+  })
+}
