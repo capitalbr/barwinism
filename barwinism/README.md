@@ -10,7 +10,7 @@ takes care of the frontend.
 
 This project was designed and built in under two weeks.
 
-### Portfolio Graph
+### Annotation Functionality
 
 The main feature of the app is annotating sections of a lyric. Giving a user 
 the ability to create an annotation is simple enough, but the annotation
