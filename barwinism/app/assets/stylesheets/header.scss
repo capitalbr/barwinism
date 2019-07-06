@@ -89,6 +89,7 @@ header .h-top nav h1{
 .session-links-container{
   display: flex;
   justify-content: flex-end;
+  min-width: 150px;
 }
 
 form.search{
@@ -113,7 +114,7 @@ form.search input{
 
 header img.logo{
   position: absolute;
-  transform: translate(-90px, 0px);
+  transform: translate(-99px, 0px);
 }
 
 
