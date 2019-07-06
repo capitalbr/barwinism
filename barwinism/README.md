@@ -70,17 +70,17 @@ let right = document.getElementsByClassName('track-show-body-right');
 $(right).append($(popup));
 ```
 
-Once the adjacent element is clicked css must be auto generated to highlight the
-lyric.  
+Once the adjacent element is clicked a css class must be auto generated to highlight the
+lyric while another class is removed so the element will no longer be deleted
+during a garbage collection cycle.
 
 Upon clicking save the annotation must be persisted to the database
-where it will be stored a string, and reconverted back to html upon retrieval.  The css class for garbage collection should also be removed.
+where it will be stored a string, and reconverted back to html upon retrieval.  
 
 ```javascript
 onSave(e){
   e.preventDefault();
   
-  document.getElementById(id).classList.remove('delete-selected');
   document.getElementsByClassName('youTube')[0].classList.remove('display-none');
   
   this.deleteSelected();
