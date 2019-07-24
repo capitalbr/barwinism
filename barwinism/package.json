@@ -25,6 +25,7 @@
     "npm": "6.4.1"
   },
   "scripts": {
-    "postinstall": "webpack"
+    "postinstall": "webpack",
+    "start": "webpack --watch --mode=development"
   }
 }
