@@ -7,6 +7,7 @@ import SignupFormContainer from "./session_form/signup_form_container";
 import TrackShowContainer from "./tracks/track_show_container";
 import FooterContainer from "./footer/footer"
 import CreateTrackContainer from "./tracks/create_track_container"
+import Splash from "./splash/splash"
 
 import ChartsContainer from "./tracks/charts_container"
 
@@ -17,10 +18,9 @@ const App = () => (
       <ProtectedRoute exact path="/tracks/:trackId" component={TrackShowContainer}/>
       <ProtectedRoute exact path="/add-song" component={CreateTrackContainer}/>
       <ProtectedRoute exact path="/charts" component={ChartsContainer} />
-      <ProtectedRoute exact path="/" component={ChartsContainer}/>
+      <Route exact path="/" component={Splash}/>
       <AuthRoute exact path="/login" component={LoginFormContainer} />
       <AuthRoute exact path="/signup" component={SignupFormContainer} />
-      {/* <Route exact path="/" render={()=>{}}/> */}
       <Redirect to="/"/>
     </Switch>
     <FooterContainer />
