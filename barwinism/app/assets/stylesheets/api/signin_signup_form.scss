@@ -1,78 +1,57 @@
 div.auth-parent{
   background-color: black;
-  // min-height: 100vh;
   height: 100vw;
 }
 
 form {
-    /* border-radius: 2px; */
-    /* -webkit-box-sizing: border-box; */
-    /* box-sizing: border-box; */
-    background-color: rgba(153, 153, 153, 0.09);
-    padding: 10px;
-    margin: 0px auto;
-    margin-top: 10px;
-    max-width: 260px;
-    font-family: Space Mono,sans-serif;
-    border-style: solid;
-    border-top: none;
-    border-bottom: none;
-    border-left-color: white;
-    border-right-color: white;
-    color: #ede8e9;
-    
-
+  background-color: rgba(153, 153, 153, 0.09);
+  padding: 10px;
+  margin: 0px auto;
+  margin-top: 10px;
+  max-width: 260px;
+  font-family: Space Mono,sans-serif;
+  border-style: solid;
+  border-top: none;
+  border-bottom: none;
+  border-left-color: white;
+  border-right-color: white;
+  color: #ede8e9;
 }
+
 form.padding-active{
   padding: 0px;
 }
+
 form input {
     width: 255px;
     height: 20px;
     margin-bottom: 7px;
     background-color: rgb(48, 45, 45);
     border-color: rgb(48, 45, 45);
-    color: white;
-  
+    color: white; 
 }
 
 form label {
   font-style: bold;
 }
 
-// form:hover{
-//   border-right-color: rgb(71, 26, 246); 
-
-// }
-
 div h1.one{
   text-align: center;
-  // margin-bottom: 0px;
   font-family: Space Mono,sans-serif;
   color: #ffffff;
-
   font-size: 40px;
-  // font-family: 'Ropa Sans', sans-serif;
-  // color: #fff;
   font-weight: 700;
   line-height: 100%;
   padding-top: 60px;
- 
-  
 }
 
 div h1.two{
   text-align: center;
-  // margin-bottom: 0px;
   font-family: Space Mono,sans-serif;
   color: #FFFF64;
-
   font-size: 40px;
-  // font-family: 'Ropa Sans', sans-serif;
-  // color: #fff;
   font-weight: 700;
   line-height: 100%;
-  
   margin-bottom: 10px;
 }
 
@@ -86,14 +65,12 @@ div.errors{
 
 div.errors ul{
   list-style-type: none;
-  
 }
 
 
 form div.button{
   display: flex;
   justify-content: space-between;
-
 }
 
 form div.button button:hover{
@@ -119,69 +96,65 @@ div.toggle-button div{
 }
 
 div.toggle-2{
-  
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
 }
 
-
 div.toggle-button button{
-    color: #ede8e9;
-    font-size: 16px;
-    max-width: 370px;
-    text-decoration: none;
-    width: 100%;
-    box-sizing: border-box;
-    border-radius: 2px;
-    font: normal 15px/1.2rem Programme,sans-serif;
-    display: block;
-    padding: 7px 12px 5px 16px;
-    margin: 0 auto 20px;
-    text-align: center;
-    cursor: pointer;
-    background-color: #444;
-    border: 1px solid #444;
+  color: #ede8e9;
+  font-size: 16px;
+  max-width: 370px;
+  text-decoration: none;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 2px;
+  font: normal 15px/1.2rem Programme,sans-serif;
+  display: block;
+  padding: 7px 12px 5px 16px;
+  margin: 0 auto 20px;
+  text-align: center;
+  cursor: pointer;
+  background-color: #444;
+  border: 1px solid #444;
 }
 
 button.button-signup div{
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 button.button-signup:hover{
-    background-color: rgb(92, 85, 85);
-    border: 1px solid rgb(92, 85, 85);
+  background-color: rgb(92, 85, 85);
+  border: 1px solid rgb(92, 85, 85);
 }
 
 button.button-signup.fb{
-    background-color: rgb(95, 126, 193);
+  background-color: rgb(95, 126, 193);
 }
 
 button.button-signup.fb:hover{
-    background-color: rgb(92, 134, 226);
-    border: 1px solid rgb(92, 134, 226);
+  background-color: rgb(92, 134, 226);
+  border: 1px solid rgb(92, 134, 226);
 }
 
 button.button-signup.twitter{
-    background-color: rgb(43, 170, 225);
+  background-color: rgb(43, 170, 225);
 }
 
 button.button-signup.twitter:hover{
-    background-color: rgb(43, 191, 255);
-    border: 1px solid rgb(43, 191, 255);
+  background-color: rgb(43, 191, 255);
+  border: 1px solid rgb(43, 191, 255);
 }
 
 button.button-signup.google{
-    background-color: rgb(232, 133, 122);
-    
+  background-color: rgb(232, 133, 122);  
 }
 
 button.button-signup.google:hover{
-    background-color: rgb(255, 138, 125);
-    border: 1px solid rgb(255, 138, 125);
+  background-color: rgb(255, 138, 125);
+  border: 1px solid rgb(255, 138, 125);
 }
-
 
 .material-icons{
   margin-right: 7px;

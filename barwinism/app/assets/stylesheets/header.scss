@@ -5,56 +5,43 @@ header {
 }
 
 header .h-top {
-  // background: rgb(21, 12, 54);
-  
-  background: #FFFF64; // from website pallete
+  background: #FFFF64;
   height: 41px;
   position: relative;
   width: 100%;
-  // overflow: visible;
-  // box-sizing: initial;
 }
 
-header .h-top nav{
-    
-    display: flex;
-    align-items: center;
-    height: 41px;
-    // position: absolute;
-    position: relative;
-
-    
+header .h-top nav{ 
+  display: flex;
+  align-items: center;
+  height: 41px;
+  position: relative;
 }
 
 .h-top2{
   display: flex;
   justify-content: flex-end;
-  /* position: relative; */
-  /* width: 100vw; */
 }
 
 header .h-top nav a.header-top{
-    background: #FFFF64; //from website pallete
-    cursor: pointer;
-    font-family: Programme,sans-serif;
-    // color: #A33ACB; from website pallete
-    color: black;
-    text-decoration: none;
-    height: 41px;
-    font-size: 12px;
-    padding: 14px;
-    box-sizing: border-box;
-    border-style: solid;
-    border-right-style: none;
-    border-left-style: none;
-    border-top-style: none;
-    // border-bottom-color: #FFFF64;
+  background: #FFFF64;
+  cursor: pointer;
+  font-family: Programme,sans-serif;
+  color: black;
+  text-decoration: none;
+  height: 41px;
+  font-size: 12px;
+  padding: 14px;
+  box-sizing: border-box;
+  border-style: solid;
+  border-right-style: none;
+  border-left-style: none;
+  border-top-style: none;
 }
 
 header .h-top nav a.logo-link{
   padding: 0px;
 }
-
 
 header .h-top nav a:hover{
   border-width: 6px;
@@ -66,21 +53,16 @@ div.session-links-container a{
 }
 
 header .h-top nav h1{
-    // position: absolute;
-    // right: 50%;
-    // transform: translate(-330px, -43px);
-    display: inline;
-    color: black;
-    margin: 0px;
-    // position: absolute;
-    padding-top: 7px;
-    transform: translate(-65px, 0px);
-        margin-right: 164px;
+  display: inline;
+  color: black;
+  margin: 0px;
+  padding-top: 7px;
+  transform: translate(-65px, 0px);
+  margin-right: 164px;
 }
 
 .header-container {
   display: flex;
-  // justify-content: space-between;
   justify-content: space-between;
   text-align: center;
   width: 100vw;
@@ -97,10 +79,10 @@ form.search{
   padding: 0px;
   height: 0px;
 }
+
 form.search input{
   margin: 0px;
   padding: 15px;
-  
   width: 100%;
   height: 2px;
   width: 100%;
@@ -117,8 +99,6 @@ header img.logo{
   transform: translate(-99px, 0px);
 }
 
-
-// testing
 .h-top2 nav{
   flex-direction: column;
 }
@@ -133,32 +113,23 @@ header img.logo{
   min-height: 38px;
   min-width: 100vw;
   background-color: black;
-
   display: flex;
   align-items: center;
   vertical-align: center;
   color: white;
-  justtify-content: spa;
   justify-content: space-around;
 }
 
 header .h-top nav a.header-bottom{
-    background: black; //from website pallete
-    cursor: pointer;
-    font-family: Programme,sans-serif;
-    // color: #A33ACB; from website pallete
-    color: white;
-    text-decoration: none;
-    height: 38px;
-    font-size: 14px;
-    font-weight: 400;
-    padding: 0px;
-    // box-sizing: border-box;
-    // border-style: solid;
-    // border-right-style: none;
-    // border-left-style: none;
-    // border-top-style: none;
-    // border-bottom-color: #FFFF64;
+  background: black;
+  cursor: pointer;
+  font-family: Programme,sans-serif;
+  color: white;
+  text-decoration: none;
+  height: 38px;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 0px;
 }
 
 header .h-top nav a.header-bottom:hover{

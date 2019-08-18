@@ -1,7 +1,5 @@
 class Album < ApplicationRecord
 
-  # has_many :tracks
-
   has_many :track_album_joins,
   primary_key: :id,
   foreign_key: :album_id,

@@ -23,7 +23,6 @@
 
 .add-track-color{
   background-color: black;
-  // height: 100vw;
   height: fit-content;
 
 }
@@ -60,8 +59,6 @@
   box-sizing: border-box;
   padding: 0 1rem;
   position: relative;
-  // -webkit-box-flex: 1;
-  // -webkit-box-orient: vertical;
 }
 
 .add-track-primary-info label{
@@ -98,7 +95,6 @@
 .add-track-primary-info div.primary-tag-radio{
   display: flex;
   flex-direction: row;
-  // flex-wrap: wrap;
   margin-bottom: 1.5rem;
   transform: translate(-41px, 26px);
   width: 430px;
@@ -168,7 +164,6 @@
 
 
 // ADDITIONAL INFO
-
 .add-track-main h3.additional-info-header{
   border-bottom: 1px solid rgba(154,154,154,.35);
   margin-bottom: 1rem;
@@ -207,7 +202,6 @@
 }
 
 .additional-info-audio-video input{
-    // font-family: Programme,sans-serif; // need to find
     display: block;
     font-size: 15px;
     color: black;
