@@ -38,6 +38,13 @@
         max-height: 150px;
         margin-top: 10px;
       }
+      .contributor{
+        font-size: 12px;
+        margin-top: 25px;
+        span{
+          color: gray;
+        }
+      }
       img{
         width: 670px;
         height: 378px;
@@ -69,12 +76,20 @@
       li.no-border{
         border-right: none;
       }
-      .story-title{
+      .contributor{
+        font-size: 12px;
+        margin-bottom: 9px;
+        span{
+          color: gray;
+        }
       }
       img{
         width: 250px;
         height: 144px;
         object-fit: cover;
+      }
+      .story-description{
+        opacity: 0;
       }
     }
   }

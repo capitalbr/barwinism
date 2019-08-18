@@ -18,23 +18,37 @@ export default class Splash extends React.Component {
   }
 
   render() {
-    let news;
-    let mainStory;
-    let otherStories;
-    let storyClass;
+    let news, mainStory, otherStories, storyClass, contributionMain,
+      contributionOther;
+   
     if (this.props.news && this.props.news[0]) {
       news = this.props.news[0].slice(0, 5).map((story, idx) => {
           storyClass = "";
         if (idx === 4) {
           storyClass = "no-border";
         }
-        return <li className={storyClass}>
+        if (idx === 0) {
+          contributionMain = <div className="contributor">
+            by {story.provider[0].name} / <span>{story.datePublished.slice(0, 10)}</span></div>;
+          
+          contributionOther = "";
+        } else {
+          contributionOther = <div className="contributor">
+            by {story.provider[0].name} / <span>{story.datePublished.slice(0, 10)}</span></div>;
+
+          contributionMain = "";
+        }
+        return <li key={`${story.name}${idx+1}`}className={storyClass}>
           <div>
             <div className="section-title"><div>News</div><hr/></div>
             <div className="story-title">{story.name}</div>
-            <div className="story-description">{story.description.slice(0, 25) + "..."}</div>
+            <div className="story-description">{story.description.slice(0, 35) + "..."}</div>
+            {contributionMain}
           </div>
-          <img src={story.image.contentUrl}></img>
+          <div>
+            {contributionOther}
+            <img src={story.image.contentUrl}></img>
+          </div>
         </li>
       })
       mainStory = news[0];
