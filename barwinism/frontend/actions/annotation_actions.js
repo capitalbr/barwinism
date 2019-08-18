@@ -9,14 +9,3 @@ export const createAnnotation = (annotation) => {
     return AnnotationAPIUtil.createAnnotation(annotation).then(annotation => dispatch({type: RECEIVE_ANNOTATION, annotation}));
   }
 }
-
-
-// SIMPLE, NO NEED TO HIT BACK END, BEING BROUGHT DOWN WITH TRACK SO ALREADY
-// IN STATE
-// SUDDENLY THIS SEEMS UNNECESSARY
-// export const fetchAnno = (annoId) => {
-//   return({
-//     type: RECEIVE_ANNO, 
-//     annoId 
-//   })
-// }

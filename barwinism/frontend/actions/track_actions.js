@@ -12,13 +12,6 @@ export const createTrack = track => {
   }
 }
 
-// export const fetchTrack = id => {
-//   return dispatch => {
-//     return TrackAPIUtil.fetchTrack(id).then(track => dispatch({type: RECEIVE_TRACK, track}))
-//   }
-// }
-
-// PAYLOAD VERSION
 export const fetchTrack = id => {
   return dispatch => {
     return TrackAPIUtil.fetchTrack(id).then(payload => dispatch({ type: RECEIVE_TRACK, payload }))

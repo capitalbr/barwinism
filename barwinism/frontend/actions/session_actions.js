@@ -25,14 +25,6 @@ export const clearErrors = () => {
   })
 }
 
-// export const signup = user => {
-//   return dispatch => {
-//     return APIUtil.signup(user).then(user => dispatch(receiveCurrentUser(user)))
-//   }, err => {
-//     return dispatch(receiveErrors(err.responseJSON))
-//   }
-// };
-
 export const signup = user => dispatch => (
   APIUtil.signup(user).then(user => (
     dispatch(receiveCurrentUser(user))
