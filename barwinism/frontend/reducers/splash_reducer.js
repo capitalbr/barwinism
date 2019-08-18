@@ -5,7 +5,7 @@ const splashReducer = (oldState = {}, action) => {
   Object.freeze(oldState);
   switch (action.type) {
     case RECEIVE_NEWS:
-      return action.news;
+      return { news: action.news.value };
     default:
       return oldState;
   }

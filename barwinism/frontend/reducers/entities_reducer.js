@@ -4,6 +4,7 @@ import tracks from "./tracks_reducer";
 import artists from "./artists_reducer";
 import albums from "./albums_reducer";
 import annotations from "./annotations_reducer";
+import splash from './splash_reducer';
 
 
 const entitiesReducer = combineReducers({
@@ -11,6 +12,7 @@ const entitiesReducer = combineReducers({
   tracks,
   artists,
   albums,
-  annotations
+  annotations,
+  splash
 })
 export default entitiesReducer;

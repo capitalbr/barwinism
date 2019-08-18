@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from "react-router-dom";
 import ChartsContainer from "../tracks/charts_container"
+import { fetchNews } from '../../actions/splash_actions';
 
 export default class Splash extends React.Component {
 
@@ -9,14 +10,46 @@ export default class Splash extends React.Component {
   }
 
   componentDidMount() {
-    
+    this.props.fetchNews()
+  }
+
+  componentDidUpdate() {
+ 
   }
 
   render() {
-   
+    let news;
+    let mainStory;
+    let otherStories;
+    let storyClass;
+    if (this.props.news && this.props.news[0]) {
+      news = this.props.news[0].slice(0, 5).map((story, idx) => {
+          storyClass = "";
+        if (idx === 4) {
+          storyClass = "no-border";
+        }
+        return <li className={storyClass}>
+          <div>
+            <div className="section-title"><div>News</div><hr/></div>
+            <div className="story-title">{story.name}</div>
+            <div className="story-description">{story.description.slice(0, 25) + "..."}</div>
+          </div>
+          <img src={story.image.contentUrl}></img>
+        </li>
+      })
+      mainStory = news[0];
+      otherStories = news.slice(1);
+      debugger
+    } 
+    
+    
+
     return (
       <div className="splash">
-       <div className="news">SPLASHITY SPLAHSHITY</div>
+       <div className="news"><ul>
+         <div className="main-story">{mainStory}</div>
+         <div className="other-stories">{otherStories}</div>
+       </ul></div>
       <ChartsContainer/>
       </div>
     )
