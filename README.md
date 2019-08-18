@@ -75,7 +75,7 @@ lyric while another class is removed so the element will no longer be deleted
 during a garbage collection cycle.
 
 Upon clicking save the annotation must be persisted to the database
-where it will be stored a string, and reconverted back to html upon retrieval.  
+where it will be stored as a string, and reconverted back to html upon retrieval.  
 
 ```javascript
 onSave(e){
@@ -104,6 +104,13 @@ onSave(e){
   annoEditor.remove();
 }
 ```
+
+
+### Track Creation
+
+The 'add song' page handles the creation of multiple database entries including the track itself, the artist, and any albums mentioned, as well as any relationships between those entries. Just like on genius.com the album input boxes are auto-generated depending on how many the user needs (they must really like auto-generation!). Users can also optionally provide a YouTube url that will be converted into it's embed url before being stored in the database. 
+
+![add_song_page](https://user-images.githubusercontent.com/48269593/63220500-8422e500-c14e-11e9-8f27-1fb603fc074a.png)
 
 ### Technologies used
  1.	JavaScript
