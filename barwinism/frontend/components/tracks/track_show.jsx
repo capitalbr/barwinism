@@ -46,9 +46,6 @@ export default class TrackShow extends React.Component {
       if (this.props.match.params.trackId !== prevProps.match.params.trackId){
         this.props.fetchTrack(this.props.match.params.trackId);
       }
-      if ($('#editor').length > 0) {
-        this.initializeEditor();
-      }
       
     }
 
