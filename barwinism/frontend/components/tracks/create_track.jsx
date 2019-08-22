@@ -40,9 +40,9 @@ export default class CreateTrack extends React.Component {
     innerInput.setAttribute('type', 'text');
     let that = this;
     innerInput.addEventListener('change', (e) => {
-      let id = Object.keys(that.state.album_input).length;
+      // let id = Object.keys(that.state.album_input).length;
       let dummy = that.state.album_input;
-      dummy[id-1] = e.target.value;
+      dummy[id] = e.target.value;
       that.setState({album_input: dummy});
     });
     let innerDiv = document.createElement("div");
@@ -53,6 +53,7 @@ export default class CreateTrack extends React.Component {
   }
 
   render() {
+    
     return(
       <div className="add-track-color">
          <div className="add-track-container">

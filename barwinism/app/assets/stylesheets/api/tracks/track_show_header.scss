@@ -91,6 +91,9 @@
   font-size: 100%;
   font-weight: 400;
   display: flex;
+  ul li{
+    display:inline-block;
+  }
 }
 
 .track-show-info div span{

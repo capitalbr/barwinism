@@ -8,18 +8,15 @@ const chartsItem = (props) => (
 
     <div>
       <img src={props.track.song_art_url}/>
-
     </div>
 
     <div className="charts-item-attributes">
       {props.track.title}
-
     </div>
 
     <div className="charts-item-attributes">
       {props.track.artist}
     </div>
-
   </div>
 );
 

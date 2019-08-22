@@ -465,13 +465,16 @@ hider(e){
 
     let albumsHolder;
     if (this.props.albums && this.props.albums.length > 0) {
-      albumsHolder = this.props.albums.map(album => {
-        return <li><h4>{album.title}</h4></li>
+      albumsHolder = this.props.albums.map((album, idx) => {
+        if (idx === this.props.albums.length -1) {
+          return <li><h4>{album.title}</h4></li>
+        }
+        return <li><h4>{album.title},</h4></li>
       })
     } else {
       albumsHolder = <li></li>
     }
-
+    
     let youTube;
     if (this.props.track && this.props.track.youtube_url) {
       youTube = this.embedYoutube();
@@ -497,8 +500,8 @@ hider(e){
                   <h1>{this.props.track.title}</h1>
                   <h2>{this.props.artist.name}</h2>
                   <div>
-                    <span>Album</span>
-                    <ul><a href={`#/tracks/${this.props.track.id}`}>{albumsHolder[0]}</a></ul>
+                    <span>Albums</span>
+                    <ul><a href={`#/tracks/${this.props.track.id}`}>{albumsHolder}</a></ul>
                   </div>
                   
                 </div>

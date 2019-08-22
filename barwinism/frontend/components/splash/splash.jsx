@@ -53,7 +53,7 @@ export default class Splash extends React.Component {
       })
       mainStory = news[0];
       otherStories = news.slice(1);
-      debugger
+      
     } 
     
     
