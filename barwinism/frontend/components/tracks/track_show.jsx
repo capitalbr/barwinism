@@ -242,7 +242,6 @@ hider(e){
   const oldPopup = document.getElementsByClassName('click-to-annotate')[0];
   if (oldPopup) {
     oldPopup.remove();
-    console.log('popup being deleted')
   }
   
   let val = e.target;
@@ -372,7 +371,6 @@ hider(e){
       })
    
     }
-    console.log(this.state.anno_body);
   }
 
   showAnno(){
