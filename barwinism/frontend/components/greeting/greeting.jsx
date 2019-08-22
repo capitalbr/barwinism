@@ -54,8 +54,8 @@ class Greeting extends React.Component {
   renderLogoutLinks(){
     return(
       <div className="session-links-container">
-        <Link className="logout header-top invisible">LOG OUT</Link>
-        <Link className="logout header-top" onClick={this.props.logout.bind(this)} >LOG OUT</Link>
+        <Link className="logout header-top invisible" to="#">LOG OUT</Link>
+        <Link className="logout header-top" to="#" onClick={this.props.logout.bind(this)} >LOG OUT</Link>
       </div>
     )
   }

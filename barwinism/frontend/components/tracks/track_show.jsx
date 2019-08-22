@@ -467,9 +467,9 @@ hider(e){
     if (this.props.albums && this.props.albums.length > 0) {
       albumsHolder = this.props.albums.map((album, idx) => {
         if (idx === this.props.albums.length -1) {
-          return <li><h4>{album.title}</h4></li>
+          return <li key={`album-${idx}`}><h4>{album.title}</h4></li>
         }
-        return <li><h4>{album.title},</h4></li>
+        return <li key={`album-${idx}`}><h4>{album.title},</h4></li>
       })
     } else {
       albumsHolder = <li></li>
