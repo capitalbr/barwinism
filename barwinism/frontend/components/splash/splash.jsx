@@ -37,7 +37,7 @@ export default class Splash extends React.Component {
         contributionMain = "";
       }
       return <li key={`${story.name}${idx + 1}`} className={storyClass}>
-        <div>
+        <a href={story.url}><div>
           <div className="section-title"><div>News</div><hr /></div>
           <div className="story-title">{story.name}</div>
           <div className="story-description">{story.description.slice(0, 35) + "..."}</div>
@@ -46,7 +46,7 @@ export default class Splash extends React.Component {
         <div>
           {contributionOther}
           <img src={story.image.contentUrl}></img>
-        </div>
+        </div></a>
       </li>
     })
   }

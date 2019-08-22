@@ -23,10 +23,9 @@
 }
 
 #charts-lower-div{
-     display: flex;
-    justify-content: SPACE-BETWEEN;
-    margin-left: 105px;
-    margin-right: 105px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .charts-item{
