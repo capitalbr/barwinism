@@ -12,8 +12,6 @@ class SessionForm extends React.Component {
       showForm: false
     };
     this.handleSubmit = this.handleSubmit.bind(this);
-    // this.formToggle = undefined;
-    // this.formPaddingState = "padding-active";
   }
 
   handleSubmit(e){
@@ -89,8 +87,6 @@ class SessionForm extends React.Component {
  
   buttonSignup(){
     return (
-      // <button onClick={this.toggle.bind(this)}>Sign up with email</button>
-      // <button onClick={this.toggle.bind(this)}>Sign up with email <i className="material-icons">email</i></button>
       <div>
         <button className="button-signup fb" onClick={this.toggle.bind(this)}>
           <div>
@@ -119,8 +115,6 @@ class SessionForm extends React.Component {
             <p>Sign up with email</p>
           </div>
         </button>
-
-
       </div>
    
 
@@ -184,30 +178,10 @@ class SessionForm extends React.Component {
 
   toggle(e){
     e.preventDefault();
-    // if (!this.formToggle) {
-    //   this.formToggle = this.renderSignup();
-    // } else {
-    //   this.formToggle = undefined;
-    // }
-    // // this.setState({ field: this.state.field })
-    // // this.formPadding();
-    // this.forceUpdate();
     this.props.clearErrors()
     const newValue = !this.state.showForm;
     this.setState({showForm: newValue});
   }
-
-  // formPadding(){
-  //   if (!this.formPaddingState){
-  //     if (this.state.field === "" && this.state.email === ""  && this.state.username === "" && this.state.password === "") {
-  //     this.formPaddingState = "padding-active";
-  //     }
-  //   } else {
-  //       this.formPaddingState = "";
-  //     }
-  // }
-
-
 
   render(){
     let message;
@@ -218,7 +192,6 @@ class SessionForm extends React.Component {
       message = "Sign In";
       formType = null;
       formToggle = this.renderLogin();
-      // this.formPadding();
     } else {
       message2 = <div className="message-2">Sign  Up 
           <p>and evolve the meaning behind the lyrics</p>
@@ -234,15 +207,10 @@ class SessionForm extends React.Component {
         <h1 className="one">{message}</h1>
         <h1 className="two">{message2}</h1>
 
-        <div className="toggle-button">{formType}</div>
-       
-        {/* <form className={this.formPaddingState}> */}
-        
-
+        <div className="toggle-button">{formType}</div>               
           <div>  
            {formToggle}
-          </div>
-        
+          </div>        
         <div className="errors">{this.renderErrors()}</div>
       </div>
     )

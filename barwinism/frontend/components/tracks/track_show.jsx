@@ -60,7 +60,6 @@ export default class TrackShow extends React.Component {
   }
 
   onSave(e){
-    // document.getElementById(id).classList.remove('delete-selected');
     document.getElementsByClassName('youTube')[0].classList.remove('display-none');
 
     e.preventDefault();
@@ -73,9 +72,6 @@ export default class TrackShow extends React.Component {
 
     }
     this.props.createAnnotation(annotation);
-    // let returnedAnno = this.props.createAnnotation(annotation).then(annotation => {
-    //   return annotation
-    // })
     
     let body = document.getElementsByClassName("theBody")[0].innerHTML;
     this.props.updateTrack({
@@ -85,16 +81,6 @@ export default class TrackShow extends React.Component {
     
     let annoEditor = document.getElementsByClassName('hidden')[0];
     annoEditor.remove();
-
-    // debugger
-    //testing
-    // let biggest = 0;
-    // this.props.annotations.forEach(el => {
-    //   if (el.id > biggest) {
-    //     biggest = el.id;
-    //   }
-    // })
-    // this.state.formType = "displayAnno";
   }
 
   embedYoutube(){
@@ -112,10 +98,6 @@ export default class TrackShow extends React.Component {
   }  
 
   highlighter(e) { 
-    
-    // document.removeEventListener('mouseup', this.registerDelete.bind(this), true);
-
-    
     const oldPopup = document.getElementsByClassName('click-to-annotate')[0];
     if (oldPopup) {
       oldPopup.remove();
@@ -128,17 +110,13 @@ export default class TrackShow extends React.Component {
     let id;
     if (selection.rangeCount && selection.toString().length > 0) {
       const replacement = document.createElement('span');
-      // GIVING THE NEW SPAN A UNIQUE ID
-      // let count = document.getElementsByClassName('theBody')[0].children.length;
-      // let count = this.htmlLyrics.children.length;
       id = `${this.props.track.id}-${Math.random()}`;
       
       replacement.setAttribute('id', id);
       replacement.setAttribute('class', 'parent');
 
       replacement.setAttribute('class', 'delete-selected');
-      // replacement.classList.add('highlight');
-      console.log(`NEWLY CREATED SPAN: ${id}`);
+    
       replacement.textContent = selection.toString();
       const range = selection.getRangeAt(0);
       range.deleteContents();
@@ -156,39 +134,22 @@ export default class TrackShow extends React.Component {
       popup.style.marginTop = `${y-380}px`;
       popup.style.height = 'fit-content';
 
-      // let y = window.scrollY + selection.getBoundingClientRect().top;
-      // popup.style.marginTop = `${y - 380}px`;
-
-
-
       let right = document.getElementsByClassName('track-show-body-right');
       $(right).append($(popup));
-      // this.deleteHighlighted(id)    
-     
-      // this.registerOutsideClick();
-      
     }
 
  }
 
-registerDelete(e){
-  
- 
+registerDelete(e){   
     var container = $(".track-show-body-right");
     
     // if the target of the click isn't the container nor a descendant of the container
     if (!container.is(e.target) && container.has(e.target).length === 0) {
-
-
       this.deleteSelected();
-
-
     }
-
 }
 
-registerOutsideClick(){
- 
+registerOutsideClick(){ 
   document.addEventListener('mouseup', this.registerDelete.bind(this), true);
 }
 
@@ -198,17 +159,12 @@ deleteHighlighted(id){
   let parent = document.getElementsByClassName('theBody')[0];
 
   const oldChild = document.getElementById(id);
-  console.log(`parent:${parent}`);
-  console.log(`oldChild:${oldChild}`);
-  console.log(`id:${id}`);
   const replacement = document.createTextNode(oldChild.textContent);
-  // Replace existing node sp2 with the new span element sp1
+  
   parent.replaceChild(replacement, oldChild);
 
   // DELETES THE FORM OFF OF THE PAGE
   this.deleteAPopupEditor();
-
-  
 
   // toggles the boolean so it will be ready to allow 
   //the next form that pops up
@@ -216,124 +172,96 @@ deleteHighlighted(id){
   this.deleteSelected();
 }   
 
-  deleteSelected() {
-    let parent = document.getElementsByClassName('theBody')[0];
-    
-    const oldChildren = $('.delete-selected');
-    
-    oldChildren.each((i, child) => {
-      const replacement = document.createTextNode(child.textContent);
-          // Replace existing node sp2 with the new span element sp1
-      parent.replaceChild(replacement, child);
-
-    })
-    
-    // let body = document.getElementsByClassName("theBody")[0].innerHTML;
-    this.props.updateTrack({
-      body: parent.innerHTML,
-      id: this.state.track_id
-    }).then(this.setState({lyrics: parent.innerHTML}))
-
-  }   
-
-
-
- 
-
-  hider(e){
-    if (!e.target.classList.contains('click-to-annotate') &&
-      !e.target.parentElement.classList.contains('track-show-body-right') &&
-      !e.target.parentElement.parentElement.classList.contains('track-show-body-right') &&
-      !e.target.parentElement.parentElement.parentElement.classList.contains('track-show-body-right') &&
-      !e.target.parentElement.parentElement.parentElement.parentElement.classList.contains('track-show-body-right') &&
-      !e.target.parentElement.parentElement.parentElement.parentElement.parentElement.classList.contains('track-show-body-right') &&
-      !e.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.classList.contains('track-show-body-right') &&
-      !e.target.classList.contains("tools-content2")
-    ) {
-      let temp = document.getElementsByClassName('youTube')[0];
-      if ( temp ){
-        document.getElementsByClassName('youTube')[0].classList.remove('display-none');
-      }
-    }
-    
-
-    this.setState({ formType: "", current_anno: "", lyrics: document.getElementsByClassName('theBody')[0].innerHTML });
-    
+deleteSelected() {
+  let parent = document.getElementsByClassName('theBody')[0];
   
-    const oldForm = document.getElementsByClassName('hidden')[0];
-    const textarea = document.getElementById('editor')
-    const img = document.getElementsByClassName('logo')[0];
-    const anno = document.getElementsByClassName('annotation')[0];
-    const innerForm = document.getElementById('editor-form')
-    const tools = document.getElementsByClassName('tools')[0];
-    const toolsTitle = document.getElementsByClassName('tools-title')[0];
-    const toolsContent = document.getElementsByClassName('tools-content')[0];
-    const toolsOptions = document.getElementsByClassName('tools-options')[0];
-    const toolsContent2one = document.getElementsByClassName('tools-content2')[0];
-    const toolsContent2two = document.getElementsByClassName('tools-content2')[1];
-    const toolsContent2three = document.getElementsByClassName('tools-content2')[2];
-    const annoSave = document.getElementsByClassName('annotation-save')[0];
-    const annoCancel = document.getElementsByClassName('annotation-cancel')[0];
-    const formDivOuter = document.getElementsByClassName('form-div-outer')[0];
-    const buttonDiv = document.getElementsByClassName('button-div')[0];
-    const hr = document.getElementsByClassName('hr')[0];
+  const oldChildren = $('.delete-selected');
+  
+  oldChildren.each((i, child) => {
+    const replacement = document.createTextNode(child.textContent);
+    parent.replaceChild(replacement, child);
 
+  })
+  
+  this.props.updateTrack({
+    body: parent.innerHTML,
+    id: this.state.track_id
+  }).then(this.setState({lyrics: parent.innerHTML}))
+}   
 
-    if (e.target === oldForm || e.target === textarea
-        || e.target === img || e.target === anno || e.target === innerForm
-        || e.target === tools || e.target === toolsTitle
-        || e.target === toolsContent || e.target === toolsOptions
-        || e.target === toolsContent2one || e.target === toolsContent2two
-        || e.target === annoSave || e.target === annoCancel
-        || e.target === formDivOuter || e.target === buttonDiv
-        || e.target === hr || e.target === toolsContent2three) {
-       return;
+// NAIVE APPROACH.  PLAN TO REFACTOR.
+hider(e){
+  if (!e.target.classList.contains('click-to-annotate') &&
+    !e.target.parentElement.classList.contains('track-show-body-right') &&
+    !e.target.parentElement.parentElement.classList.contains('track-show-body-right') &&
+    !e.target.parentElement.parentElement.parentElement.classList.contains('track-show-body-right') &&
+    !e.target.parentElement.parentElement.parentElement.parentElement.classList.contains('track-show-body-right') &&
+    !e.target.parentElement.parentElement.parentElement.parentElement.parentElement.classList.contains('track-show-body-right') &&
+    !e.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.classList.contains('track-show-body-right') &&
+    !e.target.classList.contains("tools-content2")
+  ) {
+    let temp = document.getElementsByClassName('youTube')[0];
+    if ( temp ){
+      document.getElementsByClassName('youTube')[0].classList.remove('display-none');
     }
-     
-
-    const oldPopup = document.getElementsByClassName('click-to-annotate')[0];
-    if (oldPopup) {
-      oldPopup.remove();
-      console.log('popup being deleted')
-    }
-    
-    // debugger
-    let val = e.target;
-    if (oldForm && !this.toggle && !val.classList.contains('click-to-annotate')) {
-      oldForm.remove();
-      
-    }
-    this.toggle = !this.toggle;
-
   }
 
-  // hider2(){
+  this.setState({ formType: "", current_anno: "", lyrics: document.getElementsByClassName('theBody')[0].innerHTML });
+  
+  const oldForm = document.getElementsByClassName('hidden')[0];
+  const textarea = document.getElementById('editor')
+  const img = document.getElementsByClassName('logo')[0];
+  const anno = document.getElementsByClassName('annotation')[0];
+  const innerForm = document.getElementById('editor-form')
+  const tools = document.getElementsByClassName('tools')[0];
+  const toolsTitle = document.getElementsByClassName('tools-title')[0];
+  const toolsContent = document.getElementsByClassName('tools-content')[0];
+  const toolsOptions = document.getElementsByClassName('tools-options')[0];
+  const toolsContent2one = document.getElementsByClassName('tools-content2')[0];
+  const toolsContent2two = document.getElementsByClassName('tools-content2')[1];
+  const toolsContent2three = document.getElementsByClassName('tools-content2')[2];
+  const annoSave = document.getElementsByClassName('annotation-save')[0];
+  const annoCancel = document.getElementsByClassName('annotation-cancel')[0];
+  const formDivOuter = document.getElementsByClassName('form-div-outer')[0];
+  const buttonDiv = document.getElementsByClassName('button-div')[0];
+  const hr = document.getElementsByClassName('hr')[0];
 
-  //   // UNFINISHED DO EXPECT THIS TO WORK IT'S JUST SOME GETTING STARTED
 
-  //   let popup1 = document.getElementsByClassName('click-to-annotate')[0];
-  //   let popup2 = document.getElementsByClassName('hidden')[0];
-  //   let popup3 = document.getElementsByClassName('hidden2')[0];
-
-
-  //   // popup1.classList.remove("invisible");
-  //   if (popup2){
-  //     popup2.classList.remove("invisible");
-  //   }
-  //   // popup3.classList.remove("invisible");
-  // }
-
-  annotationPopupEditor(id){
-    //ADDS HIGHLIGHTING TO THE NEWLY CREATED LYRIC SPAN
+  if (e.target === oldForm || e.target === textarea
+      || e.target === img || e.target === anno || e.target === innerForm
+      || e.target === tools || e.target === toolsTitle
+      || e.target === toolsContent || e.target === toolsOptions
+      || e.target === toolsContent2one || e.target === toolsContent2two
+      || e.target === annoSave || e.target === annoCancel
+      || e.target === formDivOuter || e.target === buttonDiv
+      || e.target === hr || e.target === toolsContent2three) {
+      return;
+  }
     
+
+  const oldPopup = document.getElementsByClassName('click-to-annotate')[0];
+  if (oldPopup) {
+    oldPopup.remove();
+    console.log('popup being deleted')
+  }
+  
+  let val = e.target;
+  if (oldForm && !this.toggle && !val.classList.contains('click-to-annotate')) {
+    oldForm.remove();
+    
+  }
+  this.toggle = !this.toggle;
+
+}
+  
+// TO PRACTICE FOR SITUATIONS WHERE I CAN'T USE JSX
+  // USING ONLY HTML DOM METHODS.
+  annotationPopupEditor(id){
+    //ADDS HIGHLIGHTING TO THE NEWLY CREATED LYRIC SPAN 
     document.getElementById(id).classList.add('highlight');
     document.getElementById(id).classList.remove('delete-selected');
 
     let body = document.getElementsByClassName("theBody")[0].innerHTML;
-    // this.props.updateTrack({
-    //   body: body,
-    //   id: this.props.track.id
-    // });
     let popupEditor = document.createElement('div');
     popupEditor.classList.add('hidden');
     let img = document.createElement('img');
@@ -349,8 +277,6 @@ deleteHighlighted(id){
     let textarea = document.createElement('textarea');
     textarea.setAttribute('id', 'editor');
     textarea.setAttribute('placeholder', "Don't just put the lyric in your own words-drop some knowledge!");
-    // textarea.addEventListener("change", this.update("body"));
-    // $(textarea).unbind('focusout');
     formDivOuter.appendChild(textarea);
     let toolsDiv = document.createElement('div');
     toolsDiv.classList.add('tools');
@@ -392,12 +318,16 @@ deleteHighlighted(id){
     button1.appendChild(textNode5);
     button1.setAttribute("data-anno-id", id)
     button1.addEventListener("click", this.onSave.bind(this));
+
     //SAVE BUTTON ABILITY TO CREATE ANNOTATION IN DATABASE
     buttonDiv.appendChild(button1)
+
     let button2 = document.createElement('button');
     button2.classList.add("annotation-cancel");
+
     //GIVES CANCEL BUTTON ABILITY TO DELETE LATEST CREATED LYRIC SPAN
     button2.addEventListener("click", this.deleteHighlighted.bind(this, id));
+
     let textNode6 = document.createTextNode("Cancel");
     button2.appendChild(textNode6);
     buttonDiv.appendChild(button2);
@@ -406,44 +336,6 @@ deleteHighlighted(id){
     divAnnotation.appendChild(form);
     popupEditor.appendChild(divAnnotation);
     
-    // let popupEditor = (  
-    //   <div className="hidden">
-    //     <img className="logo" src={window.annotation_arrow} />
-    //     <div className="annotation">
-    //       <form>
-    //         <div>
-    //           <textarea id="editor"
-    //             placeholder="Don’t just put the lyric in your own
-    //             words—drop some knowledge!"></textarea>
-    //           <div className="tools">
-    //             <div className="tools-title">
-    //               <span className="tools-content">Tools:</span>
-    //             </div>
-    //             <div className="tools-options">
-    //               <span className="tools-content2">Add Image</span>
-    //               <span className="tools-content2">Formatting Help</span>
-    //               <a className="tools-content2">How To Annotate</a>
-    //             </div>
-                
-    //           </div>
-    //           <hr></hr>
-    //           <div>
-    //             <button className="annotation-save">Save</button>
-    //             <button className="annotation-cancel">Cancel</button>
-    //           </div>
-    //           {/* <div id="preview"></div> */}
-                  
-    //         </div>
-    //       </form>
-    //     </div>
-    //   </div>
-    // )
-
-    // TRYING TO MAKE FORM DISSAPPEAR IN NOT THE FOCUSED ELEMENT
-    // let focusForm = document.getElementById('editor-form')
-    // focusForm.addEventListener('focusout', this.deleteAPopupEditor.bind(this));
-    // popupEditor.addEventListener('focusout', this.deleteAPopupEditor.bind(this));
-
     //FINAL STEPS OF FUNCTION:  ADDING THE ELEMENT TO THE PAGE
     let anno = document.getElementById(id);
     let y = window.scrollY + anno.getBoundingClientRect().top;
@@ -455,10 +347,6 @@ deleteHighlighted(id){
 
     let ele = document.getElementsByClassName('track-show-body-right')[0];
     ele.appendChild(popupEditor);
-    // document.getElementById('editor-form').focus();
-    // focusForm.focus();  
-    
-    
   }
 
   deleteAPopupEditor(){
@@ -467,20 +355,14 @@ deleteHighlighted(id){
     if (parent instanceof Node && child instanceof Node) {
       parent.removeChild(child);
     }
-    
-    // this.deleteHighlighted();
   }
 
   getAnno(e){
-    // if (this.state.formType === "displayAnno") {
-    //   this.setState({ formType: "", current_anno: "" });
-    // }
     e.preventDefault();
     if (e.target.id === "theBody" || e.target.id === "") {
       return
     } else {
       this.hider(e);
-      
       this.setState({ formType: "displayAnno" });
       this.setState({ current_anno: e.target.id });
       const current_annotation = this.props.annotations[e.target.id];
@@ -491,22 +373,9 @@ deleteHighlighted(id){
    
     }
     console.log(this.state.anno_body);
-    // debugger
   }
 
   showAnno(){
-    
-   
-    // let anno = this.props.annotations[this.state.current_anno];
-    // let annoBody;
-    // if (anno) {
-    //   // anno = anno.body;
-    //   annoBody = anno.body;
-
-    // } else {
-    //   return;
-    // }
-
     let annoMargin = document.getElementById(this.state.current_anno);
     let y = window.scrollY + annoMargin.getBoundingClientRect().top;
     let val = y - 565;
@@ -518,13 +387,6 @@ deleteHighlighted(id){
       marginTop: `${val}px`,
     };
 
-    // let ele = document.getElementById('display-anno');
-    // debugger
-    // if (ele){
-    //   ele.innerHTML = marked(annoBody);
-    // }
-    
-
     return (<div className="hidden2"
         style={styles}>
       <img src={window.annotation_arrow}/>
@@ -535,10 +397,7 @@ deleteHighlighted(id){
       <div className="annotation">
         <form>
           <div>
-            <p readOnly id="display-anno" dangerouslySetInnerHTML={{__html: this.state.anno_body} }>
-              {/* {marked(anno)} */}
-              {/* {marked('[google](google.com)')} */}
-              
+            <p readOnly id="display-anno" dangerouslySetInnerHTML={{__html: this.state.anno_body} }>         
             </p>
            
             <hr></hr>
@@ -562,37 +421,21 @@ deleteHighlighted(id){
     </div>
     )
   }
-
-  annotationPopupOnClick(){
-
-  }
-
-  initializeEditor(){
-      var $editor = $('#editor');
-      var $preview = $('#preview');
-      setInterval(function () {
-        $preview.html(marked($editor[0].value));
-      }, 1000);
-  }
  
   showEdit(e){
-    
     e.preventDefault();
     if (this.state.editForm === false) {
       this.setState({editForm: true});
     } else {
       this.setState({editForm: false});
     }
-    
   }
 
   renderEditBody(){
-    
-      const htmlLyrics = `<span>${this.state.body}</span>`;
-      
-      let ele = document.createElement('div');
-      ele.innerHTML = htmlLyrics;
-      let value= ele.textContent;
+    const htmlLyrics = `<span>${this.state.body}</span>`;
+    let ele = document.createElement('div');
+    ele.innerHTML = htmlLyrics;
+    let value= ele.textContent;
     
     return(
       <div contentEditable="true" id="theBody" defaultValue={value}></div>
@@ -607,8 +450,6 @@ deleteHighlighted(id){
       ></p>
     )
   }
-
-  
 
   render(){
     

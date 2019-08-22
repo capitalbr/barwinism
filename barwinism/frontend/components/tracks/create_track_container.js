@@ -3,7 +3,6 @@ import CreateTrack from "./create_track";
 
 import { connect } from 'react-redux';
 import { createTrack } from "../../actions/track_actions";
-import { Link } from "react-router-dom";
 
 
 const mapDispatchToProps = (dispatch) => {

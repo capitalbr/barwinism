@@ -5,7 +5,6 @@ import { fetchTrack, updateTrack } from "../../actions/track_actions";
 import { fetchArtist } from "../../actions/artist_actions";
 import { fetchTrackAlbums } from "../../actions/album_actions"
 import { Link } from "react-router-dom";
-// Doesn't exist yet
 import { createAnnotation } from "../../actions/annotation_actions"
 
 
@@ -50,8 +49,6 @@ const mapDispatchToProps = (dispatch) => {
     fetchArtist: (id) => dispatch(fetchArtist(id)),
     createAnnotation: (annotation) => dispatch(createAnnotation(annotation)),
     updateTrack: (track) => dispatch(updateTrack(track))
-    // fetchAnno: (annoId) => dispatch(fetchAnno(annoId))
-    // fetchTrackAlbums: (id) => dispatch(fetchTrackAlbums(id))
   })
 }
 

@@ -44,7 +44,6 @@ export default class CreateTrack extends React.Component {
       let dummy = that.state.album_input;
       dummy[id-1] = e.target.value;
       that.setState({album_input: dummy});
-      // that.setState({ album_input: { [id-1]: e.target.value } });
     });
     let innerDiv = document.createElement("div");
     innerDiv.appendChild(innerInput);
@@ -132,8 +131,6 @@ export default class CreateTrack extends React.Component {
                          Country
                       </label>
                     </div>
-
-                    {/* <div className="create-track-next-row"> */}
                       <div>
                         <label>
                           <input type="radio" name="tag"
@@ -143,7 +140,6 @@ export default class CreateTrack extends React.Component {
                           Non Music
                         </label>
                       </div>
-                    {/* </div> */}
                     
                   </div>
                     <span>Note: If you're not sure which tag to use please 
@@ -151,9 +147,6 @@ export default class CreateTrack extends React.Component {
                     </span>
                 </div>
                 <div>
-                  {/* PLACEHOLDER FOR DUPLICATE SONG SEARCH HIDDEN FORM LIKE GENIUS HAS
-                              may be necessary to have this box to the right of the above one like genius.com
-                              does it.*/}
                 </div> 
               </div>
               <div className="add-track-lyrics">
