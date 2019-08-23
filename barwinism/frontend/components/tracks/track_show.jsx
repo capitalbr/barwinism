@@ -66,7 +66,6 @@ export default class TrackShow extends React.Component {
       track_id: this.state.track_id,
       anno_id: e.target.getAttribute("data-anno-id"),
       upvotes: this.state.upvotes
-
     }
     this.props.createAnnotation(annotation);
     
@@ -137,20 +136,6 @@ export default class TrackShow extends React.Component {
 
  }
 
-registerDelete(e){   
-    var container = $(".track-show-body-right");
-    
-    // if the target of the click isn't the container nor a descendant of the container
-    if (!container.is(e.target) && container.has(e.target).length === 0) {
-      this.deleteSelected();
-    }
-}
-
-registerOutsideClick(){ 
-  document.addEventListener('mouseup', this.registerDelete.bind(this), true);
-}
-
-
 deleteHighlighted(id){
   document.getElementsByClassName('youTube')[0].classList.remove('display-none');
   let parent = document.getElementsByClassName('theBody')[0];
@@ -177,7 +162,6 @@ deleteSelected() {
   oldChildren.each((i, child) => {
     const replacement = document.createTextNode(child.textContent);
     parent.replaceChild(replacement, child);
-
   })
   
   this.props.updateTrack({
@@ -188,20 +172,20 @@ deleteSelected() {
 
 // NAIVE APPROACH.  PLAN TO REFACTOR.
 hider(e){
-  if (!e.target.classList.contains('click-to-annotate') &&
-    !e.target.parentElement.classList.contains('track-show-body-right') &&
-    !e.target.parentElement.parentElement.classList.contains('track-show-body-right') &&
-    !e.target.parentElement.parentElement.parentElement.classList.contains('track-show-body-right') &&
-    !e.target.parentElement.parentElement.parentElement.parentElement.classList.contains('track-show-body-right') &&
-    !e.target.parentElement.parentElement.parentElement.parentElement.parentElement.classList.contains('track-show-body-right') &&
-    !e.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.classList.contains('track-show-body-right') &&
-    !e.target.classList.contains("tools-content2")
-  ) {
-    let temp = document.getElementsByClassName('youTube')[0];
-    if ( temp ){
-      document.getElementsByClassName('youTube')[0].classList.remove('display-none');
-    }
-  }
+  // if (!e.target.classList.contains('click-to-annotate') &&
+  //   !e.target.parentElement.classList.contains('track-show-body-right') &&
+  //   !e.target.parentElement.parentElement.classList.contains('track-show-body-right') &&
+  //   !e.target.parentElement.parentElement.parentElement.classList.contains('track-show-body-right') &&
+  //   !e.target.parentElement.parentElement.parentElement.parentElement.classList.contains('track-show-body-right') &&
+  //   !e.target.parentElement.parentElement.parentElement.parentElement.parentElement.classList.contains('track-show-body-right') &&
+  //   !e.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.classList.contains('track-show-body-right') &&
+  //   !e.target.classList.contains("tools-content2")
+  // ) {
+  //   let temp = document.getElementsByClassName('youTube')[0];
+  //   if ( temp ){
+  //     document.getElementsByClassName('youTube')[0].classList.remove('display-none');
+  //   }
+  // }
 
   this.setState({ formType: "", current_anno: "", lyrics: document.getElementsByClassName('theBody')[0].innerHTML });
   
@@ -251,13 +235,13 @@ hider(e){
 }
   
 // TO PRACTICE FOR SITUATIONS WHERE I CAN'T USE JSX
-  // USING ONLY HTML DOM METHODS.
+// USING ONLY HTML DOM METHODS.
   annotationPopupEditor(id){
+
     //ADDS HIGHLIGHTING TO THE NEWLY CREATED LYRIC SPAN 
     document.getElementById(id).classList.add('highlight');
     document.getElementById(id).classList.remove('delete-selected');
 
-    let body = document.getElementsByClassName("theBody")[0].innerHTML;
     let popupEditor = document.createElement('div');
     popupEditor.classList.add('hidden');
     let img = document.createElement('img');
@@ -408,8 +392,6 @@ hider(e){
                 <svg></svg>
               </div>
             </div>
-            
-
           </div>
         </form>
       </div>
@@ -447,11 +429,9 @@ hider(e){
   }
 
   render(){
-    
     let formOutput;
     
-    if (this.state.formType === "displayAnno") {
-      
+    if (this.state.formType === "displayAnno") {   
       formOutput = this.showAnno();
     }
 
