@@ -394,3 +394,746 @@ TrackAlbumJoin.create!({
   track_id: 3,
   album_id: 1
 })
+
+#--------------------------------------------------------#
+#--------------------------------------------------------#
+artist = Artist.create!({
+  name: "Anna Kendrick"
+})
+
+album = Album.create!({
+  title: "Trolls (Original Motion Picture Soundtrack)",
+  artist_id: artist.id
+})
+
+track = Track.create!({
+  title: "Get Back Up Again", 
+  body: "I really hope I can do it
+'Cause they’re all depending on me
+I know that I must leave the only home
+I’ve ever known
+And brave the dangers of the forest
+Saving them before they’re eaten
+I mean, how hard can that be?
+
+Looking up at a sunny sky, so shiny and blue
+And there's a butterfly
+Well, isn’t that a super fantastic sign
+It’s gonna be a fantastic day
+Such marvelousness it’s gonna bring
+Gotta pocket full of songs that I’m gonna sing
+And I’m ready to take on anything
+Hooray!
+
+Some super fun surprise around each corner
+Just riding on a rainbow, I’m gonna be okay
+
+Hey!
+I’m not giving up today
+There's nothing getting in my way
+And if you knock knock me over
+I will get back up again
+Oh!
+If something goes a little wrong
+Well you can go ahead and bring it on
+'Cause if you knock knock me over, I will get back up again
+
+Woah oh oh oh oh oh oh, get back up again
+Woah oh oh oh oh oh oh, ahhhh!
+
+I’m marching along I've got confidence
+I'm cooler than a pack of peppermints
+And I haven't been this excited since
+I can't remember when!
+
+I'm off on this remarkable adventure
+Just riding on a rainbow
+What if it's all a big mistake?
+What if it's more than I can take?
+No! I can't think that way 'cause I know
+That I’m really, really, really gonna be okay
+
+Hey!
+I’m not giving up today
+There's nothing getting in my way
+And if you knock knock me over
+I will get back up again
+Oh!
+If something goes a little wrong
+Well you can go ahead and bring it on
+'Cause if you knock knock me over, i will get back up again
+
+
+(Get up, get up, get up) woah oh oh oh oh oh oh
+Get back up again
+(Get up, get up, get up) woah oh oh oh oh oh oh
+
+I’m okay!
+
+(Get up, get up, get up) woah oh oh oh oh oh oh oh
+And if you knock knock me over, knock knock me over
+I will get back up again", 
+  artist_id: artist.id,
+  album_id: album.id,
+  song_art_url: "https://t2.genius.com/unsafe/220x0/https%3A%2F%2Fimages.genius.com%2F041e793766ba9e3b7ae635739a618e13.1000x1000x1.jpg",
+  youtube_url: "https://www.youtube.com/watch?v=gRx4ZTfEqtM",
+  primary_tag: "pop",
+  user_id: 1
+})
+
+TrackAlbumJoin.create!({
+  track_id: track.id,
+  album_id: album.id
+})
+
+
+#--------------------------------------------------------#
+#--------------------------------------------------------#
+artist = Artist.create!({
+  name: "Rascal Flatts"
+})
+
+album = Album.create!({
+  title: "Me And My Gang",
+  artist_id: artist.id
+})
+
+track = Track.create!({
+  title: "Life Is a Highway", 
+  body: "[Verse 1]
+Whooo umm yeah
+Life is like a road that you travel on
+When there is one day here and the next day gone
+Sometimes you bend, sometimes you stand
+Sometimes you turn your back to the wind
+There is a world outside every darkened door
+Where blues will not haunt you anymore
+Where brave are free and lovers soar
+Come ride with me to the distant shore
+We won't hesitate
+To break down the garden gate
+There's not much time left today
+
+[Chorus]
+Life is a highway
+I want to ride it all night long
+If you are going my way
+I want to drive it all night long
+
+[Verse 2]
+Through all these cities and all these towns
+It is in my blood and it is all around
+I love you now like I loved you then
+This is the road and these are the hands
+From Mozambique to those Memphis nights
+The Khyber Pass to Vancouver's lights
+
+Knock me down get back up again
+You are in my blood
+I am not a lonely man
+There is no load I cannot hold
+Road so rough this I know
+I will be there when the light comes in
+Just tell them we are survivors
+
+[Chorus]
+Life is a highway
+I want to ride it all night long
+If you are going my way
+I want to drive it all night long
+
+Give me give me give me give me yeah
+
+[Chorus]
+Life is a highway
+I want to ride it all night long
+If you are going my way
+I want to drive it all night long
+
+There was a distance between you and I (between you and I)
+A misunderstanding once
+But now we look it in the eye
+
+Ooh, yeah
+
+There ain't no load that I can't hold
+The roads are rough, this I know
+I'll be there when the light comes in
+Just tell them we're survivors
+
+[Chorus]
+Life is a highway
+I want to ride it all night long
+If you're going my way
+I want to drive it all night long
+Life is a highway
+I want to ride it all night long
+If you're going my way
+I want to drive it all night long
+Life is a highway
+I want to ride it all night long
+If you're going my way
+I want to drive it all night long
+
+Give me give me give me give me yeah", 
+  artist_id: artist.id,
+  album_id: album.id,
+  song_art_url: "https://t2.genius.com/unsafe/220x0/https%3A%2F%2Fimages.genius.com%2Fe4d842afe782a3bc54a802885b5efcc8.500x500x1.jpg",
+  youtube_url: "https://www.youtube.com/watch?v=6UdZIh8_xGc",
+  primary_tag: "rock",
+  user_id: 1
+})
+
+TrackAlbumJoin.create!({
+  track_id: track.id,
+  album_id: album.id
+})
+
+
+#--------------------------------------------------------#
+#--------------------------------------------------------#
+artist = Artist.create!({
+  name: "Stromae"
+})
+
+album = Album.create!({
+  title: "Racine carrée",
+  artist_id: artist.id
+})
+
+track = Track.create!({
+  title: "Papaoutai", 
+  body: "[Couplet 1]
+Dites-moi d'où il vient
+Enfin je saurai où je vais
+Maman dit que lorsqu'on cherche bien
+On finit toujours par trouver
+Elle dit qu'il n'est jamais très loin
+Qu'il part très souvent travailler
+Maman dit \"travailler c'est bien\"
+Bien mieux qu'être mal accompagné
+Pas vrai ?
+
+[Pont]
+Où est ton papa ?
+Dis-moi où est ton papa ?
+Sans même devoir lui parler
+Il sait ce qui ne va pas
+Ah sacré papa
+Dis-moi où es-tu caché ?
+Ça doit, faire au moins mille fois que j'ai
+Compté mes doigts
+Hey !
+
+[Refrain]
+Où t'es, papaoutai?
+Où t'es, papaoutai?
+Où t'es, papaoutai?
+Où t'es, où t'es où, papaoutai ?
+Où t'es, papaoutai ?
+Où t'es, papaoutai ?
+Où t'es, papaoutai ?
+Où t'es, où t'es où, papaoutai ?
+Où t'es
+Où t'es...
+
+[Couplet 2]
+Quoi, qu'on y croit ou pas
+Y aura bien un jour où on n'y croira plus
+Un jour ou l'autre on sera tous papa
+Et d'un jour à l'autre on aura disparu
+Serons-nous détestables ?
+Serons-nous admirables ?
+Des géniteurs ou des génies ?
+Dites-nous qui donne naissance aux irresponsables ?
+Ah dites-nous qui, tiens
+Tout le monde sait comment on fait des bébés
+Mais personne sait comment on fait des papas
+Monsieur Je-sais-tout en aurait hérité, c'est ça
+Faut l'sucer d'son pouce ou quoi ?
+Dites-nous où c'est caché, ça doit
+Faire au moins mille fois qu'on a
+Bouffé nos doigts
+Hey !
+
+[Refrain]
+Où t'es, papaoutai?
+Où t'es, papaoutai?
+Où t'es, papaoutai?
+Où t'es, où t'es où, papaoutai ?
+Où t'es, papaoutai ?
+Où t'es, papaoutai ?
+Où t'es, papaoutai ?
+Où t'es, où t'es où, papaoutai ?
+Où t'es
+Où t'es...
+
+[Pont]
+Où est ton papa ?
+Dis-moi où est ton papa ?
+Sans même devoir lui parler
+Il sait ce qui ne va pas
+Ah sacré papa
+Dis-moi où es-tu caché ?
+Ça doit, faire au moins mille fois que j'ai
+Compté mes doigts
+Hey
+Où est ton papa ?
+Dis-moi où est ton papa ?
+Sans même devoir lui parler
+Il sait ce qui ne va pas
+Ah sacré papa
+Dis-moi où es-tu caché ?
+Ça doit, faire au moins mille fois que j'ai
+Compté mes doigts
+Hey !
+
+[Refrain]
+Où t'es, papaoutai?
+Où t'es, papaoutai?
+Où t'es, papaoutai?
+Où t'es, où t'es où, papaoutai ?
+Où t'es, papaoutai ?
+Où t'es, papaoutai ?
+Où t'es, papaoutai ?
+Où t'es, où t'es où, papaoutai ?
+Où t'es
+Où t'es...", 
+  artist_id: artist.id,
+  album_id: album.id,
+  song_art_url: "https://t2.genius.com/unsafe/220x220/https%3A%2F%2Fimages.genius.com%2Fa1851e6bdc394d1e0e1d1bed937a68a7.1000x1000x1.jpg",
+  youtube_url: "https://www.youtube.com/watch?v=oiKj0Z_Xnjc",
+  primary_tag: "rap",
+  user_id: 1
+})
+
+TrackAlbumJoin.create!({
+  track_id: track.id,
+  album_id: album.id
+})
+
+
+#--------------------------------------------------------#
+#--------------------------------------------------------#
+artist = Artist.create!({
+  name: "Adele"
+})
+
+album = Album.create!({
+  title: "25",
+  artist_id: artist.id
+})
+
+track = Track.create!({
+  title: "River Lea", 
+  body: "[Verse 1]
+Everybody tells me it's 'bout time that I moved on
+That I need to learn to lighten up and learn how to be young
+But my heart is a valley, it's so shallow and manmade
+I'm scared to death if I let you in that you'll see I'm just a fake
+Sometimes I feel lonely in the arms of your touch
+But I know that's just me 'cause nothing ever is enough
+When I was a child I grew up by the River Lea
+There was something in the water, now that something's in me
+
+[Pre-Chorus]
+Oh I can't go back, but the reeds are growing out of my fingertips
+I can't go back to the river
+
+[Chorus]
+But it's in my roots, in my veins
+In my blood and I stain every heart that I use to heal the pain
+Oh it's in my roots, in my veins
+In my blood and I stain every heart that I use to heal the pain
+So I blame it on the River Lea, the River Lea, the River Lea
+Yeah I blame it on the River Lea, the River Lea, the River Lea
+
+[Verse 2]
+I should probably tell you now before it's way too late
+That I never meant to hurt you or lie straight to your face
+Consider this my apology, I know it's years in advance
+But I would rather say it now in case I never get the chance
+
+[Pre-Chorus]
+No I can't go back, but the reeds are growing out of my fingertips
+I can't go back to the river
+
+[Chorus]
+But it's in my roots, in my veins
+In my blood and I stain every heart that I use to heal the pain
+Oh it's in my roots, in my veins
+In my blood and I stain every heart that I use to heal the pain
+So I blame it on the River Lea, the River Lea, the River Lea
+Yeah I blame it on the River Lea, the River Lea, the River Lea
+So I blame it on the River Lea, the River Lea, the River Lea
+Yeah I blame it on the River Lea, the River Lea, the River Lea
+
+[Outro]
+River Lea, River Lea
+River Lea
+The River Lea-ea-ea
+The River Lea-ea-ea
+The River Lea-ea-ea", 
+  artist_id: artist.id,
+  album_id: album.id,
+  song_art_url: "https://t2.genius.com/unsafe/220x221/https%3A%2F%2Fimages.genius.com%2F6772172951a8192c8b3fd68f76c0ac13.594x595x1.png",
+  youtube_url: "https://www.youtube.com/watch?v=lxRQlvmH-Uk",
+  primary_tag: "pop",
+  user_id: 1
+})
+
+TrackAlbumJoin.create!({
+  track_id: track.id,
+  album_id: album.id
+})
+
+
+#--------------------------------------------------------#
+#--------------------------------------------------------#
+artist = Artist.create!({
+  name: "Grace VanderWaal"
+})
+
+album = Album.create!({
+  title: "Wonder Park (Original Motion Picture Soundtrack)",
+  artist_id: artist.id
+})
+
+track = Track.create!({
+  title: "Hideaway", 
+  body: "[Verse 1]
+Let's wrap a blanket 'round us
+And go flyin' into outer space
+We could be famous, speak a different language
+Make our great escape
+
+[Pre-Chorus]
+I'll chase the stars inside your eyes
+And follow you into the great unknown
+We'll be alone
+
+[Chorus]
+So let's just play pretend and find a secret place
+When the world around us says that we should act our age
+The day is gonna come when there's no time left to waste
+But we'll never grow up, I say we hide away
+
+[Verse 2]
+And build a city, something out of nothing
+Make this place a home, a home
+Stay make-believing, we'll go disappearing
+Who would ever know?
+
+[Pre-Chorus]
+We'll never be too far apart
+'Cause in the end, you and I both know
+There's somewhere we can go
+
+[Chorus]
+So let's just play pretend and find a secret place
+When the world around us says that we should act our age
+The day is gonna come when there's no time left to waste
+But we'll never grow up, I say we hide away
+
+[Bridge]
+Just want to hide away
+Hide away, hide away
+Hide away, hide away
+We'll never grow up
+Just want to hide away
+Hide away, hide away
+Hide away, hide away
+
+[Chorus]
+So let's just play pretend and find a secret place
+When the world around us says that we should act our age
+The day is gonna come when there's no time left to waste
+But we'll never grow up, I say we hide away
+So let's just play pretend and find a secret place
+When the world around us says that we should act our age
+The day is gonna come when there's no time left to waste
+But we'll never grow up, I say we hide away
+Don't make me grow up, I say we hide away", 
+  artist_id: artist.id,
+  album_id: album.id,
+  song_art_url: "https://t2.genius.com/unsafe/220x220/https%3A%2F%2Fimages.genius.com%2F38e04e68f31f99650aa300208d3b8efe.1000x1000x1.jpg",
+  youtube_url: "https://www.youtube.com/watch?v=k-prczfRWCE",
+  primary_tag: "pop",
+  user_id: 1
+})
+
+TrackAlbumJoin.create!({
+  track_id: track.id,
+  album_id: album.id
+})
+
+
+
+#--------------------------------------------------------#
+#--------------------------------------------------------#
+artist = Artist.create!({
+  name: "LunchMoney Lewis"
+})
+
+album = Album.create!({
+  title: "The Secret Life of Pets 2 (Original Motion Picture Soundtrack)",
+  artist_id: artist.id
+})
+
+track = Track.create!({
+  title: "It’s Gonna Be A Lovely Day (The Secret Life of Pets 2)", 
+  body: "[Verse 1]
+(Yeah)
+I can feel the sun shining
+I can see the stars aligning
+I know that it's perfect timing, oh
+I can feel my heart beating
+I can feel the love peaking
+I know that we're gonna need it, oh
+
+[Pre-Chorus]
+Just keep that smile upon your face
+'Cause everything's gonna be okay
+Just sing along with it
+
+[Chorus]
+I know somebody love me
+Someone reach out and hug me
+The road is getting bumpy
+But it's gonna be a lovely day
+I know you're feeling lonely
+Someone reach out and hold me
+You can't be acting grumpy
+It's gonna be a lovely day
+
+[Post-Chorus]
+La-la-la-la-lovely
+La-la-la-la-lovely
+La-la-la-la-lovely
+It's gonna be a lovely day
+
+[Verse 2]
+I see too many days like this
+Hope you know that I dream
+And you wanna cry 'cause we both need love
+Well, I know today's gonna be a little different
+Let's stay close, the sun keep blinding me
+
+[Verse 3]
+I don't know what you've been told
+But we both know glitter don't make gold
+Sung some songs, but we always told
+But we both already know how this story goes
+Let's make time to make something
+Let's dream a lie to chase something
+Let's love hard to say something
+And don't forget it gets better
+
+[Pre-Chorus]
+Just keep that smile upon your face
+'Cause everything's gonna be okay
+Just sing along with it
+
+[Chorus]
+I know somebody love me (I know somebody love me)
+Someone reach out and hug me (Someone reach out and hug me)
+The road is getting bumpy (The road is getting bumpy)
+But it's gonna be a lovely day (But it's gonna be a lovely day)
+I know you're feeling lonely (I know you're feeling lonely)
+Someone reach out and hold me (Someone reach out and hold me)
+You can't be acting grumpy (You can't be acting grumpy)
+It's gonna be a lovely day
+
+[Post-Chorus]
+La-la-la-la-lovely (La-lovely, lovely)
+La-la-la-la-lovely (La-lovely, lovely)
+La-la-la-la-lovely (La-lovely, lovely)
+It's gonna be a lovely day
+La-la-la-la-lovely
+La-la-la-la-lovely
+La-la-la-la-lovely
+It's gonna be a lovely day
+
+[Bridge]
+Now if the moon goes down and the sun gets bigger
+How many of you wanna pull up with us
+To the function? (True)
+It ain't nothing
+Let your head, go, keep it jumpin'
+Don't let your chin hang low
+No matter who you are, you deserve a halo
+Just need a little love, you can keep the pesos
+Always here for some fun, that's just how the day goes
+
+[Pre-Chorus]
+Just keep that smile upon your face
+'Cause everything's gonna be okay
+Just sing along with it
+
+[Chorus]
+I know somebody love me (I know somebody love me)
+Someone reach out and hug me (Someone reach out and hug me)
+The road is getting bumpy (The road is getting bumpy)
+But it's gonna be a lovely day (But it's gonna be a lovely day)
+I know you're feeling lonely (I know you're feeling lonely)
+Someone reach out and hold me (Someone reach out and hold me)
+You can't be acting grumpy (You can't be acting grumpy)
+It's gonna be a lovely day
+
+[Post-Chorus]
+La-la-la-la-lovely (La-lovely, lovely)
+La-la-la-la-lovely (La-lovely, lovely)
+La-la-la-la-lovely (La-lovely, lovely)
+It's gonna be a lovely day
+La-la-la-la-lovely (La-la-la-la-lovely)
+La-la-la-la-lovely (La-la-la-la-lovely)
+La-la-la-la-lovely
+It's gonna be a lovely day", 
+  artist_id: artist.id,
+  album_id: album.id,
+  song_art_url: "https://t2.genius.com/unsafe/220x220/https%3A%2F%2Fimages.genius.com%2Fc9df84fd9a763db743b2e0907556b96f.268x268x1.jpg",
+  youtube_url: "https://www.youtube.com/watch?v=1VRdMuf99tw",
+  primary_tag: "pop",
+  user_id: 1
+})
+
+TrackAlbumJoin.create!({
+  track_id: track.id,
+  album_id: album.id
+})
+
+
+#--------------------------------------------------------#
+#--------------------------------------------------------#
+artist = Artist.create!({
+  name: "Vera Blue"
+})
+
+album = Album.create!({
+  title: "Sherlock Gnomes (Music From The Motion Picture)",
+  artist_id: artist.id
+})
+
+track = Track.create!({
+  title: "The One", 
+  body: "[Verse 1]
+I saw you dancing out the ocean
+Running fast along the sand
+A spirit born of earth and water
+Fire flying from your hands
+In the instant that you love someone
+In the second that the hammer hits
+Reality runs up your spine
+And the pieces finally fit
+
+[Chorus]
+And all I ever needed was the one
+Like freedom fields where wild horses run
+When stars collide like you and I
+No shadows block the sun
+You're all I've ever needed
+Baby you're the one
+
+[Verse 2]
+There are caravans we follow
+Drunken nights in dark hotels
+When chances breathe between the silence
+Where sex and love no longer gel, oh
+For each man in his time is Cain
+Until he walks along the beach
+And sees his future in the water
+A long lost heart within his reach
+
+[Chorus]
+And all I ever needed was the one
+Like freedom fields where wild horses run
+When stars collide like you and I
+No shadows block the sun
+You're all I've ever needed
+Uh, baby you're the one
+
+And all I ever needed was the one
+Like freedom fields where wild horses run
+When stars collide like you and I
+No shadows block the sun (oh)
+You're all I've ever needed
+Uh, baby you're the one
+
+And all I ever needed was the one
+Like freedom fields where wild horses run
+When stars collide like you and I
+No shadows block the sun (oh)
+You're all I've ever needed
+Uh, baby you're the one", 
+  artist_id: artist.id,
+  album_id: album.id,
+  song_art_url: "https://t2.genius.com/unsafe/220x0/https%3A%2F%2Fimages.genius.com%2Ff340f2683a4ee8a8e627ed512f49919a.500x500x1.jpg",
+  youtube_url: "https://www.youtube.com/watch?v=bDX4KoF0oJA",
+  primary_tag: "pop",
+  user_id: 1
+})
+
+TrackAlbumJoin.create!({
+  track_id: track.id,
+  album_id: album.id
+})
+
+
+#--------------------------------------------------------#
+#--------------------------------------------------------#
+artist = Artist.create!({
+  name: "Dan Auerbach"
+})
+
+album = Album.create!({
+  title: " Cars 3 (Original Motion Picture Soundtrack)",
+  artist_id: artist.id
+})
+
+track = Track.create!({
+  title: "Run That Race", 
+  body: "Another day another dollar gone
+When I get up in the morning I just can't go on
+I feel the outstretch turns of time
+I ain't lyin'
+
+But somethin's callin' from down deep within
+Like I finally started livin' for myself again
+I saved the outstretch lands of time
+Changed my mind
+
+Cause I wanna run that race
+I wanna run that race
+I do it on my pace
+As long as I get to run that race
+
+I feel discouraged and I doubt myself
+But you know you can't blame it on nobody else
+Only you know where it is
+You belong, sing along
+
+We gotta run that race
+We gotta run that race
+I do it on my pace
+As long as we get to run that race
+
+When I lay my head on my pillow at night
+I think about what still going right
+Thank the stars up above
+There's still things left I know
+
+I wanna run that race
+I wanna run that race
+I wanna run that race", 
+  artist_id: artist.id,
+  album_id: album.id,
+  song_art_url: "https://t2.genius.com/unsafe/220x0/https%3A%2F%2Fimages.genius.com%2F33cc1f3326afe4c66c5f7f26fa86b4d4.499x499x1.jpg",
+  youtube_url: "https://www.youtube.com/watch?v=mPpPjdN3tyM",
+  primary_tag: "rock",
+  user_id: 1
+})
+
+TrackAlbumJoin.create!({
+  track_id: track.id,
+  album_id: album.id
+})

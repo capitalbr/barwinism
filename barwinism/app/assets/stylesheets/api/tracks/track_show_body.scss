@@ -49,6 +49,9 @@
   justify-content: center;
   width: 406px;
   flex-wrap: wrap;
+  #popup{
+    display: flex;
+  }
 }
 
 .track-show-body-right img{
@@ -69,7 +72,7 @@
   border-top: none;
   border-bottom: none;
   border-right: none;
-  margin-left: 13px;
+  transform: translate(13px);
 }
 
 .track-show-body-right div.hidden2{

@@ -1,5 +1,7 @@
 import React from 'react';
 import marked from 'marked';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import ReactDOM from 'react-dom';
 
 
 export default class TrackShow extends React.Component {
@@ -15,9 +17,12 @@ export default class TrackShow extends React.Component {
       current_anno: "",
       editForm: false,
       lyrics: "",
-      anno_body: ""
+      anno_body: "",
+      popup: "",
+      clickAway: false
     };
     this.toggle = true;
+    this.count = 0;
   }
     componentDidMount(){
       this.props.fetchTrack(this.props.match.params.trackId)
@@ -57,6 +62,7 @@ export default class TrackShow extends React.Component {
   }
 
   onSave(e){
+
     document.getElementsByClassName('youTube')[0].classList.remove('display-none');
 
     e.preventDefault();
@@ -94,6 +100,7 @@ export default class TrackShow extends React.Component {
   }  
 
   highlighter(e) { 
+    
     const oldPopup = document.getElementsByClassName('click-to-annotate')[0];
     if (oldPopup) {
       oldPopup.remove();
@@ -130,16 +137,21 @@ export default class TrackShow extends React.Component {
       popup.style.marginTop = `${y-380}px`;
       popup.style.height = 'fit-content';
 
+
       let right = document.getElementsByClassName('track-show-body-right');
       $(right).append($(popup));
+      // let targetDiv = document.getElementById("popup");
+      
+      // // ReactDOM.render(<Root store={store} />, root);
+      // targetDiv.appendChild(popup);
     }
-
  }
 
 deleteHighlighted(id){
+  
   document.getElementsByClassName('youTube')[0].classList.remove('display-none');
   let parent = document.getElementsByClassName('theBody')[0];
-
+  
   const oldChild = document.getElementById(id);
   const replacement = document.createTextNode(oldChild.textContent);
   
@@ -172,54 +184,16 @@ deleteSelected() {
 
 // NAIVE APPROACH.  PLAN TO REFACTOR.
 hider(e){
-  // if (!e.target.classList.contains('click-to-annotate') &&
-  //   !e.target.parentElement.classList.contains('track-show-body-right') &&
-  //   !e.target.parentElement.parentElement.classList.contains('track-show-body-right') &&
-  //   !e.target.parentElement.parentElement.parentElement.classList.contains('track-show-body-right') &&
-  //   !e.target.parentElement.parentElement.parentElement.parentElement.classList.contains('track-show-body-right') &&
-  //   !e.target.parentElement.parentElement.parentElement.parentElement.parentElement.classList.contains('track-show-body-right') &&
-  //   !e.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.classList.contains('track-show-body-right') &&
-  //   !e.target.classList.contains("tools-content2")
-  // ) {
-  //   let temp = document.getElementsByClassName('youTube')[0];
-  //   if ( temp ){
-  //     document.getElementsByClassName('youTube')[0].classList.remove('display-none');
-  //   }
-  // }
+
+  let video = document.getElementsByClassName('youTube')[0];
+    if ( video ){
+      video.classList.remove('display-none');
+    }
 
   this.setState({ formType: "", current_anno: "", lyrics: document.getElementsByClassName('theBody')[0].innerHTML });
   
   const oldForm = document.getElementsByClassName('hidden')[0];
-  const textarea = document.getElementById('editor')
-  const img = document.getElementsByClassName('logo')[0];
-  const anno = document.getElementsByClassName('annotation')[0];
-  const innerForm = document.getElementById('editor-form')
-  const tools = document.getElementsByClassName('tools')[0];
-  const toolsTitle = document.getElementsByClassName('tools-title')[0];
-  const toolsContent = document.getElementsByClassName('tools-content')[0];
-  const toolsOptions = document.getElementsByClassName('tools-options')[0];
-  const toolsContent2one = document.getElementsByClassName('tools-content2')[0];
-  const toolsContent2two = document.getElementsByClassName('tools-content2')[1];
-  const toolsContent2three = document.getElementsByClassName('tools-content2')[2];
-  const annoSave = document.getElementsByClassName('annotation-save')[0];
-  const annoCancel = document.getElementsByClassName('annotation-cancel')[0];
-  const formDivOuter = document.getElementsByClassName('form-div-outer')[0];
-  const buttonDiv = document.getElementsByClassName('button-div')[0];
-  const hr = document.getElementsByClassName('hr')[0];
-
-
-  if (e.target === oldForm || e.target === textarea
-      || e.target === img || e.target === anno || e.target === innerForm
-      || e.target === tools || e.target === toolsTitle
-      || e.target === toolsContent || e.target === toolsOptions
-      || e.target === toolsContent2one || e.target === toolsContent2two
-      || e.target === annoSave || e.target === annoCancel
-      || e.target === formDivOuter || e.target === buttonDiv
-      || e.target === hr || e.target === toolsContent2three) {
-      return;
-  }
     
-
   const oldPopup = document.getElementsByClassName('click-to-annotate')[0];
   if (oldPopup) {
     oldPopup.remove();
@@ -237,104 +211,135 @@ hider(e){
 // TO PRACTICE FOR SITUATIONS WHERE I CAN'T USE JSX
 // USING ONLY HTML DOM METHODS.
   annotationPopupEditor(id){
+    debugger
+    this.id = id;
+    let video = document.getElementsByClassName('youTube')[0];
+    if (video) {
+      video.classList.add('display-none');
+    }
 
+    // REMOVES 'Start the Genius Annotation' POPUP
+    const oldPopup = document.getElementsByClassName('click-to-annotate')[0];
+    if (oldPopup) {
+      oldPopup.remove();
+    }
     //ADDS HIGHLIGHTING TO THE NEWLY CREATED LYRIC SPAN 
     document.getElementById(id).classList.add('highlight');
     document.getElementById(id).classList.remove('delete-selected');
-
-    let popupEditor = document.createElement('div');
-    popupEditor.classList.add('hidden');
-    let img = document.createElement('img');
-    img.setAttribute('src', window.annotation_arrow);
-    img.classList.add('logo');
-    popupEditor.appendChild(img);
-    let divAnnotation = document.createElement('div');
-    divAnnotation.classList.add('annotation');
-    let form = document.createElement('form');
-    form.setAttribute('id', 'editor-form')
-    let formDivOuter = document.createElement('div');
-    formDivOuter.classList.add('form-div-outer');
-    let textarea = document.createElement('textarea');
-    textarea.setAttribute('id', 'editor');
-    textarea.setAttribute('placeholder', "Don't just put the lyric in your own words-drop some knowledge!");
-    formDivOuter.appendChild(textarea);
-    let toolsDiv = document.createElement('div');
-    toolsDiv.classList.add('tools');
-    let toolsTitle = document.createElement('div');
-    toolsTitle.classList.add('tools-title');
-    let toolsSpan = document.createElement('span');
-    toolsSpan.classList.add('tools-content');
-    let textNode = document.createTextNode("Tools:");
-    toolsSpan.appendChild(textNode);
-    toolsTitle.appendChild(toolsSpan);
-    toolsDiv.appendChild(toolsTitle);
-    let toolsOptions = document.createElement('div');
-    toolsOptions.classList.add('tools-options');
-    let optionsSpan = document.createElement('span');
-    optionsSpan.classList.add('tools-content2');
-    let textNode2 = document.createTextNode("Add Image");
-    optionsSpan.appendChild(textNode2);
-    toolsOptions.appendChild(optionsSpan);
-    let optionsSpan2 = document.createElement('span');
-    optionsSpan2.classList.add('tools-content2');
-    let textNode3 = document.createTextNode("Formatting Help");
-    optionsSpan2.appendChild(textNode3);
-    toolsOptions.appendChild(optionsSpan2);
-    let optionsAnchor = document.createElement('a');
-    optionsAnchor.classList.add('tools-content2');
-    let textNode4 = document.createTextNode("How To Annotate");
-    optionsAnchor.appendChild(textNode4);
-    toolsOptions.appendChild(optionsAnchor);
-    toolsDiv.appendChild(toolsOptions);
-    formDivOuter.appendChild(toolsDiv);
-    let hr = document.createElement('hr');
-    hr.classList.add('hr')
-    formDivOuter.appendChild(hr);
-    let buttonDiv = document.createElement('div');
-    buttonDiv.classList.add('button-div');
-    let button1 = document.createElement('button')
-    button1.classList.add("annotation-save");
-    let textNode5 = document.createTextNode("Save");
-    button1.appendChild(textNode5);
-    button1.setAttribute("data-anno-id", id)
-    button1.addEventListener("click", this.onSave.bind(this));
-
-    //SAVE BUTTON ABILITY TO CREATE ANNOTATION IN DATABASE
-    buttonDiv.appendChild(button1)
-
-    let button2 = document.createElement('button');
-    button2.classList.add("annotation-cancel");
-
-    //GIVES CANCEL BUTTON ABILITY TO DELETE LATEST CREATED LYRIC SPAN
-    button2.addEventListener("click", this.deleteHighlighted.bind(this, id));
-
-    let textNode6 = document.createTextNode("Cancel");
-    button2.appendChild(textNode6);
-    buttonDiv.appendChild(button2);
-    formDivOuter.appendChild(buttonDiv);
-    form.appendChild(formDivOuter);
-    divAnnotation.appendChild(form);
-    popupEditor.appendChild(divAnnotation);
     
-    //FINAL STEPS OF FUNCTION:  ADDING THE ELEMENT TO THE PAGE
     let anno = document.getElementById(id);
     let y = window.scrollY + anno.getBoundingClientRect().top;
     let val = y - 565;
     if ((y - 565) < 0) {
       val = 0;
     }
-    popupEditor.style.marginTop = `${val}px`;
+    this.margin = val;
+    
+    
+    const annotation = {
+      body: "a;ljf;aljdf;lajsf;lajs;lfjas;lfjas;ldfsa;ldfj",
+      track_id: this.state.track_id,
+      anno_id: id,
+      upvotes: this.state.upvotes
+    }
+    this.props.createAnnotation(annotation);
 
-    let ele = document.getElementsByClassName('track-show-body-right')[0];
-    ele.appendChild(popupEditor);
+    let body = document.getElementsByClassName("theBody")[0].innerHTML;
+    this.props.updateTrack({
+      body: body,
+      id: this.props.track.id
+    }).then( res => {
+      this.setState({ 
+        formType: "editAnno",
+        lyrics: this.props.track.body
+       });
+    })
+
+
+
   }
 
+  showEditor(){
+    
+
+    return (
+      <div
+        className="hidden"
+        style={{
+          marginTop: `${this.margin}px`
+        }}>
+        <img src={window.annotation_arrow} className="logo"/>
+          <div className="annotation">
+            <form id="editor-form">
+              <div className="form-div-outer">
+                <textarea
+                  id="editor"
+                  placeholder="Don't just put the lyric in your own words-drop some knowledge!"
+                >
+                </textarea>
+                <div className="tools">
+                  <div className="tools-title">
+                    <span className="tools-content">
+                      Tools:
+                  </span>
+                  </div>
+                  <div className="tools-options">
+                    <span className="tools-content2">
+                      Add Image
+                  </span>
+                    <span className="tools-content2">
+                      Formatting Help
+                  </span>
+                    <a className="tools-content2">
+                      How To Annotate
+                  </a>
+                  </div>
+                </div>
+                <hr className="hr"></hr>
+                <div className="button-div">
+                  <button
+                    className="annotation-save"
+                    data-anno-id={this.id}
+                    onClick={this.onSave.bind(this)}>
+                    Save
+                </button>
+                  <button
+                    className="annotation-cancel"
+                    onClick={this.deleteHighlighted.bind(this, this.id)}>
+                    Cancel
+                </button>
+                </div>
+              </div>
+            </form>
+          </div>
+      </div>
+    )
+  }
+
+  // hidePopups(e){
+  //   debugger
+  //   this.deleteAPopupEditor;
+  //   const oldPopup = document.getElementsByClassName('click-to-annotate')[0];
+  //   if (e.target.closest(".click-to-annotate" || e.target.closest(".track-show-body-left"))) {
+  //     return;
+  //   } else {
+  //     oldPopup.remove();
+  //   }
+
+  //   let d = document.getElementById("d");
+  //   // if there is no ancestor with the id 'a', the method returns null and this evaluates to false:
+  //   if (d.closest("#a")) {
+  //     alert("d is a descendant of an element with the id 'a'");
+  //   }
+  // }
+
   deleteAPopupEditor(){
-    let parent = document.getElementsByClassName('track-show-body-right')[0];
-    let child = document.getElementsByClassName('hidden')[0];
-    if (parent instanceof Node && child instanceof Node) {
-      parent.removeChild(child);
-    }
+    this.setState({formType: ""});
+    // let parent = document.getElementsByClassName('track-show-body-right')[0];
+    // let child = document.getElementsByClassName('hidden')[0];
+    // if (parent instanceof Node && child instanceof Node) {
+    //   parent.removeChild(child);
+    // }
   }
 
   getAnno(e){
@@ -366,7 +371,7 @@ hider(e){
       marginTop: `${val}px`,
     };
 
-    return (<div className="hidden2"
+    return (<ClickAwayListener onClickAway={this.hider.bind(this)}><div className="hidden2"
         style={styles}>
       <img src={window.annotation_arrow}/>
       <div className="title-and-contributors">
@@ -396,6 +401,7 @@ hider(e){
         </form>
       </div>
     </div>
+    </ClickAwayListener>
     )
   }
  
@@ -419,6 +425,11 @@ hider(e){
     )
   }
 
+  // prepareHighlighter(e){
+  //   // this.setState({ clickAway: true });
+  //   this.highlighter(e);
+  // }
+
   renderLyricBody(){
     return(
       <p id="theBody"
@@ -433,6 +444,8 @@ hider(e){
     
     if (this.state.formType === "displayAnno") {   
       formOutput = this.showAnno();
+    } else if (this.state.formType === "editAnno") {
+      formOutput = this.showEditor(this.id)
     }
 
     let editBody;
@@ -461,11 +474,22 @@ hider(e){
     } else {
       youTube = ""
     }
+
+    // let clickAway;
+    // if (this.state.clickAway === true){
+    //   clickAway = <ClickAwayListener onClickAway={this.hider.bind(this)}>
+    //       <div id="popup"></div>
+    //     </ClickAwayListener>
+    // } else {
+    //   clickAway = <div className="display-hidden" id="popup"></div>
+    // }
+
+    
     if (this.props.track && this.props.artist){
      
        return(
          <div className="track-show-header-parent">
-           <div className="track-show-header fade-in" onClick={this.hider.bind(this)}>
+           <div className="track-show-header fade-in">
             <div className='shadow'>
               <div className="inner-track-show-header">
                 <div className="outer-track-show-header-left">
@@ -515,8 +539,10 @@ hider(e){
                   
                </div>
             </div>
-             <div className="track-show-body-right" onClick={this.hider.bind(this)}>
+             <div className="track-show-body-right">
                 {formOutput}
+                {/* {clickAway} */}
+                <div id="popup"></div>
 
                 
                 <div className="youTube">
