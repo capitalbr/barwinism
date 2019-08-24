@@ -62,7 +62,6 @@ export default class TrackShow extends React.Component {
   }
 
   onSave(e){
-
     document.getElementsByClassName('youTube')[0].classList.remove('display-none');
 
     e.preventDefault();
@@ -81,8 +80,9 @@ export default class TrackShow extends React.Component {
       id: this.props.track.id
     });
     
-    let annoEditor = document.getElementsByClassName('hidden')[0];
-    annoEditor.remove();
+    // let annoEditor = document.getElementsByClassName('hidden')[0];
+    // annoEditor.remove();
+    this.setState({formType: ""})
   }
 
   embedYoutube(){
@@ -100,7 +100,7 @@ export default class TrackShow extends React.Component {
   }  
 
   highlighter(e) { 
-    
+    // debugger
     const oldPopup = document.getElementsByClassName('click-to-annotate')[0];
     if (oldPopup) {
       oldPopup.remove();
@@ -182,7 +182,7 @@ deleteSelected() {
   }).then(this.setState({lyrics: parent.innerHTML}))
 }   
 
-// NAIVE APPROACH.  PLAN TO REFACTOR.
+
 hider(e){
 
   let video = document.getElementsByClassName('youTube')[0];
@@ -190,7 +190,10 @@ hider(e){
       video.classList.remove('display-none');
     }
 
-  this.setState({ formType: "", current_anno: "", lyrics: document.getElementsByClassName('theBody')[0].innerHTML });
+  this.setState({ 
+    formType: "", 
+    current_anno: "", 
+    lyrics: document.getElementsByClassName('theBody')[0].innerHTML });
   
   const oldForm = document.getElementsByClassName('hidden')[0];
     
@@ -343,18 +346,25 @@ hider(e){
   }
 
   getAnno(e){
+    // debugger
     e.preventDefault();
     if (e.target.id === "theBody" || e.target.id === "") {
       return
     } else {
       this.hider(e);
-      this.setState({ formType: "displayAnno" });
-      this.setState({ current_anno: e.target.id });
       const current_annotation = this.props.annotations[e.target.id];
       let current_annotation_marked = $(marked(current_annotation.body));
-      this.setState({
+      this.setState({ 
+        formType: "displayAnno",
+        current_anno: e.target.id,
         anno_body: current_annotation_marked.html()
-      })
+        });
+      // this.setState({ current_anno: e.target.id });
+      // const current_annotation = this.props.annotations[e.target.id];
+      // let current_annotation_marked = $(marked(current_annotation.body));
+      // this.setState({
+      //   anno_body: current_annotation_marked.html()
+      // })
    
     }
   }
@@ -445,7 +455,9 @@ hider(e){
     if (this.state.formType === "displayAnno") {   
       formOutput = this.showAnno();
     } else if (this.state.formType === "editAnno") {
-      formOutput = this.showEditor(this.id)
+      formOutput = this.showEditor(this.id);
+    } else {
+      formOutput = "";
     }
 
     let editBody;
