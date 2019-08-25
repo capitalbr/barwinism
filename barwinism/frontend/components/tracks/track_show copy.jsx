@@ -2,6 +2,7 @@ import React from 'react';
 import marked from 'marked';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import ReactDOM from 'react-dom';
+import merge from 'lodash/merge';
 
 
 export default class TrackShow extends React.Component {
@@ -99,54 +100,70 @@ export default class TrackShow extends React.Component {
     )
   }  
 
-  highlighter(e) {
-    // const oldPopup = document.getElementsByClassName('click-to-annotate')[0];
-    // if (oldPopup) {
-    //   oldPopup.remove();
-    // }
-    this.setState({ formType: "" });
-    const selection = window.getSelection();
-    if (window.getSelection().toString().length > 0) {
+  storeSelection(){
+    debugger
+    // if (this.selection.toString().apply(this).length > 0) {
+    let sel = this.selection.toString.apply(window.getSelection());
+
+    if (sel.length > 0) {
       document.getElementsByClassName('youTube')[0].classList.add('display-none');
     }
     
-    // let id;
-    if (selection.rangeCount && selection.toString().length > 0) {
-      const replacement = document.createElement('span');
+    // if (this.selection.rangeCount && this.selection.toString().length > 0) {
+    if (this.selection.rangeCount && sel.length > 0) {
+      this.replacement = document.createElement('span');
       this.id = `${this.props.track.id}-${Math.random()}`;
-      
-      replacement.setAttribute('id', this.id);
-      replacement.setAttribute('class', 'parent');
 
-      replacement.setAttribute('class', 'delete-selected');
-    
-      replacement.textContent = selection.toString();
-      const range = selection.getRangeAt(0);
-      range.deleteContents();
-      range.insertNode(replacement);
+      this.replacement.setAttribute('id', this.id);
+      this.replacement.setAttribute('class', 'parent');
 
-      let y = window.scrollY + replacement.getBoundingClientRect().top;
+      this.replacement.setAttribute('class', 'delete-selected');
+
+      this.replacement.textContent = sel;
+      // this.range = this.selection.getRangeAt(0);
+      this.range = this.selection.getRangeAt.apply(window.getSelection(), 0);
+
+      let y = window.scrollY + this.replacement.getBoundingClientRect().top;
       this.margin = y - 380;
+      this.setState({ formType: 'displayPopup' });
+    }
+  }
 
-      const annotation = {
-        body: "Your annotation is blank!",
-        track_id: this.state.track_id,
-        anno_id: this.id,
-        upvotes: this.state.upvotes
-      }
-      this.props.createAnnotation(annotation);
+  highlighter(e) { 
+    debugger
+    const oldPopup = document.getElementsByClassName('click-to-annotate')[0];
+    if (oldPopup) {
+      oldPopup.remove();
+    }
+    // this.selection = window.getSelection();
+    this.selection = merge({}, window.getSelection());
+    this.anchorOffset = this.selection.anchorOffset
+    this.focusOffset = this.selection.focusOffset
+    this.anchorNode = this.selection.anchorNode;
+    this.focusNode = this.selection.focusNode;
+    // if (window.getSelection().toString().length > 0) {
+    //   document.getElementsByClassName('youTube')[0].classList.add('display-none');
+    // }
+    
+    this.storeSelection()
+    // let id;
+    // if (selection.rangeCount && selection.toString().length > 0) {
+    //   const replacement = document.createElement('span');
+    //   this.id = `${this.props.track.id}-${Math.random()}`;
+      
+    //   replacement.setAttribute('id', this.id);
+    //   replacement.setAttribute('class', 'parent');
 
-      let parent = document.getElementsByClassName('theBody')[0];
-      this.pastLyrics = this.state.lyrics;
-      this.props.updateTrack({
-        body: parent.innerHTML,
-        id: this.state.track_id
-      }).then(this.setState({ 
-        lyrics: parent.innerHTML,
-        formType: 'displayPopup' 
-      }))
+    //   replacement.setAttribute('class', 'delete-selected');
+    
+    //   replacement.textContent = selection.toString();
+    //   const range = selection.getRangeAt(0);
+    //   range.deleteContents();
+    //   range.insertNode(replacement);
 
-      // this.setState({ formType: 'displayPopup'});
+    //   let y = window.scrollY + replacement.getBoundingClientRect().top;
+    //   this.margin = y - 380;
+    //   this.setState({ formType: 'displayPopup'});
       // let popup = document.createElement('span');
       // popup.addEventListener("click", this.annotationPopupEditor.bind(this));
       // popup.setAttribute('class', 'click-to-annotate');
@@ -166,15 +183,12 @@ export default class TrackShow extends React.Component {
       
       // // ReactDOM.render(<Root store={store} />, root);
       // targetDiv.appendChild(popup);
-    }
+    // }
  }
-
-
 
  showPopup(){
   
   return(
-    <ClickAwayListener onClickAway={ (e) => this.hider(e, true)}>
     <span 
       onClick={this.annotationPopupEditor.bind(this)}
       className="click-to-annotate"
@@ -184,7 +198,6 @@ export default class TrackShow extends React.Component {
       }}>
       Start the Genius Annotation
     </span>
-    </ClickAwayListener>
   )
  }
 
@@ -224,43 +237,30 @@ deleteSelected() {
 }   
 
 
-hider(e, popup = false){
-debugger
+hider(e){
+
   let video = document.getElementsByClassName('youTube')[0];
     if ( video ){
       video.classList.remove('display-none');
     }
-  let lyrics;
-  if (popup) {
-    lyrics = this.pastLyrics;
-  } else {
-    lyrics = document.getElementsByClassName('theBody')[0].innerHTML; 
-  }
 
-  this.props.updateTrack({
-      body: lyrics,
-      id: this.state.track_id
-    });
-    this.setState({ 
-      formType: "", 
-      current_anno: "", 
-      lyrics: lyrics
-    });
-    
-    
+  this.setState({ 
+    formType: "", 
+    current_anno: "", 
+    lyrics: document.getElementsByClassName('theBody')[0].innerHTML });
   
   const oldForm = document.getElementsByClassName('hidden')[0];
     
   const oldPopup = document.getElementsByClassName('click-to-annotate')[0];
-  // if (oldPopup) {
-  //   oldPopup.remove();
-  // }
+  if (oldPopup) {
+    oldPopup.remove();
+  }
   
   let val = e.target;
-  // if (oldForm && !this.toggle && !val.classList.contains('click-to-annotate')) {
-  //   oldForm.remove();
+  if (oldForm && !this.toggle && !val.classList.contains('click-to-annotate')) {
+    oldForm.remove();
     
-  // }
+  }
   this.toggle = !this.toggle;
 
 }
@@ -268,17 +268,38 @@ debugger
 // TO PRACTICE FOR SITUATIONS WHERE I CAN'T USE JSX
 // USING ONLY HTML DOM METHODS.
   annotationPopupEditor(){
+    debugger
     let video = document.getElementsByClassName('youTube')[0];
     if (video) {
       video.classList.add('display-none');
     }
 
     // REMOVES 'Start the Genius Annotation' POPUP
-    // this.setState({ formType: "" });
-    // const oldPopup = document.getElementsByClassName('click-to-annotate')[0];
-    // if (oldPopup) {
-    //   oldPopup.remove();
-    // }
+    const oldPopup = document.getElementsByClassName('click-to-annotate')[0];
+    if (oldPopup) {
+      oldPopup.remove();
+    }
+
+    let body = document.getElementsByClassName("theBody")[0];
+    let range = document.createRange();
+    // let range = window.getSelection().getRangeAt(0);
+
+    range.setStart(this.anchorNode, this.anchorOffset);
+    range.setEnd(this.focusNode, this.focusOffset);
+
+
+
+
+    range.deleteContents();
+    range.insertNode(this.replacement);
+    // window.getSelection().addRange(range);
+    // this.range.deleteContents();
+    // this.range.insertNode(this.replacement);
+    // window.getSelection().addRange(this.range);
+    this.selection.addRange(range);
+
+    
+
     //ADDS HIGHLIGHTING TO THE NEWLY CREATED LYRIC SPAN 
     document.getElementById(this.id).classList.add('highlight');
     document.getElementById(this.id).classList.remove('delete-selected');
@@ -293,16 +314,16 @@ debugger
     
     
     const annotation = {
-      body: "a;ljf;aljdf;lajsf;lajs;lfjas;lfjas;ldfsa;ldfj",
+      body: "Your saved annotation is currently blank!",
       track_id: this.state.track_id,
       anno_id: this.id,
       upvotes: this.state.upvotes
     }
     this.props.createAnnotation(annotation);
 
-    let body = document.getElementsByClassName("theBody")[0].innerHTML;
+    // let body = document.getElementsByClassName("theBody")[0].innerHTML;
     this.props.updateTrack({
-      body: body,
+      body: body.innerHTML,
       id: this.props.track.id
     }).then( res => {
       this.setState({ 
