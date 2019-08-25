@@ -110,6 +110,8 @@ export default class TrackShow extends React.Component {
       document.getElementsByClassName('youTube')[0].classList.add('display-none');
     }
     
+    this.deleteSelected();
+
     // let id;
     if (selection.rangeCount && selection.toString().length > 0) {
       const replacement = document.createElement('span');
@@ -166,6 +168,8 @@ export default class TrackShow extends React.Component {
       
       // // ReactDOM.render(<Root store={store} />, root);
       // targetDiv.appendChild(popup);
+    } else {
+      this.getAnno(e);
     }
  }
 
@@ -225,7 +229,6 @@ deleteSelected() {
 
 
 hider(e, popup = false){
-debugger
   let video = document.getElementsByClassName('youTube')[0];
     if ( video ){
       video.classList.remove('display-none');
@@ -399,7 +402,6 @@ debugger
   }
 
   getAnno(e){
-    // debugger
     e.preventDefault();
     if (e.target.id === "theBody" || e.target.id === "") {
       return
@@ -497,7 +499,7 @@ debugger
     return(
       <p id="theBody"
         onMouseUp={this.highlighter.bind(this)}
-        onClick={this.getAnno.bind(this)}
+        // onClick={this.getAnno.bind(this)}
       ></p>
     )
   }
