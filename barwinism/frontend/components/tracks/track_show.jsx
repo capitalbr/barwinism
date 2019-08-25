@@ -106,14 +106,19 @@ export default class TrackShow extends React.Component {
     // }
     this.setState({ formType: "" });
     const selection = window.getSelection();
-    if (window.getSelection().toString().length > 0) {
-      document.getElementsByClassName('youTube')[0].classList.add('display-none');
-    }
+    let valid = selection.anchorNode.nodeName === "#text" && selection.anchorNode === selection.focusNode;
+    // selection.focusNode.nodeName
+    // "#text"
+
+    // if (window.getSelection().toString().length > 0) {
+    //   document.getElementsByClassName('youTube')[0].classList.add('display-none');
+    // }
     
     this.deleteSelected();
 
     // let id;
-    if (selection.rangeCount && selection.toString().length > 0) {
+    if (selection.rangeCount && selection.toString().length > 0 && valid) {
+      document.getElementsByClassName('youTube')[0].classList.add('display-none');
       const replacement = document.createElement('span');
       this.id = `${this.props.track.id}-${Math.random()}`;
       
@@ -168,7 +173,9 @@ export default class TrackShow extends React.Component {
       
       // // ReactDOM.render(<Root store={store} />, root);
       // targetDiv.appendChild(popup);
-    } else {
+    } else if (selection.anchorNode === selection.focusNode ||
+        selection.toString().length > 0){
+      // document.getElementsByClassName('youTube')[0].classList.remove('display-none');
       this.getAnno(e);
     }
  }
