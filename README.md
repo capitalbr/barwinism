@@ -9,9 +9,12 @@ React / Redux takes care of the frontend.
 
 This project was designed and built in under two weeks.
 
-![Screen Shot 2019-07-05 at 12 28 19 PM](https://user-images.githubusercontent.com/48269593/60737480-8cb5b800-9f20-11e9-95e1-2403d35ccc72.png)
+![Splash Page](https://user-images.githubusercontent.com/48269593/63730122-81e81700-c82f-11e9-8a70-885ca7a6da87.png)
 
 ### Annotation Functionality
+
+![Screen Shot 2019-07-05 at 12 28 19 PM](https://user-images.githubusercontent.com/48269593/60737480-8cb5b800-9f20-11e9-95e1-2403d35ccc72.png)
+
 
 The main feature of the app is annotating sections of a lyric. Giving a user 
 the ability to create an annotation is simple enough, but the annotation
