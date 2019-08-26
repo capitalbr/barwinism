@@ -190,9 +190,8 @@ export default class TrackShow extends React.Component {
       
       // // ReactDOM.render(<Root store={store} />, root);
       // targetDiv.appendChild(popup);
-    } else if (selection.anchorNode === selection.focusNode &&
-        selection.toString().length > 0 &&
-        !e.target.classList.contains('delete-selected')){
+    } else if (!e.target.classList.contains('delete-selected') &&
+        selection.toString().length === 0){
           
           this.getAnno(e);
         } else {
@@ -365,56 +364,58 @@ hider(e, popup = false){
     
 
     return (
-      <div
-        className="hidden"
-        style={{
-          marginTop: `${this.margin}px`
-        }}>
-        <img src={window.annotation_arrow} className="logo"/>
-          <div className="annotation">
-            <form id="editor-form">
-              <div className="form-div-outer">
-                <textarea
-                  id="editor"
-                  placeholder="Don't just put the lyric in your own words-drop some knowledge!"
-                >
-                </textarea>
-                <div className="tools">
-                  <div className="tools-title">
-                    <span className="tools-content">
-                      Tools:
-                  </span>
+      <ClickAwayListener onClickAway={(e) => this.hider(e, true)}>
+        <div
+          className="hidden"
+          style={{
+            marginTop: `${this.margin}px`
+          }}>
+          <img src={window.annotation_arrow} className="logo"/>
+            <div className="annotation">
+              <form id="editor-form">
+                <div className="form-div-outer">
+                  <textarea
+                    id="editor"
+                    placeholder="Don't just put the lyric in your own words-drop some knowledge!"
+                  >
+                  </textarea>
+                  <div className="tools">
+                    <div className="tools-title">
+                      <span className="tools-content">
+                        Tools:
+                    </span>
+                    </div>
+                    <div className="tools-options">
+                      <span className="tools-content2">
+                        Add Image
+                    </span>
+                      <span className="tools-content2">
+                        Formatting Help
+                    </span>
+                      <a className="tools-content2">
+                        How To Annotate
+                    </a>
+                    </div>
                   </div>
-                  <div className="tools-options">
-                    <span className="tools-content2">
-                      Add Image
-                  </span>
-                    <span className="tools-content2">
-                      Formatting Help
-                  </span>
-                    <a className="tools-content2">
-                      How To Annotate
-                  </a>
+                  <hr className="hr"></hr>
+                  <div className="button-div">
+                    <button
+                      className="annotation-save"
+                      data-anno-id={this.id}
+                      onClick={this.onSave.bind(this)}>
+                      Save
+                  </button>
+                    <button
+                      className="annotation-cancel"
+                      onClick={this.deleteHighlighted.bind(this, this.id)}>
+                      Cancel
+                  </button>
                   </div>
                 </div>
-                <hr className="hr"></hr>
-                <div className="button-div">
-                  <button
-                    className="annotation-save"
-                    data-anno-id={this.id}
-                    onClick={this.onSave.bind(this)}>
-                    Save
-                </button>
-                  <button
-                    className="annotation-cancel"
-                    onClick={this.deleteHighlighted.bind(this, this.id)}>
-                    Cancel
-                </button>
-                </div>
-              </div>
-            </form>
-          </div>
-      </div>
+              </form>
+            </div>
+        </div>
+      </ClickAwayListener>
     )
   }
 

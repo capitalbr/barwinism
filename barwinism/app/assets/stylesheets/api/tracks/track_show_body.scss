@@ -354,13 +354,17 @@ div.tools span.tools-content{
 
 .highlight{
   background-color: #fff2ac;
-  background-image: linear-gradient(to right, #ffe359 0%, #fff2ac 100%)
+  background-image: linear-gradient(to right, #ffe359 0%, #fff2ac 100%);
+  cursor: pointer;
+  user-select: none;
 }
 
 .highlight-blue{
   height: 20px;
   background-color: #B4D7FE;
-  background-image: linear-gradient(to right, rgb(119, 183, 255) 0%, #B4D7FE 100%)
+  background-image: linear-gradient(to right, rgb(119, 183, 255) 0%, #B4D7FE 100%);
+  cursor: pointer;
+  user-select: none;
 }
 
 .track-show-body-end{

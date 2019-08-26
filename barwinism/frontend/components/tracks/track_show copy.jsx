@@ -2,7 +2,6 @@ import React from 'react';
 import marked from 'marked';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import ReactDOM from 'react-dom';
-import merge from 'lodash/merge';
 
 
 export default class TrackShow extends React.Component {
@@ -24,6 +23,7 @@ export default class TrackShow extends React.Component {
     };
     this.toggle = true;
     this.count = 0;
+    this.refresh = true;
   }
     componentDidMount(){
       this.props.fetchTrack(this.props.match.params.trackId)
@@ -52,7 +52,10 @@ export default class TrackShow extends React.Component {
       if (this.props.match.params.trackId !== prevProps.match.params.trackId){
         this.props.fetchTrack(this.props.match.params.trackId);
       }
-      
+      if ($('.delete-selected').length > 0 && this.refresh) {
+        this.deleteSelected();
+        this.refresh = false;
+      }
     }
 
   update(field){
@@ -68,12 +71,13 @@ export default class TrackShow extends React.Component {
     e.preventDefault();
     this.deleteSelected();
     const annotation = {
+      id: this.props.annotations[this.id].id,
       body: document.getElementsByTagName("textarea")[0].value,
       track_id: this.state.track_id,
       anno_id: e.target.getAttribute("data-anno-id"),
       upvotes: this.state.upvotes
     }
-    this.props.createAnnotation(annotation);
+    this.props.updateAnnotation(annotation);
     
     let body = document.getElementsByClassName("theBody")[0].innerHTML;
     this.props.updateTrack({
@@ -100,68 +104,73 @@ export default class TrackShow extends React.Component {
     )
   }  
 
-  storeSelection(){
-    // if (this.selection.toString().apply(this).length > 0) {
-    let sel = this.selection.toString.apply(window.getSelection());
-
-    if (sel.length > 0) {
-      document.getElementsByClassName('youTube')[0].classList.add('display-none');
+  highlighter(e) {
+    // const oldPopup = document.getElementsByClassName('click-to-annotate')[0];
+    // if (oldPopup) {
+    //   oldPopup.remove();
+    // }
+    if (this.state.formType !== "") {
+      this.setState({ formType: "" });
     }
-    
-    // if (this.selection.rangeCount && this.selection.toString().length > 0) {
-    if (this.selection.rangeCount && sel.length > 0) {
-      this.replacement = document.createElement('span');
-      this.id = `${this.props.track.id}-${Math.random()}`;
+    const selection = window.getSelection();
+    let valid = selection.anchorNode.nodeName === "#text" && 
+      selection.anchorNode === selection.focusNode &&
+      selection.anchorNode.parentNode === document.getElementsByClassName("theBody")[0];
+    // selection.focusNode.nodeName
+    // "#text"
 
-      this.replacement.setAttribute('id', this.id);
-      this.replacement.setAttribute('class', 'parent');
-
-      this.replacement.setAttribute('class', 'delete-selected');
-
-      this.replacement.textContent = sel;
-      // this.range = this.selection.getRangeAt(0);
-      this.range = this.selection.getRangeAt.apply(window.getSelection(), 0);
-
-      let y = window.scrollY + this.replacement.getBoundingClientRect().top;
-      this.margin = y - 380;
-      this.setState({ formType: 'displayPopup' });
-    }
-  }
-
-  highlighter(e) { 
-    const oldPopup = document.getElementsByClassName('click-to-annotate')[0];
-    if (oldPopup) {
-      oldPopup.remove();
-    }
-    // this.selection = window.getSelection();
-    this.selection = merge({}, window.getSelection());
-    this.anchorOffset = this.selection.anchorOffset
-    this.focusOffset = this.selection.focusOffset
-    this.anchorNode = this.selection.anchorNode;
-    this.focusNode = this.selection.focusNode;
     // if (window.getSelection().toString().length > 0) {
     //   document.getElementsByClassName('youTube')[0].classList.add('display-none');
     // }
-    
-    this.storeSelection()
+    if (selection.toString().length > 0) {
+      this.deleteSelected(false);
+    } else {
+      this.deleteSelected();
+      let video = document.getElementsByClassName('youTube')[0];
+      if (video) {
+        video.classList.remove('display-none');
+      }
+    }
     // let id;
-    // if (selection.rangeCount && selection.toString().length > 0) {
-    //   const replacement = document.createElement('span');
-    //   this.id = `${this.props.track.id}-${Math.random()}`;
+    if (selection.rangeCount && selection.toString().length > 0 && valid) {
+      document.getElementsByClassName('youTube')[0].classList.add('display-none');
+      const replacement = document.createElement('span');
+      this.id = `${this.props.track.id}-${Math.random()}`;
       
-    //   replacement.setAttribute('id', this.id);
-    //   replacement.setAttribute('class', 'parent');
+      replacement.setAttribute('id', this.id);
+      replacement.setAttribute('class', 'parent');
 
-    //   replacement.setAttribute('class', 'delete-selected');
+      replacement.setAttribute('class', 'delete-selected highlight-blue');
     
-    //   replacement.textContent = selection.toString();
-    //   const range = selection.getRangeAt(0);
-    //   range.deleteContents();
-    //   range.insertNode(replacement);
+      replacement.textContent = selection.toString();
+      const range = selection.getRangeAt(0);
+      range.deleteContents();
+      range.insertNode(replacement);
 
-    //   let y = window.scrollY + replacement.getBoundingClientRect().top;
-    //   this.margin = y - 380;
-    //   this.setState({ formType: 'displayPopup'});
+      let y = window.scrollY + replacement.getBoundingClientRect().top;
+      this.margin = y - 380;
+
+      const annotation = {
+        body: "Your annotation is blank!",
+        track_id: this.state.track_id,
+        anno_id: this.id,
+        upvotes: this.state.upvotes
+      }
+      this.props.createAnnotation(annotation);
+
+      let parent = document.getElementsByClassName('theBody')[0];
+      this.pastLyrics = this.state.lyrics;
+
+      
+      this.props.updateTrack({
+        body: parent.innerHTML,
+        id: this.state.track_id
+      }).then(this.setState({ 
+        lyrics: parent.innerHTML,
+        formType: 'displayPopup' 
+      }))
+
+      // this.setState({ formType: 'displayPopup'});
       // let popup = document.createElement('span');
       // popup.addEventListener("click", this.annotationPopupEditor.bind(this));
       // popup.setAttribute('class', 'click-to-annotate');
@@ -181,21 +190,36 @@ export default class TrackShow extends React.Component {
       
       // // ReactDOM.render(<Root store={store} />, root);
       // targetDiv.appendChild(popup);
-    // }
+    } else if ((selection.anchorNode === selection.focusNode &&
+        !e.target.classList.contains('delete-selected') &&
+        selection.toString().length > 0) ||
+        selection.toString().length === 0){
+          
+          this.getAnno(e);
+        } else {
+          document.getElementsByClassName('youTube')[0].classList.remove('display-none');
+          this.deleteSelected(true, true);
+    };
  }
+
+
 
  showPopup(){
   
   return(
+    <ClickAwayListener onClickAway={ (e) => this.hider(e, true)}>
     <span 
       onClick={this.annotationPopupEditor.bind(this)}
       className="click-to-annotate"
       style={{
-        marginTop: `${this.margin}px`,
+        top: `${this.margin}px`,
         height: 'fit-content'
       }}>
-      Start the Genius Annotation
+      <div>
+        Start the Genius Annotation
+      </div>
     </span>
+    </ClickAwayListener>
   )
  }
 
@@ -215,50 +239,74 @@ deleteHighlighted(id){
   // toggles the boolean so it will be ready to allow 
   //the next form that pops up
   this.toggle = !this.toggle;
-  this.deleteSelected();
+  this.props.updateTrack({
+    body: parent.innerHTML,
+    id: this.state.track_id
+  }).then(this.setState({ lyrics: parent.innerHTML }))
+  // this.deleteSelected();
 }   
 
-deleteSelected() {
+deleteSelected(command = true, valid = false) {
   let parent = document.getElementsByClassName('theBody')[0];
   
   const oldChildren = $('.delete-selected');
   
   oldChildren.each((i, child) => {
     const replacement = document.createTextNode(child.textContent);
-    parent.replaceChild(replacement, child);
+    // parent.replaceChild(replacement, child);
+    child.parentNode.replaceChild(replacement, child);
   })
-  
-  this.props.updateTrack({
-    body: parent.innerHTML,
-    id: this.state.track_id
-  }).then(this.setState({lyrics: parent.innerHTML}))
+
+  if (!valid) {
+    valid = oldChildren.length > 0
+  }
+  if (valid && command) {  
+    this.props.updateTrack({
+      body: parent.innerHTML,
+      id: this.state.track_id
+    }).then(this.setState({ lyrics: parent.innerHTML }));
+  }
 }   
 
 
-hider(e){
-
+hider(e, popup = false){
   let video = document.getElementsByClassName('youTube')[0];
     if ( video ){
       video.classList.remove('display-none');
     }
+  let lyrics;
+  if (popup) {
+    // lyrics = this.pastLyrics;
+    this.deleteSelected(false);
+    lyrics = document.getElementsByClassName('theBody')[0].innerHTML; 
+  } else {
+    lyrics = document.getElementsByClassName('theBody')[0].innerHTML; 
+  }
 
-  this.setState({ 
-    formType: "", 
-    current_anno: "", 
-    lyrics: document.getElementsByClassName('theBody')[0].innerHTML });
+  this.props.updateTrack({
+      body: lyrics,
+      id: this.state.track_id
+    });
+    this.setState({ 
+      formType: "", 
+      current_anno: "", 
+      lyrics: lyrics
+    });
+    
+    
   
   const oldForm = document.getElementsByClassName('hidden')[0];
     
   const oldPopup = document.getElementsByClassName('click-to-annotate')[0];
-  if (oldPopup) {
-    oldPopup.remove();
-  }
+  // if (oldPopup) {
+  //   oldPopup.remove();
+  // }
   
   let val = e.target;
-  if (oldForm && !this.toggle && !val.classList.contains('click-to-annotate')) {
-    oldForm.remove();
+  // if (oldForm && !this.toggle && !val.classList.contains('click-to-annotate')) {
+  //   oldForm.remove();
     
-  }
+  // }
   this.toggle = !this.toggle;
 
 }
@@ -272,55 +320,36 @@ hider(e){
     }
 
     // REMOVES 'Start the Genius Annotation' POPUP
-    const oldPopup = document.getElementsByClassName('click-to-annotate')[0];
-    if (oldPopup) {
-      oldPopup.remove();
-    }
-
-    let body = document.getElementsByClassName("theBody")[0];
-    let range = document.createRange();
-    // let range = window.getSelection().getRangeAt(0);
-
-    range.setStart(this.anchorNode, this.anchorOffset);
-    range.setEnd(this.focusNode, this.focusOffset);
-
-
-
-
-    range.deleteContents();
-    range.insertNode(this.replacement);
-    // window.getSelection().addRange(range);
-    // this.range.deleteContents();
-    // this.range.insertNode(this.replacement);
-    // window.getSelection().addRange(this.range);
-    this.selection.addRange(range);
-
-    
-
+    // this.setState({ formType: "" });
+    // const oldPopup = document.getElementsByClassName('click-to-annotate')[0];
+    // if (oldPopup) {
+    //   oldPopup.remove();
+    // }
     //ADDS HIGHLIGHTING TO THE NEWLY CREATED LYRIC SPAN 
-    document.getElementById(this.id).classList.add('highlight');
-    document.getElementById(this.id).classList.remove('delete-selected');
+    let currentAnno = document.getElementById(this.id)
+    currentAnno.classList.add('highlight');
+    currentAnno.classList.remove('delete-selected');
+    currentAnno.classList.remove('highlight-blue');
     
-    let anno = document.getElementById(this.id);
-    let y = window.scrollY + anno.getBoundingClientRect().top;
+    // let anno = document.getElementById(this.id);
+    let y = window.scrollY + currentAnno.getBoundingClientRect().top;
     let val = y - 565;
     if ((y - 565) < 0) {
       val = 0;
     }
     this.margin = val;
     
-    
     const annotation = {
-      body: "Your saved annotation is currently blank!",
+      id: this.props.annotations[currentAnno.id].id,
       track_id: this.state.track_id,
       anno_id: this.id,
       upvotes: this.state.upvotes
     }
-    this.props.createAnnotation(annotation);
+    this.props.updateAnnotation(annotation);
 
-    // let body = document.getElementsByClassName("theBody")[0].innerHTML;
+    let body = document.getElementsByClassName("theBody")[0].innerHTML;
     this.props.updateTrack({
-      body: body.innerHTML,
+      body: body,
       id: this.props.track.id
     }).then( res => {
       this.setState({ 
@@ -337,75 +366,60 @@ hider(e){
     
 
     return (
-      <div
-        className="hidden"
-        style={{
-          marginTop: `${this.margin}px`
-        }}>
-        <img src={window.annotation_arrow} className="logo"/>
-          <div className="annotation">
-            <form id="editor-form">
-              <div className="form-div-outer">
-                <textarea
-                  id="editor"
-                  placeholder="Don't just put the lyric in your own words-drop some knowledge!"
-                >
-                </textarea>
-                <div className="tools">
-                  <div className="tools-title">
-                    <span className="tools-content">
-                      Tools:
-                  </span>
+      <ClickAwayListener onClickAway={(e) => this.hider(e, true)}>
+        <div
+          className="hidden"
+          style={{
+            marginTop: `${this.margin}px`
+          }}>
+          <img src={window.annotation_arrow} className="logo"/>
+            <div className="annotation">
+              <form id="editor-form">
+                <div className="form-div-outer">
+                  <textarea
+                    id="editor"
+                    placeholder="Don't just put the lyric in your own words-drop some knowledge!"
+                  >
+                  </textarea>
+                  <div className="tools">
+                    <div className="tools-title">
+                      <span className="tools-content">
+                        Tools:
+                    </span>
+                    </div>
+                    <div className="tools-options">
+                      <span className="tools-content2">
+                        Add Image
+                    </span>
+                      <span className="tools-content2">
+                        Formatting Help
+                    </span>
+                      <a className="tools-content2">
+                        How To Annotate
+                    </a>
+                    </div>
                   </div>
-                  <div className="tools-options">
-                    <span className="tools-content2">
-                      Add Image
-                  </span>
-                    <span className="tools-content2">
-                      Formatting Help
-                  </span>
-                    <a className="tools-content2">
-                      How To Annotate
-                  </a>
+                  <hr className="hr"></hr>
+                  <div className="button-div">
+                    <button
+                      className="annotation-save"
+                      data-anno-id={this.id}
+                      onClick={this.onSave.bind(this)}>
+                      Save
+                  </button>
+                    <button
+                      className="annotation-cancel"
+                      onClick={this.deleteHighlighted.bind(this, this.id)}>
+                      Cancel
+                  </button>
                   </div>
                 </div>
-                <hr className="hr"></hr>
-                <div className="button-div">
-                  <button
-                    className="annotation-save"
-                    data-anno-id={this.id}
-                    onClick={this.onSave.bind(this)}>
-                    Save
-                </button>
-                  <button
-                    className="annotation-cancel"
-                    onClick={this.deleteHighlighted.bind(this, this.id)}>
-                    Cancel
-                </button>
-                </div>
-              </div>
-            </form>
-          </div>
-      </div>
+              </form>
+            </div>
+        </div>
+      </ClickAwayListener>
     )
   }
-
-  // hidePopups(e){
-  //   debugger
-  //   this.deleteAPopupEditor;
-  //   const oldPopup = document.getElementsByClassName('click-to-annotate')[0];
-  //   if (e.target.closest(".click-to-annotate" || e.target.closest(".track-show-body-left"))) {
-  //     return;
-  //   } else {
-  //     oldPopup.remove();
-  //   }
-
-  //   let d = document.getElementById("d");
-  //   // if there is no ancestor with the id 'a', the method returns null and this evaluates to false:
-  //   if (d.closest("#a")) {
-  //     alert("d is a descendant of an element with the id 'a'");
-  //   }
-  // }
 
   deleteAPopupEditor(){
     this.setState({formType: ""});
@@ -423,12 +437,20 @@ hider(e){
     } else {
       this.hider(e);
       const current_annotation = this.props.annotations[e.target.id];
-      let current_annotation_marked = $(marked(current_annotation.body));
-      this.setState({ 
-        formType: "displayAnno",
-        current_anno: e.target.id,
-        anno_body: current_annotation_marked.html()
+      let current_annotation_marked;
+      if (current_annotation) {
+        current_annotation_marked = $(marked(current_annotation.body));
+        this.setState({ 
+          formType: "displayAnno",
+          current_anno: e.target.id,
+          anno_body: current_annotation_marked.html()
+          });
+      } else {
+        this.setState({
+          formType: "displayAnno",
+          current_anno: e.target.id
         });
+      }
       // this.setState({ current_anno: e.target.id });
       // const current_annotation = this.props.annotations[e.target.id];
       // let current_annotation_marked = $(marked(current_annotation.body));
@@ -441,7 +463,12 @@ hider(e){
 
   showAnno(){
     let annoMargin = document.getElementById(this.state.current_anno);
-    let y = window.scrollY + annoMargin.getBoundingClientRect().top;
+    let y;
+    if (annoMargin) {
+      y = window.scrollY + annoMargin.getBoundingClientRect().top;
+    } else {
+      y = -565;
+    }
     let val = y - 565;
     if ((y - 565) < 0) {
       val = 0;
@@ -514,7 +541,7 @@ hider(e){
     return(
       <p id="theBody"
         onMouseUp={this.highlighter.bind(this)}
-        onClick={this.getAnno.bind(this)}
+        // onClick={this.getAnno.bind(this)}
       ></p>
     )
   }
