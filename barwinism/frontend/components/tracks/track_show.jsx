@@ -23,6 +23,7 @@ export default class TrackShow extends React.Component {
     };
     this.toggle = true;
     this.count = 0;
+    this.refresh = true;
   }
     componentDidMount(){
       this.props.fetchTrack(this.props.match.params.trackId)
@@ -51,7 +52,10 @@ export default class TrackShow extends React.Component {
       if (this.props.match.params.trackId !== prevProps.match.params.trackId){
         this.props.fetchTrack(this.props.match.params.trackId);
       }
-      
+      if ($('.delete-selected').length > 0 && this.refresh) {
+        this.deleteSelected();
+        this.refresh = false;
+      }
     }
 
   update(field){
@@ -118,7 +122,15 @@ export default class TrackShow extends React.Component {
     // if (window.getSelection().toString().length > 0) {
     //   document.getElementsByClassName('youTube')[0].classList.add('display-none');
     // }
-    this.deleteSelected(false);
+    if (selection.toString().length > 0) {
+      this.deleteSelected(false);
+    } else {
+      this.deleteSelected();
+      let video = document.getElementsByClassName('youTube')[0];
+      if (video) {
+        video.classList.remove('display-none');
+      }
+    }
     // let id;
     if (selection.rangeCount && selection.toString().length > 0 && valid) {
       document.getElementsByClassName('youTube')[0].classList.add('display-none');
@@ -178,9 +190,11 @@ export default class TrackShow extends React.Component {
       
       // // ReactDOM.render(<Root store={store} />, root);
       // targetDiv.appendChild(popup);
-    } else if (selection.anchorNode === selection.focusNode ||
-        selection.toString().length > 0){
+    } else if ((selection.anchorNode === selection.focusNode ||
+        selection.toString().length > 0) &&
+        !e.target.classList.contains('delete-selected')){
       // document.getElementsByClassName('youTube')[0].classList.remove('display-none');
+      
       this.getAnno(e);
     };
  }
@@ -254,7 +268,9 @@ hider(e, popup = false){
     }
   let lyrics;
   if (popup) {
-    lyrics = this.pastLyrics;
+    // lyrics = this.pastLyrics;
+    this.deleteSelected(false);
+    lyrics = document.getElementsByClassName('theBody')[0].innerHTML; 
   } else {
     lyrics = document.getElementsByClassName('theBody')[0].innerHTML; 
   }
