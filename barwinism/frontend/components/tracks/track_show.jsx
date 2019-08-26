@@ -151,6 +151,9 @@ export default class TrackShow extends React.Component {
     }
     // let id;
     if (selection.rangeCount && selection.toString().length > 0 && valid) {
+      if (document.getElementsByClassName("hidden")[0]) {
+        this.deleteHighlighted(this.id)
+      }
       document.getElementsByClassName('youTube')[0].classList.add('display-none');
       const replacement = document.createElement('span');
       this.id = `${this.props.track.id}-${Math.random()}`;
@@ -215,7 +218,9 @@ export default class TrackShow extends React.Component {
           }
           this.getAnno(e);
         } else {
-          
+          if (document.getElementsByClassName("hidden")[0]) {
+            this.deleteHighlighted(this.id)
+          }
           document.getElementsByClassName('youTube')[0].classList.remove('display-none');
           this.deleteSelected(true, true);
     };
