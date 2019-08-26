@@ -206,6 +206,10 @@ export default class TrackShow extends React.Component {
 
  showPopup(){
   if (!document.getElementById(this.id)) {
+    let video = document.getElementsByClassName('youTube')[0];
+    if (video) {
+      video.classList.remove('display-none');
+    }
     return;
   }
   return(
@@ -468,10 +472,12 @@ hider(e, popup = false){
           anno_body: current_annotation_marked.html()
           });
       } else {
-        this.setState({
-          formType: "displayAnno",
-          current_anno: e.target.id
-        });
+        debugger
+        // this.setState({
+        //   formType: "displayAnno",
+        //   current_anno: e.target.id
+        // });
+        return
       }
       // this.setState({ current_anno: e.target.id });
       // const current_annotation = this.props.annotations[e.target.id];
