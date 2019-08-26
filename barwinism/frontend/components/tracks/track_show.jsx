@@ -190,12 +190,14 @@ export default class TrackShow extends React.Component {
       
       // // ReactDOM.render(<Root store={store} />, root);
       // targetDiv.appendChild(popup);
-    } else if ((selection.anchorNode === selection.focusNode ||
-        selection.toString().length > 0) &&
+    } else if (selection.anchorNode === selection.focusNode &&
+        selection.toString().length > 0 &&
         !e.target.classList.contains('delete-selected')){
-      // document.getElementsByClassName('youTube')[0].classList.remove('display-none');
-      
-      this.getAnno(e);
+          
+          this.getAnno(e);
+        } else {
+          document.getElementsByClassName('youTube')[0].classList.remove('display-none');
+          this.deleteSelected(true, true);
     };
  }
 
@@ -209,10 +211,12 @@ export default class TrackShow extends React.Component {
       onClick={this.annotationPopupEditor.bind(this)}
       className="click-to-annotate"
       style={{
-        marginTop: `${this.margin}px`,
+        top: `${this.margin}px`,
         height: 'fit-content'
       }}>
-      Start the Genius Annotation
+      <div>
+        Start the Genius Annotation
+      </div>
     </span>
     </ClickAwayListener>
   )
@@ -241,7 +245,7 @@ deleteHighlighted(id){
   // this.deleteSelected();
 }   
 
-deleteSelected(command = true) {
+deleteSelected(command = true, valid = false) {
   let parent = document.getElementsByClassName('theBody')[0];
   
   const oldChildren = $('.delete-selected');
@@ -251,8 +255,11 @@ deleteSelected(command = true) {
     // parent.replaceChild(replacement, child);
     child.parentNode.replaceChild(replacement, child);
   })
-  
-  if (oldChildren.length > 0 && command) {  
+
+  if (!valid) {
+    valid = oldChildren.length > 0
+  }
+  if (valid && command) {  
     this.props.updateTrack({
       body: parent.innerHTML,
       id: this.state.track_id
