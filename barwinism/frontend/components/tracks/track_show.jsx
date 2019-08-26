@@ -66,28 +66,44 @@ export default class TrackShow extends React.Component {
   }
 
   onSave(e){
-    document.getElementsByClassName('youTube')[0].classList.remove('display-none');
+    // document.getElementsByClassName('youTube')[0].classList.remove('display-none');
 
     e.preventDefault();
     this.deleteSelected();
+    let id = this.id || this.state.current_anno;
     const annotation = {
-      id: this.props.annotations[this.id].id,
+      id: this.props.annotations[id].id,
       body: document.getElementsByTagName("textarea")[0].value,
       track_id: this.state.track_id,
       anno_id: e.target.getAttribute("data-anno-id"),
       upvotes: this.state.upvotes
     }
-    this.props.updateAnnotation(annotation);
+
+    this.id = "";
+
+    this.props.updateAnnotation(annotation)
+      .then( () => {
+        // let body = document.getElementsByClassName("theBody")[0].innerHTML;
+
+        // this.props.updateTrack({
+        //   body: body,
+        //   id: this.props.track.id
+        // });
     
-    let body = document.getElementsByClassName("theBody")[0].innerHTML;
-    this.props.updateTrack({
-      body: body,
-      id: this.props.track.id
-    });
+        this.setState({
+          formType: "displayAnno",
+          anno_body: document.getElementsByTagName("textarea")[0].value
+          // lyrics: body
+        })
+      
+      });
     
+    
+
     // let annoEditor = document.getElementsByClassName('hidden')[0];
     // annoEditor.remove();
-    this.setState({formType: ""})
+    // this.setState({ formType: "" })
+    
   }
 
   embedYoutube(){
@@ -113,7 +129,7 @@ export default class TrackShow extends React.Component {
       this.setState({ formType: "" });
     }
     const selection = window.getSelection();
-    let valid = selection.anchorNode.nodeName === "#text" && 
+    let valid = selection.anchorNode && selection.anchorNode.nodeName === "#text" && 
       selection.anchorNode === selection.focusNode &&
       selection.anchorNode.parentNode === document.getElementsByClassName("theBody")[0];
     // selection.focusNode.nodeName
@@ -230,7 +246,10 @@ export default class TrackShow extends React.Component {
  }
 
 deleteHighlighted(id, noUpdate = false){
-  
+  if (this.cancelButtonBackToDisplayAnno){
+    this.setState({formType: 'displayAnno'})
+    return;
+  }
   document.getElementsByClassName('youTube')[0].classList.remove('display-none');
   let parent = document.getElementsByClassName('theBody')[0];
   
@@ -371,6 +390,8 @@ hider(e, popup = false){
       }
       this.props.updateAnnotation(annotation);
   
+      this.cancelButtonBackToDisplayAnno = false;
+
       let body = document.getElementsByClassName("theBody")[0].innerHTML;
       this.props.updateTrack({
         body: body,
@@ -389,15 +410,33 @@ hider(e, popup = false){
   }
 
   showEditor(){
-    
+    let annoMargin = document.getElementById(this.state.current_anno);
+    let y;
+    if (annoMargin) {
+      y = window.scrollY + annoMargin.getBoundingClientRect().top;
+    } else {
+      y = -565;
+    }
+    let val = y - 565;
+    if ((y - 565) < 0) {
+      val = 0;
+    }
+
+    let styles = {
+      marginTop: `${val}px`,
+    };
+
+    let currentAnno = this.props.annotations[this.state.current_anno].body || "";
 
     return (
       <ClickAwayListener onClickAway={(e) => this.hider(e, "highlight")}>
         <div
           className="hidden"
-          style={{
-            marginTop: `${this.margin}px`
-          }}>
+          // style={{
+          //   marginTop: `${this.margin}px`
+          // }}
+          style={styles}
+          >
           <img src={window.annotation_arrow} className="logo"/>
             <div className="annotation">
               <form id="editor-form">
@@ -405,7 +444,9 @@ hider(e, popup = false){
                   <textarea
                     id="editor"
                     placeholder="Don't just put the lyric in your own words-drop some knowledge!"
+                    defaultValue={currentAnno}
                   >
+                  
                   </textarea>
                   <div className="tools">
                     <div className="tools-title">
@@ -429,7 +470,7 @@ hider(e, popup = false){
                   <div className="button-div">
                     <button
                       className="annotation-save"
-                      data-anno-id={this.id}
+                      data-anno-id={this.id || this.state.current_anno}
                       onClick={this.onSave.bind(this)}>
                       Save
                   </button>
@@ -489,7 +530,17 @@ hider(e, popup = false){
     }
   }
 
+  setFormType(e, type){
+    e.preventDefault();
+    switch (type) {
+      case "editAnno":
+        this.cancelButtonBackToDisplayAnno = true;
+        this.setState({formType: type});
+    }
+  }
+
   showAnno(){
+    
     let annoMargin = document.getElementById(this.state.current_anno);
     let y;
     if (annoMargin) {
@@ -521,7 +572,10 @@ hider(e, popup = false){
            
             <hr></hr>
             <div>
-              <button className="annotation-edit">Edit</button>
+              <button 
+                className="annotation-edit"
+                onClick={(e) => this.setFormType(e, "editAnno")}
+                >Edit</button>
             </div>
             <div>
               <div>
