@@ -67,7 +67,7 @@ export default class TrackShow extends React.Component {
 
   onSave(e){
     // document.getElementsByClassName('youTube')[0].classList.remove('display-none');
-
+    
     e.preventDefault();
     this.deleteSelected();
     let id = this.id || this.state.current_anno;
@@ -78,9 +78,11 @@ export default class TrackShow extends React.Component {
       anno_id: e.target.getAttribute("data-anno-id"),
       upvotes: this.state.upvotes
     }
-
-    this.id = "";
-
+    
+    // if(this.state.current_anno){
+    //   this.id = "";
+    // }
+    
     this.props.updateAnnotation(annotation)
       .then( () => {
         // let body = document.getElementsByClassName("theBody")[0].innerHTML;
@@ -208,8 +210,9 @@ export default class TrackShow extends React.Component {
       // targetDiv.appendChild(popup);
     } else if (!e.target.classList.contains('delete-selected') &&
         selection.toString().length === 0){
-          
-          this.deleteHighlighted(this.id)
+          if (document.getElementsByClassName("hidden")[0]){
+            this.deleteHighlighted(this.id)
+          }
           this.getAnno(e);
         } else {
           
@@ -410,7 +413,9 @@ hider(e, popup = false){
   }
 
   showEditor(){
-    let annoMargin = document.getElementById(this.state.current_anno);
+    
+    let id = this.id || this.state.current_anno ;
+    let annoMargin = document.getElementById(id);
     let y;
     if (annoMargin) {
       y = window.scrollY + annoMargin.getBoundingClientRect().top;
@@ -426,7 +431,12 @@ hider(e, popup = false){
       marginTop: `${val}px`,
     };
 
-    let currentAnno = this.props.annotations[this.state.current_anno].body || "";
+    let currentAnno = this.props.annotations[id]
+    if (currentAnno) {
+      currentAnno = currentAnno.body;
+    } else {
+      currentAnno = "";
+    }
 
     return (
       <ClickAwayListener onClickAway={(e) => this.hider(e, "highlight")}>
@@ -470,13 +480,13 @@ hider(e, popup = false){
                   <div className="button-div">
                     <button
                       className="annotation-save"
-                      data-anno-id={this.id || this.state.current_anno}
+                      data-anno-id={id}
                       onClick={this.onSave.bind(this)}>
                       Save
                   </button>
                     <button
                       className="annotation-cancel"
-                      onClick={this.deleteHighlighted.bind(this, this.id)}>
+                      onClick={this.deleteHighlighted.bind(this, id)}>
                       Cancel
                   </button>
                   </div>
@@ -498,14 +508,16 @@ hider(e, popup = false){
   }
 
   getAnno(e){
+    
     e.preventDefault();
     if (e.target.id === "theBody" || e.target.id === "") {
-      return
+      return;
     } else {
       this.hider(e);
       const current_annotation = this.props.annotations[e.target.id];
       let current_annotation_marked;
       if (current_annotation) {
+        this.id = e.target.id;
         current_annotation_marked = $(marked(current_annotation.body));
         this.setState({ 
           formType: "displayAnno",
@@ -518,7 +530,7 @@ hider(e, popup = false){
         //   formType: "displayAnno",
         //   current_anno: e.target.id
         // });
-        return
+        return;
       }
       // this.setState({ current_anno: e.target.id });
       // const current_annotation = this.props.annotations[e.target.id];
@@ -540,8 +552,9 @@ hider(e, popup = false){
   }
 
   showAnno(){
-    
-    let annoMargin = document.getElementById(this.state.current_anno);
+    let id = this.id || this.state.current_anno
+    // this.id = "";
+    let annoMargin = document.getElementById(id);
     let y;
     if (annoMargin) {
       y = window.scrollY + annoMargin.getBoundingClientRect().top;
