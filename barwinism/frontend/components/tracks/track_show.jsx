@@ -193,8 +193,10 @@ export default class TrackShow extends React.Component {
     } else if (!e.target.classList.contains('delete-selected') &&
         selection.toString().length === 0){
           
+          this.deleteHighlighted(this.id)
           this.getAnno(e);
         } else {
+          
           document.getElementsByClassName('youTube')[0].classList.remove('display-none');
           this.deleteSelected(true, true);
     };
@@ -203,7 +205,9 @@ export default class TrackShow extends React.Component {
 
 
  showPopup(){
-  
+  if (!document.getElementById(this.id)) {
+    return;
+  }
   return(
     <ClickAwayListener onClickAway={ (e) => this.hider(e, true)}>
     <span 
@@ -221,27 +225,33 @@ export default class TrackShow extends React.Component {
   )
  }
 
-deleteHighlighted(id){
+deleteHighlighted(id, noUpdate = false){
   
   document.getElementsByClassName('youTube')[0].classList.remove('display-none');
   let parent = document.getElementsByClassName('theBody')[0];
   
   const oldChild = document.getElementById(id);
-  const replacement = document.createTextNode(oldChild.textContent);
+  if (oldChild) {
+    const replacement = document.createTextNode(oldChild.textContent);
+    parent.replaceChild(replacement, oldChild);
+    
+    // DELETES THE FORM OFF OF THE PAGE
+    // this.deleteAPopupEditor();
   
-  parent.replaceChild(replacement, oldChild);
+    // toggles the boolean so it will be ready to allow 
+    //the next form that pops up
+    this.toggle = !this.toggle;
+  
+    if (!noUpdate) {
+      this.props.updateTrack({
+        body: parent.innerHTML,
+        id: this.state.track_id
+      }).then(this.setState({ lyrics: parent.innerHTML }))
+    }
+    // this.deleteSelected();
+  }
+  
 
-  // DELETES THE FORM OFF OF THE PAGE
-  this.deleteAPopupEditor();
-
-  // toggles the boolean so it will be ready to allow 
-  //the next form that pops up
-  this.toggle = !this.toggle;
-  this.props.updateTrack({
-    body: parent.innerHTML,
-    id: this.state.track_id
-  }).then(this.setState({ lyrics: parent.innerHTML }))
-  // this.deleteSelected();
 }   
 
 deleteSelected(command = true, valid = false) {
@@ -272,14 +282,23 @@ hider(e, popup = false){
     if ( video ){
       video.classList.remove('display-none');
     }
-  let lyrics;
-  if (popup) {
-    // lyrics = this.pastLyrics;
-    this.deleteSelected(false);
-    lyrics = document.getElementsByClassName('theBody')[0].innerHTML; 
-  } else {
-    lyrics = document.getElementsByClassName('theBody')[0].innerHTML; 
+  // let lyrics;
+  // if (popup) {
+  //   // lyrics = this.pastLyrics;
+  //   this.deleteSelected(false);
+  //   lyrics = document.getElementsByClassName('theBody')[0].innerHTML; 
+  // } else {
+  //   lyrics = document.getElementsByClassName('theBody')[0].innerHTML; 
+  // }
+  
+  switch (popup) {
+    case true:
+      this.deleteSelected(false);
+    case "highlight":
+      this.deleteHighlighted(this.id, true);
   }
+
+  let lyrics = document.getElementsByClassName('theBody')[0].innerHTML;
 
   this.props.updateTrack({
       body: lyrics,
@@ -313,9 +332,7 @@ hider(e, popup = false){
 // USING ONLY HTML DOM METHODS.
   annotationPopupEditor(){
     let video = document.getElementsByClassName('youTube')[0];
-    if (video) {
-      video.classList.add('display-none');
-    }
+    
 
     // REMOVES 'Start the Genius Annotation' POPUP
     // this.setState({ formType: "" });
@@ -325,36 +342,43 @@ hider(e, popup = false){
     // }
     //ADDS HIGHLIGHTING TO THE NEWLY CREATED LYRIC SPAN 
     let currentAnno = document.getElementById(this.id)
-    currentAnno.classList.add('highlight');
-    currentAnno.classList.remove('delete-selected');
-    currentAnno.classList.remove('highlight-blue');
-    
-    // let anno = document.getElementById(this.id);
-    let y = window.scrollY + currentAnno.getBoundingClientRect().top;
-    let val = y - 565;
-    if ((y - 565) < 0) {
-      val = 0;
-    }
-    this.margin = val;
-    
-    const annotation = {
-      id: this.props.annotations[currentAnno.id].id,
-      track_id: this.state.track_id,
-      anno_id: this.id,
-      upvotes: this.state.upvotes
-    }
-    this.props.updateAnnotation(annotation);
+    if (currentAnno) {
+      currentAnno.classList.add('highlight');
+      currentAnno.classList.remove('delete-selected');
+      currentAnno.classList.remove('highlight-blue');
 
-    let body = document.getElementsByClassName("theBody")[0].innerHTML;
-    this.props.updateTrack({
-      body: body,
-      id: this.props.track.id
-    }).then( res => {
-      this.setState({ 
-        formType: "editAnno",
-        lyrics: this.props.track.body
-       });
-    })
+      if (video) {
+        video.classList.add('display-none');
+      }
+
+      // let anno = document.getElementById(this.id);
+      let y = window.scrollY + currentAnno.getBoundingClientRect().top;
+      let val = y - 565;
+      if ((y - 565) < 0) {
+        val = 0;
+      }
+      this.margin = val;
+      
+      const annotation = {
+        id: this.props.annotations[currentAnno.id].id,
+        track_id: this.state.track_id,
+        anno_id: this.id,
+        upvotes: this.state.upvotes
+      }
+      this.props.updateAnnotation(annotation);
+  
+      let body = document.getElementsByClassName("theBody")[0].innerHTML;
+      this.props.updateTrack({
+        body: body,
+        id: this.props.track.id
+      }).then( res => {
+        this.setState({ 
+          formType: "editAnno",
+          lyrics: this.props.track.body
+         });
+      })
+    }
+    
 
 
 
@@ -364,7 +388,7 @@ hider(e, popup = false){
     
 
     return (
-      <ClickAwayListener onClickAway={(e) => this.hider(e, true)}>
+      <ClickAwayListener onClickAway={(e) => this.hider(e, "highlight")}>
         <div
           className="hidden"
           style={{
