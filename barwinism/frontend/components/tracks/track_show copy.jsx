@@ -101,7 +101,6 @@ export default class TrackShow extends React.Component {
   }  
 
   storeSelection(){
-    debugger
     // if (this.selection.toString().apply(this).length > 0) {
     let sel = this.selection.toString.apply(window.getSelection());
 
@@ -130,7 +129,6 @@ export default class TrackShow extends React.Component {
   }
 
   highlighter(e) { 
-    debugger
     const oldPopup = document.getElementsByClassName('click-to-annotate')[0];
     if (oldPopup) {
       oldPopup.remove();
@@ -268,7 +266,6 @@ hider(e){
 // TO PRACTICE FOR SITUATIONS WHERE I CAN'T USE JSX
 // USING ONLY HTML DOM METHODS.
   annotationPopupEditor(){
-    debugger
     let video = document.getElementsByClassName('youTube')[0];
     if (video) {
       video.classList.add('display-none');
@@ -420,7 +417,6 @@ hider(e){
   }
 
   getAnno(e){
-    // debugger
     e.preventDefault();
     if (e.target.id === "theBody" || e.target.id === "") {
       return

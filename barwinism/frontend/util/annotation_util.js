@@ -1,5 +1,4 @@
 export const createAnnotation = (annotation) => {
-  debugger
   return($.ajax({
     method: "POST",
     url: "/api/annotations",
@@ -8,7 +7,6 @@ export const createAnnotation = (annotation) => {
 }
 
 export const updateAnnotation = (annotation) => {
-  debugger
   return ($.ajax({
     method: "PATCH",
     url: `/api/annotations/${annotation.id}`,

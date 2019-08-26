@@ -395,23 +395,6 @@ hider(e, popup = false){
     )
   }
 
-  // hidePopups(e){
-  //   debugger
-  //   this.deleteAPopupEditor;
-  //   const oldPopup = document.getElementsByClassName('click-to-annotate')[0];
-  //   if (e.target.closest(".click-to-annotate" || e.target.closest(".track-show-body-left"))) {
-  //     return;
-  //   } else {
-  //     oldPopup.remove();
-  //   }
-
-  //   let d = document.getElementById("d");
-  //   // if there is no ancestor with the id 'a', the method returns null and this evaluates to false:
-  //   if (d.closest("#a")) {
-  //     alert("d is a descendant of an element with the id 'a'");
-  //   }
-  // }
-
   deleteAPopupEditor(){
     this.setState({formType: ""});
     // let parent = document.getElementsByClassName('track-show-body-right')[0];

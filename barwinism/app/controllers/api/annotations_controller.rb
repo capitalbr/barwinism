@@ -10,7 +10,6 @@ class Api::AnnotationsController < ApplicationController
   end
 
   def update
-    debugger
     @anno = Annotation.find(params[:id])
 
     if @anno.update(annotation_params)
