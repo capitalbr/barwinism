@@ -67,12 +67,13 @@ export default class TrackShow extends React.Component {
     e.preventDefault();
     this.deleteSelected();
     const annotation = {
+      id: this.props.annotations[this.id].id,
       body: document.getElementsByTagName("textarea")[0].value,
       track_id: this.state.track_id,
       anno_id: e.target.getAttribute("data-anno-id"),
       upvotes: this.state.upvotes
     }
-    this.props.createAnnotation(annotation);
+    this.props.updateAnnotation(annotation);
     
     let body = document.getElementsByClassName("theBody")[0].innerHTML;
     this.props.updateTrack({
@@ -104,18 +105,20 @@ export default class TrackShow extends React.Component {
     // if (oldPopup) {
     //   oldPopup.remove();
     // }
-    this.setState({ formType: "" });
+    if (this.state.formType !== "") {
+      this.setState({ formType: "" });
+    }
     const selection = window.getSelection();
-    let valid = selection.anchorNode.nodeName === "#text" && selection.anchorNode === selection.focusNode;
+    let valid = selection.anchorNode.nodeName === "#text" && 
+      selection.anchorNode === selection.focusNode &&
+      selection.anchorNode.parentNode === document.getElementsByClassName("theBody")[0];
     // selection.focusNode.nodeName
     // "#text"
 
     // if (window.getSelection().toString().length > 0) {
     //   document.getElementsByClassName('youTube')[0].classList.add('display-none');
     // }
-    
-    this.deleteSelected();
-
+    this.deleteSelected(false);
     // let id;
     if (selection.rangeCount && selection.toString().length > 0 && valid) {
       document.getElementsByClassName('youTube')[0].classList.add('display-none');
@@ -125,7 +128,7 @@ export default class TrackShow extends React.Component {
       replacement.setAttribute('id', this.id);
       replacement.setAttribute('class', 'parent');
 
-      replacement.setAttribute('class', 'delete-selected');
+      replacement.setAttribute('class', 'delete-selected highlight-blue');
     
       replacement.textContent = selection.toString();
       const range = selection.getRangeAt(0);
@@ -145,6 +148,8 @@ export default class TrackShow extends React.Component {
 
       let parent = document.getElementsByClassName('theBody')[0];
       this.pastLyrics = this.state.lyrics;
+
+      
       this.props.updateTrack({
         body: parent.innerHTML,
         id: this.state.track_id
@@ -177,7 +182,7 @@ export default class TrackShow extends React.Component {
         selection.toString().length > 0){
       // document.getElementsByClassName('youTube')[0].classList.remove('display-none');
       this.getAnno(e);
-    }
+    };
  }
 
 
@@ -215,23 +220,30 @@ deleteHighlighted(id){
   // toggles the boolean so it will be ready to allow 
   //the next form that pops up
   this.toggle = !this.toggle;
-  this.deleteSelected();
+  this.props.updateTrack({
+    body: parent.innerHTML,
+    id: this.state.track_id
+  }).then(this.setState({ lyrics: parent.innerHTML }))
+  // this.deleteSelected();
 }   
 
-deleteSelected() {
+deleteSelected(command = true) {
   let parent = document.getElementsByClassName('theBody')[0];
   
   const oldChildren = $('.delete-selected');
   
   oldChildren.each((i, child) => {
     const replacement = document.createTextNode(child.textContent);
-    parent.replaceChild(replacement, child);
+    // parent.replaceChild(replacement, child);
+    child.parentNode.replaceChild(replacement, child);
   })
   
-  this.props.updateTrack({
-    body: parent.innerHTML,
-    id: this.state.track_id
-  }).then(this.setState({lyrics: parent.innerHTML}))
+  if (oldChildren.length > 0 && command) {  
+    this.props.updateTrack({
+      body: parent.innerHTML,
+      id: this.state.track_id
+    }).then(this.setState({ lyrics: parent.innerHTML }));
+  }
 }   
 
 
@@ -290,25 +302,26 @@ hider(e, popup = false){
     //   oldPopup.remove();
     // }
     //ADDS HIGHLIGHTING TO THE NEWLY CREATED LYRIC SPAN 
-    document.getElementById(this.id).classList.add('highlight');
-    document.getElementById(this.id).classList.remove('delete-selected');
+    let currentAnno = document.getElementById(this.id)
+    currentAnno.classList.add('highlight');
+    currentAnno.classList.remove('delete-selected');
+    currentAnno.classList.remove('highlight-blue');
     
-    let anno = document.getElementById(this.id);
-    let y = window.scrollY + anno.getBoundingClientRect().top;
+    // let anno = document.getElementById(this.id);
+    let y = window.scrollY + currentAnno.getBoundingClientRect().top;
     let val = y - 565;
     if ((y - 565) < 0) {
       val = 0;
     }
     this.margin = val;
     
-    
     const annotation = {
-      body: "a;ljf;aljdf;lajsf;lajs;lfjas;lfjas;ldfsa;ldfj",
+      id: this.props.annotations[currentAnno.id].id,
       track_id: this.state.track_id,
       anno_id: this.id,
       upvotes: this.state.upvotes
     }
-    this.props.createAnnotation(annotation);
+    this.props.updateAnnotation(annotation);
 
     let body = document.getElementsByClassName("theBody")[0].innerHTML;
     this.props.updateTrack({
@@ -415,12 +428,20 @@ hider(e, popup = false){
     } else {
       this.hider(e);
       const current_annotation = this.props.annotations[e.target.id];
-      let current_annotation_marked = $(marked(current_annotation.body));
-      this.setState({ 
-        formType: "displayAnno",
-        current_anno: e.target.id,
-        anno_body: current_annotation_marked.html()
+      let current_annotation_marked;
+      if (current_annotation) {
+        current_annotation_marked = $(marked(current_annotation.body));
+        this.setState({ 
+          formType: "displayAnno",
+          current_anno: e.target.id,
+          anno_body: current_annotation_marked.html()
+          });
+      } else {
+        this.setState({
+          formType: "displayAnno",
+          current_anno: e.target.id
         });
+      }
       // this.setState({ current_anno: e.target.id });
       // const current_annotation = this.props.annotations[e.target.id];
       // let current_annotation_marked = $(marked(current_annotation.body));
@@ -433,7 +454,12 @@ hider(e, popup = false){
 
   showAnno(){
     let annoMargin = document.getElementById(this.state.current_anno);
-    let y = window.scrollY + annoMargin.getBoundingClientRect().top;
+    let y;
+    if (annoMargin) {
+      y = window.scrollY + annoMargin.getBoundingClientRect().top;
+    } else {
+      y = -565;
+    }
     let val = y - 565;
     if ((y - 565) < 0) {
       val = 0;

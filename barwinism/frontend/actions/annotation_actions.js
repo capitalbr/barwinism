@@ -6,6 +6,14 @@ export const RECEIVE_ANNO = "RECEIVE_ANNO";
 // THUNKS
 export const createAnnotation = (annotation) => {
   return dispatch => {
-    return AnnotationAPIUtil.createAnnotation(annotation).then(annotation => dispatch({type: RECEIVE_ANNOTATION, annotation}));
+    return AnnotationAPIUtil.createAnnotation(annotation)
+    .then(annotation => dispatch({type: RECEIVE_ANNOTATION, annotation}));
+  }
+}
+
+export const updateAnnotation = (annotation) => {
+  return dispatch => {
+    return AnnotationAPIUtil.updateAnnotation(annotation)
+    .then(annotation => dispatch({ type: RECEIVE_ANNOTATION, annotation }));
   }
 }
