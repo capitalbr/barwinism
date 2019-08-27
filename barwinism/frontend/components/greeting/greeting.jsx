@@ -32,7 +32,7 @@ class Greeting extends React.Component {
               placeholder="Search lyrics & more"
             />
           </form>
-          <Link className="logo-link" to="/"><img className="logo" src={window.logo} /></Link>
+          <Link className="logo-link" to="/"><div className="logo">CLEANIUS</div></Link>
           {links}
         </div>
         <div className="header-container-bottom">
