@@ -35,7 +35,7 @@
 
 .charts-item{
   display: flex;
-  min-width: 1190px;
+  width: 1190px;
   height: 80px;
   padding-left: 11px;
   padding-right: 11px;
@@ -77,6 +77,11 @@
   .attributes-container{
     display: flex;
   }
+  .attributes-container-img{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 55px;
+  }
   span{
     margin-left: 9px;
     letter-spacing: 1px;
@@ -84,6 +89,9 @@
     font-size: 11px;
     color: #929090;
     transform: translate(0px, 9.5px);
+  }
+  img{
+    zoom: 35%;
   }
 
 }

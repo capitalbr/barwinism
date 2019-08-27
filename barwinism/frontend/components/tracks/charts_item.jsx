@@ -20,6 +20,20 @@ const chartsItem = (props) => (
     <div className="charts-item-attributes">
       {props.track.artist}
     </div>
+
+    <div className="charts-item-attributes ">
+      <div className="attributes-container-img">
+        <div id="trending-views">
+          <img src={window.flame} />
+          40
+        </div>
+
+        <div id="all-time-views">
+          <img src={window.eye} />
+          50.3k
+        </div>
+      </div>
+    </div>
   </div>
 );
 
