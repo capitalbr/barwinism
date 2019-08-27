@@ -708,6 +708,9 @@ hider(e, popup = false){
        return(
          <div className="track-show-header-parent">
            <div className="track-show-header fade-in">
+            <div className="background-img-container">
+             <img src={this.props.track.song_art_url} />
+            </div>
             <div className='shadow'>
               <div className="inner-track-show-header">
                 <div className="outer-track-show-header-left">
