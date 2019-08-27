@@ -56,11 +56,32 @@ div h1.two{
 }
 
 div.errors{
-  font-family: Space Mono,sans-serif;
-  transform: translate(0px, -07px);  
-  text-align: center;
   font-size: small;
-  color: #ede8e9;
+  div{
+    margin-bottom: 26px;
+  }
+  span{
+    display: flex;
+    background-color: #991120;
+    height: 30px;
+    padding: 0px 26px 1px 26px;
+    align-items: center;
+  }
+  ul{
+    padding: 12px 25px 12px 25px;
+    background-color: #222222;
+    h5{
+      font-size: 12.5px;
+      margin-bottom: 8px;
+    }
+    li{
+      list-style-type: disc;
+      padding-top: 7px;
+      font-size: 14px;
+      font-weight: bold;
+      transform: translate(7px);
+    }
+  }
 }
 
 div.errors ul{
