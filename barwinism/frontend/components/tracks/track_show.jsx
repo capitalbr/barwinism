@@ -350,7 +350,7 @@ hider(e, popup = false){
   //   oldPopup.remove();
   // }
   
-  let val = e.target;
+  // let val = e.target;
   // if (oldForm && !this.toggle && !val.classList.contains('click-to-annotate')) {
   //   oldForm.remove();
     
@@ -491,7 +491,7 @@ hider(e, popup = false){
                   </button>
                     <button
                       className="annotation-cancel"
-                      onClick={this.deleteHighlighted.bind(this, id)}>
+                      onClick={(e) => this.onCancel(e, id)}>
                       Cancel
                   </button>
                   </div>
@@ -501,6 +501,13 @@ hider(e, popup = false){
         </div>
       </ClickAwayListener>
     )
+  }
+
+  onCancel(e, id){
+    e.preventDefault();
+    // this.deleteHighlighted.bind(this, id)
+    this.deleteHighlighted(id);
+    this.hider();
   }
 
   deleteAPopupEditor(){
