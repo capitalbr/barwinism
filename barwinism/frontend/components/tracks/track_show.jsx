@@ -20,7 +20,9 @@ export default class TrackShow extends React.Component {
       anno_body: "",
       popup: "",
       clickAway: false,
-      fetchedNews: false
+      fetchedNews: false,
+      shouldRenderProposal: false,
+      shouldSetFadeOut: false
     };
     this.toggle = true;
     this.count = 0;
@@ -45,6 +47,14 @@ export default class TrackShow extends React.Component {
     
 
     componentDidUpdate(prevProps){
+      
+      const editDiv = document.getElementById("editDiv");
+      if (editDiv) {
+        setTimeout(() => {
+          $("#editDiv").fadeOut(300);
+        }, 1000);
+      }
+
       if (!this.props.artist && this.props.track) {
         this.props.fetchArtist(this.props.track.artist_id);
       }
@@ -640,7 +650,23 @@ hider(e, popup = false){
     if (this.state.editForm === false) {
       this.setState({editForm: true});
     } else {
-      this.setState({editForm: false});
+      this.setState({
+        editForm: false,
+        shouldRenderProposal: true,
+        shouldSetFadeOut: true
+      });
+    }
+  }
+
+  renderProposal(){
+    let trackTitle;
+    if (this.props.track) {
+      trackTitle = this.props.track.title
+    }
+    if (this.state.shouldRenderProposal) {
+      return <div id="editDiv">You created a lyric proposal for {trackTitle}</div>
+    } else {
+      return;
     }
   }
 
@@ -742,7 +768,22 @@ hider(e, popup = false){
       trackArtist = this.props.artist.name
     }
 
+    let editOrSubmit;
+    if (this.state.editForm) {
+      editOrSubmit = "Propose This Edit"
+    } else {
+      editOrSubmit = "Edit Lyrics"
+    }
 
+    
+    // if (this.state.shouldSetFadeOut) {
+    //   let editScript = <script>
+    //     setTimeout(() => {
+    //       $("editDiv").fadeOut(300);
+    //     }, 1000);
+    //         </script>
+    //   this.state.shouldSetFadeOut = false;
+    // }
     // let clickAway;
     // if (this.state.clickAway === true){
     //   clickAway = <ClickAwayListener onClickAway={this.hider.bind(this)}>
@@ -783,8 +824,10 @@ hider(e, popup = false){
       <div className="track-show-body">
         <div className="track-show-body-left">
           <div className="track-show-body-left-edit">
-            <button onClick={this.showEdit.bind(this)}>Edit Lyrics</button>
+            <button onClick={this.showEdit.bind(this)}>{editOrSubmit}</button>
           </div>
+          {this.renderProposal()}
+            
           <div className="track-show-body-lyrics">
             <pre>
                 {editBody}
