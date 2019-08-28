@@ -28,8 +28,13 @@ export default class TrackShow extends React.Component {
     componentDidMount(){
       this.props.fetchTrack(this.props.match.params.trackId)
         .then(() => {
-          this.setState({
-          lyrics: this.props.track.body})
+          this.props.fetchSongNews(this.props.track.title.split(" ").join("+"))
+            .then( () => {
+              this.mounted = true;
+              this.setState({
+              lyrics: this.props.track.body
+              })
+            });
         })
     }
     
@@ -38,7 +43,7 @@ export default class TrackShow extends React.Component {
       if (!this.props.artist && this.props.track) {
         this.props.fetchArtist(this.props.track.artist_id);
       }
-
+     
       const bodyTag = document.getElementById('theBody');
       if (bodyTag) {
         const htmlLyrics = `<span>${this.state.lyrics}</span>`;
@@ -653,6 +658,24 @@ hider(e, popup = false){
     )
   }
 
+  renderPicture(num){
+    let picture = this.props.track.song_art_url;
+    if (picture) {
+      return picture;
+    } else {
+      if (this.props.news.length > 0) {
+        if (!this.onesWithImg) {
+          this.onesWithImg = this.props.news[0].filter(news => news.image);
+        }
+        // let num = Math.floor(Math.random() * this.onesWithImg.length);
+        return this.onesWithImg[num] ? this.onesWithImg[num].image.contentUrl : window.smiley;
+      } else if (this.mounted){
+        return window.smiley;
+      }
+    }
+  }
+
+
   render(){
     let formOutput;
     
@@ -709,13 +732,13 @@ hider(e, popup = false){
          <div className="track-show-header-parent">
            <div className="track-show-header fade-in">
             <div className="background-img-container">
-             <img src={this.props.track.song_art_url} />
+             <img src={this.renderPicture(1)} />
             </div>
             <div className='shadow'>
               <div className="inner-track-show-header">
                 <div className="outer-track-show-header-left">
                   <div className="inner-track-show-header-left">
-                   <img src={this.props.track.song_art_url} />
+                   <img src={this.renderPicture(2)} />
                   <div className="track-show-song-art">
                   </div>
                 </div>

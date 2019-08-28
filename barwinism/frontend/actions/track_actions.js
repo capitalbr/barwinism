@@ -1,8 +1,11 @@
 import * as TrackAPIUtil from "../util/track_util";
 import {RECEIVE_SESSION_ERRORS, receiveErrors} from "./session_actions"
+import { RECEIVE_NEWS } from "../actions/splash_actions";
+
 
 export const RECEIVE_TRACK = "RECEIVE_TRACK";
 export const RECEIVE_ALL_TRACKS = "RECEIVE_ALL_TRACKS";
+// export const RECEIVE_NEWS = "RECEIVE_NEWS";
 
 export const createTrack = track => {
   return dispatch => {
@@ -38,3 +41,18 @@ export const fetchTracks = () => {
     return TrackAPIUtil.fetchTracks().then(tracks => dispatch({type: RECEIVE_ALL_TRACKS, tracks}));
   }
 }
+
+export const fetchSongNews = (title) => {
+  return dispatch => {
+    return TrackAPIUtil.fetchSongNews(title).then(news => dispatch({ type: RECEIVE_NEWS, news }));
+  }
+}
+
+// export const fetchSongNews = (title) => dispatch => (
+//   TrackAPIUtil.fetchSongNews(title).then(songNews => (
+//     dispatch({ 
+//       type: RECEIVE_NEWS,
+//       songNews
+//     })
+//   ))
+// )
