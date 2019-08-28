@@ -19,23 +19,28 @@ export default class TrackShow extends React.Component {
       lyrics: "",
       anno_body: "",
       popup: "",
-      clickAway: false
+      clickAway: false,
+      fetchedNews: false
     };
     this.toggle = true;
     this.count = 0;
     this.refresh = true;
+    this.fetchSent = false;
   }
     componentDidMount(){
       this.props.fetchTrack(this.props.match.params.trackId)
-        .then(() => {
-          this.props.fetchSongNews(this.props.track.title.split(" ").join("+"))
-            .then( () => {
-              this.mounted = true;
-              this.setState({
-              lyrics: this.props.track.body
-              })
-            });
-        })
+        .then( () => {
+          this.setState({
+          lyrics: this.props.track.body
+        })})
+      
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
+        // .then(() => {
+        //   this.props.fetchSongNews(this.props.track.title.split(" ").join("+"))
+        //     .then( () => {
+        //       this.mounted = true;
+        //     });
+        // })
     }
     
 
@@ -43,7 +48,13 @@ export default class TrackShow extends React.Component {
       if (!this.props.artist && this.props.track) {
         this.props.fetchArtist(this.props.track.artist_id);
       }
-     
+      if (this.props.track && this.fetchSent === false){
+        this.fetchSent = true;
+        this.props.fetchSongNews(this.props.track.title.split(" ").join("+"))
+        .then(() => {
+          this.setState({fetchedNews: true});
+        });
+      }
       const bodyTag = document.getElementById('theBody');
       if (bodyTag) {
         const htmlLyrics = `<span>${this.state.lyrics}</span>`;
@@ -659,9 +670,14 @@ hider(e, popup = false){
   }
 
   renderPicture(num){
-    let picture = this.props.track.song_art_url;
-    if (picture) {
-      return picture;
+    let picture;
+    if (this.props.track) {
+      picture = this.props.track.song_art_url;
+    }
+    
+    if (picture) return picture;
+    if (!this.state.fetchedNews) {
+      return;
     } else {
       if (this.props.news.length > 0) {
         if (!this.onesWithImg) {
@@ -711,10 +727,21 @@ hider(e, popup = false){
     
     let youTube;
     if (this.props.track && this.props.track.youtube_url) {
-      youTube = this.embedYoutube();
+      youTube = <div className="youTube">
+        <div>Music Video</div>
+        {this.embedYoutube()}
+        </div>;
     } else {
       youTube = ""
     }
+    let trackTitle, trackArtist, trackId;
+    if (this.props.track) {
+      trackTitle = this.props.track.title
+      trackId = this.props.track.id
+    } else if (this.props.artist){
+      trackArtist = this.props.artist.name
+    }
+
 
     // let clickAway;
     // if (this.state.clickAway === true){
@@ -724,87 +751,70 @@ hider(e, popup = false){
     // } else {
     //   clickAway = <div className="display-hidden" id="popup"></div>
     // }
-
-    
-    if (this.props.track && this.props.artist){
-     
-       return(
-         <div className="track-show-header-parent">
-           <div className="track-show-header fade-in">
-            <div className="background-img-container">
-             <img src={this.renderPicture(1)} />
-            </div>
-            <div className='shadow'>
-              <div className="inner-track-show-header">
-                <div className="outer-track-show-header-left">
-                  <div className="inner-track-show-header-left">
-                   <img src={this.renderPicture(2)} />
-                  <div className="track-show-song-art">
-                  </div>
-                </div>
-                </div>
-                
-                <div className="track-show-info">
-                  <h1>{this.props.track.title}</h1>
-                  <h2>{this.props.artist.name}</h2>
-                  <div>
-                    <span>Albums</span>
-                    <ul><a href={`#/tracks/${this.props.track.id}`}>{albumsHolder}</a></ul>
-                  </div>
-                  
-                </div>
-              </div>
-              <div className="inner-track-show-header-right"></div>
-            </div>
-          </div>
-          <div className="track-show-body">
-            <div className="track-show-body-left">
-              <div className="track-show-body-left-edit">
-                <button onClick={this.showEdit.bind(this)}>Edit Lyrics</button>
-              </div>
-              <div className="track-show-body-lyrics">
-                <pre>
-                   {editBody}
-                </pre>
-                 
-              </div>
-                <div className="track-show-body-end-flex">
-                  
-                  
-                  <div className="track-show-img-button">
-                    <button >
-                    <img className="logo" src={window.fb} />
-                    </button>
-                  </div>
-                  <div className="track-show-body-end">
-                    <button >Follow</button>
-                    <button >Embed</button>
-                  </div>
-                  
-               </div>
-            </div>
-             <div className="track-show-body-right">
-                {formOutput}
-                {/* {clickAway} */}
-                <div id="popup"></div>
-
-                
-                <div className="youTube">
-                  <div>Music Video</div>
-                  {youTube}
-                </div>
-            </div>
-          </div>
+    return(
+      <div className="track-show-header-parent">
+        <div className="track-show-header fade-in">
+        <div className="background-img-container">
+          <img src={this.renderPicture(1)} />
         </div>
-      )
-    } else {
-      return(
-        <div>...loading</div>
-      )
-    }
-
-    
-   
+        <div className='shadow'>
+          <div className="inner-track-show-header">
+            <div className="outer-track-show-header-left">
+              <div className="inner-track-show-header-left">
+                <img src={this.renderPicture(2)} />
+              <div className="track-show-song-art">
+              </div>
+            </div>
+            </div>
+            
+            <div className="track-show-info">
+              <h1>{trackTitle}</h1>
+              <h2>{trackArtist}</h2>
+              <div>
+                <span>Albums</span>
+                <ul><a href={`#/tracks/${trackId}`}>{albumsHolder}</a></ul>
+              </div>
+              
+            </div>
+          </div>
+          <div className="inner-track-show-header-right"></div>
+        </div>
+      </div>
+      <div className="track-show-body">
+        <div className="track-show-body-left">
+          <div className="track-show-body-left-edit">
+            <button onClick={this.showEdit.bind(this)}>Edit Lyrics</button>
+          </div>
+          <div className="track-show-body-lyrics">
+            <pre>
+                {editBody}
+            </pre>
+              
+          </div>
+            <div className="track-show-body-end-flex">
+              
+              
+              <div className="track-show-img-button">
+                <button >
+                <img className="logo" src={window.fb} />
+                </button>
+              </div>
+              <div className="track-show-body-end">
+                <button >Follow</button>
+                <button >Embed</button>
+              </div>
+              
+            </div>
+        </div>
+          <div className="track-show-body-right">
+            {formOutput}
+            {/* {clickAway} */}
+            <div id="popup"></div>
+              {youTube}
+        </div>
+      </div>
+    </div>
+    )
   }
 
 }

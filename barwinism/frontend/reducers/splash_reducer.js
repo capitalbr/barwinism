@@ -6,6 +6,8 @@ const splashReducer = (oldState = {}, action) => {
   switch (action.type) {
     case RECEIVE_NEWS:
       return { news: action.news.value };
+    case "CLEAR_NEWS":
+      return { news: []}
     default:
       return oldState;
   }

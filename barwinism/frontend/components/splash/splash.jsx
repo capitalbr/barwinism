@@ -10,6 +10,7 @@ export default class Splash extends React.Component {
   }
 
   componentDidMount() {
+    this.props.clearNews()
     this.props.fetchNews()
   }
 
@@ -39,8 +40,6 @@ export default class Splash extends React.Component {
       let image;
       if (story.image) {
         image = story.image.contentUrl
-      } else {
-        image = window.smiley
       }
       return <li key={`${story.name}${idx + 1}`} className={storyClass}>
         <a href={story.url}><div>

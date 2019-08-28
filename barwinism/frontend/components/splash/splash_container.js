@@ -13,7 +13,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
   return ({
-    fetchNews: () => dispatch(fetchNews())
+    fetchNews: () => dispatch(fetchNews()),
+    clearNews: () => dispatch({type: "CLEAR_NEWS"})
   })
 }
 
