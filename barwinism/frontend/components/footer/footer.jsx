@@ -30,7 +30,7 @@ class Footer extends React.Component {
           <a href="#">Contact Us</a>
           <a href="#">Sign Out</a>
         </div>
-        <div>© 2019 Barwinism Media Group Inc.</div>
+        <div>© 2019 Cleanius Media Group Inc.</div>
       </div>
        
     )

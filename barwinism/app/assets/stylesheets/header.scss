@@ -97,7 +97,10 @@ form.search input{
 
 header div.logo{
   position: absolute;
-  transform: translate(-115px, 5.5px);
+  // WITH SEARCH
+  // transform: translate(-115px, 5.5px);
+  //WITHOUT SEARCH
+  transform: translate(-4px, 5.5px);
   text-shadow: -3.2px 3.2px 1px black;
   color: #FCFC64;
   background: #FCFC64;

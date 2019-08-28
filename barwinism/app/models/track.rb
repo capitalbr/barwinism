@@ -1,6 +1,9 @@
 class Track < ApplicationRecord
   validates_length_of :body, :maximum => 20000
-  validates :artist_input, :album_input, length: { minimum: 1 }, allow_nil: true
+  validates :body, presence: true
+  validates :artist_input, :album_input, presence: true, allow_nil: true
+  validates :title, uniqueness: true, presence: true
+  validates :primary_tag, presence: true
   belongs_to :artist
 
   has_many :track_album_joins,

@@ -26,7 +26,7 @@ export default class CreateTrack extends React.Component {
     e.preventDefault();
     this.props.createTrack(this.state)
     .then(payload => {
-      return this.props.history.push(`/tracks/${payload.track.id}`)
+      return this.props.history.push(`/tracks/${payload.payload.track.id}`)
     })
     
   }
@@ -52,12 +52,32 @@ export default class CreateTrack extends React.Component {
     ele.appendChild(outerDiv);
   }
 
+  renderErrors() {
+    if (this.props.errors.length < 1) {
+      return;
+    }
+    return (
+      <div>
+        <span>Whoops</span>
+        <ul>
+          <h5>There must be some mistake</h5>
+          {this.props.errors.map((error, i) => (
+            <li key={`error-${i}`}>
+              {error}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+
   render() {
     return(
       <div className="add-track-color">
          <div className="add-track-container">
           <div className="add-track-main">
             <h1>Add Song</h1>
+            <div className="errors">{this.renderErrors()}</div>
             <small>* required</small>
             <form onSubmit={this.handleSubmit.bind(this)}>
               <h3>Primary Info</h3>
@@ -180,7 +200,7 @@ export default class CreateTrack extends React.Component {
                     </label>
                   </div>
                   <div className="additional-info-audio-video album">
-                    <div className="heading">Albums, and additional tags</div>
+                    <div className="heading">Albums, and secondary tag</div>
                       <div>
                         <label>Album:</label>
                         <br/>

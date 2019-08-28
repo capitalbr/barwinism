@@ -35,7 +35,7 @@
 
 .charts-item{
   display: flex;
-  width: 1190px;
+  width: 1167px;
   height: 80px;
   padding-left: 11px;
   padding-right: 11px;
@@ -51,12 +51,18 @@
 
 #charts div.rank{
     width: 69px;
-    margin-right: 20px;
+    margin-right: 42px;
     display: flex;
     flex-direction: column;
     align-self: center;
     font-size: 24px;
     font-family: Programme, sans-serif;
+}
+
+#charts div #artist-name{
+  div{
+    margin-left: 87px;
+  }
 }
 
 #charts div.thumbnail{
@@ -79,8 +85,26 @@
   }
   .attributes-container-img{
     display: flex;
-    justify-content: space-between;
-    padding-left: 55px;
+    // justify-content: space-between;
+    padding-left: 65px;
+    width: 185px;
+    .views-trending{
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      width: 123px;
+      p{
+        color: rgb(252, 39, 100);
+      }
+    }
+    .views-all-time{
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+    }
+    p{
+      margin-left: 5px;
+    }
   }
   span{
     margin-left: 9px;

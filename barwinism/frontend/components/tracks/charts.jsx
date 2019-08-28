@@ -18,7 +18,7 @@ export default class CreateTrack extends React.Component {
     return(
       <div id="charts"> 
         <div id="charts-inner-div">
-          <h1>CHARTS</h1>
+          <h1>ALL SONGS</h1>
         </div>
         <div id="charts-lower-div">
           <ul>{list}</ul>
