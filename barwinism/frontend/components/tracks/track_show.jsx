@@ -51,8 +51,8 @@ export default class TrackShow extends React.Component {
       const editDiv = document.getElementById("editDiv");
       if (editDiv) {
         setTimeout(() => {
-          $("#editDiv").fadeOut(300);
-        }, 1000);
+          $("#editDiv").fadeOut(1400);
+        }, 2500);
       }
 
       if (!this.props.artist && this.props.track) {
@@ -66,7 +66,7 @@ export default class TrackShow extends React.Component {
         });
       }
       const bodyTag = document.getElementById('theBody');
-      if (bodyTag) {
+      if (bodyTag && !this.state.editForm) {
         const htmlLyrics = `<span>${this.state.lyrics}</span>`;
         $(bodyTag).empty();
         $(bodyTag).append($(htmlLyrics).addClass("theBody"));
@@ -664,20 +664,27 @@ hider(e, popup = false){
       trackTitle = this.props.track.title
     }
     if (this.state.shouldRenderProposal) {
-      return <div id="editDiv">You created a lyric proposal for {trackTitle}</div>
-    } else {
-      return;
+      let oldEditMessage = document.getElementById("editDiv");
+      if (oldEditMessage) {
+        // oldEditMessage.parentNode.removeChild(oldEditMessage);
+        oldEditMessage.style.display = null;
+      } else {
+        return <div id="editDiv">You created a lyric proposal for {trackTitle}</div>
+      }
     }
   }
 
   renderEditBody(){
-    const htmlLyrics = `<span>${this.state.body}</span>`;
     let ele = document.createElement('div');
-    ele.innerHTML = htmlLyrics;
+    ele.innerHTML = this.state.lyrics;
+    // debugger
+    for (let i = 0; i < ele.children.length; i++) { 
+      const replacement = document.createTextNode(ele.children[i].textContent);
+      ele.replaceChild(replacement, ele.children[i]);
+    }
     let value= ele.textContent;
-    
     return(
-      <div contentEditable="true" id="theBody" defaultValue={value}></div>
+      <div contentEditable="true" id="theBody">{value}</div>
     )
   }
 
