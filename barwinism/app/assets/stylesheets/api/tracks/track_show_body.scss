@@ -396,14 +396,15 @@ div.tools span.tools-content{
 }
 
 .track-show-img-button img{
-  height: 35px;
+  height: 100%;
+  width: 37px
 }
 
 .track-show-img-button{
   display: flex;
 }
 
-.track-show-img-button button {
+.track-show-img-button .fb-share-button {
   background: linear-gradient(to bottom,#fff 80%,rgba(255,255,255,0));
   z-index: 3;
   padding: 0px;
@@ -412,6 +413,7 @@ div.tools span.tools-content{
   top: 0;
   align-self: center;
   margin-right: 7px;
+  height: fit-content;
 }
 
 .track-show-body-end-flex{
