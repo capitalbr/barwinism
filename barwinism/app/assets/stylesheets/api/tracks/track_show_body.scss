@@ -37,6 +37,10 @@
   
 }
 
+[contentEditable=true]:empty:not(:focus):before{
+        content:attr(data-text)
+    }
+
 .track-show-body-left{
   width: 58%;
   padding: 0 1rem;
@@ -274,12 +278,29 @@ div.tools span.tools-content{
     
 
 // APPENDED TO LYRICS
-.track-show-body-lyrics span.click-to-annotate{
- 
-  height: 100px;
-      position: absolute;
-    transform: translate(400px, -30px);
-    width: 200px;
+.track-show-body-right span.click-to-annotate{
+  // height: 100px;
+  // position: absolute;
+  transform: translate(0px, -10px);
+  width: 256px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-left: 4px solid #99A7EE;
+  position: absolute;
+  div{
+    border: 2px solid;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+    height: fit-content;
+    padding: 7px;
+    font-weight: bold;
+    font-family: 'Allerta', sans-serif;
+    font-size: 15px;
+  }
 }
 
 
@@ -317,11 +338,12 @@ div.tools span.tools-content{
   cursor: pointer;
   border-color: #000;
   border-width: .15rem;
-  font-family: 'Allerta', sans-serif;;
+  font-family: 'Allerta', sans-serif;
   font-size: 1rem;
   line-height: 1.4rem;
   padding: .25rem .5rem;
   box-sizing: border-box;
+  outline: none;
 }
 
 .track-show-body-lyrics{
@@ -337,7 +359,17 @@ div.tools span.tools-content{
 
 .highlight{
   background-color: #fff2ac;
-    background-image: linear-gradient(to right, #ffe359 0%, #fff2ac 100%)
+  background-image: linear-gradient(to right, #ffe359 0%, #fff2ac 100%);
+  cursor: pointer;
+  user-select: none;
+}
+
+.highlight-blue{
+  height: 20px;
+  background-color: #B4D7FE;
+  background-image: linear-gradient(to right, rgb(119, 183, 255) 0%, #B4D7FE 100%);
+  cursor: pointer;
+  user-select: none;
 }
 
 .track-show-body-end{
@@ -360,6 +392,7 @@ div.tools span.tools-content{
   box-sizing: border-box;
   margin-left: 4px;
   margin-right: 8px;
+  outline: none;
 }
 
 .track-show-img-button img{
@@ -421,4 +454,15 @@ div.tools span.tools-content{
   cursor: default;
  }
 
+
+ #editDiv{
+   position: absolute;
+   border: 3px solid #99A7EE;
+   padding: 12px;
+   border-radius: 20px;
+  //  transform: translate(-320px, 400px);
+   transform: translate(-13px, -58px);
+   z-index: 3;
+   background: white;
+ }
 

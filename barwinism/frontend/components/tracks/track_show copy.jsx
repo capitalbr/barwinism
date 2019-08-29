@@ -19,54 +19,28 @@ export default class TrackShow extends React.Component {
       lyrics: "",
       anno_body: "",
       popup: "",
-      clickAway: false,
-      fetchedNews: false,
-      shouldRenderProposal: false,
-      shouldSetFadeOut: false
+      clickAway: false
     };
     this.toggle = true;
     this.count = 0;
     this.refresh = true;
-    this.fetchSent = false;
   }
     componentDidMount(){
       this.props.fetchTrack(this.props.match.params.trackId)
-        .then( () => {
+        .then(() => {
           this.setState({
-          lyrics: this.props.track.body
-        })})
-      
-      document.body.scrollTop = document.documentElement.scrollTop = 0;
-        // .then(() => {
-        //   this.props.fetchSongNews(this.props.track.title.split(" ").join("+"))
-        //     .then( () => {
-        //       this.mounted = true;
-        //     });
-        // })
+          lyrics: this.props.track.body})
+        })
     }
     
 
     componentDidUpdate(prevProps){
-      
-      const editDiv = document.getElementById("editDiv");
-      if (editDiv) {
-        setTimeout(() => {
-          $("#editDiv").fadeOut(1400);
-        }, 2500);
-      }
-
       if (!this.props.artist && this.props.track) {
         this.props.fetchArtist(this.props.track.artist_id);
       }
-      if (this.props.track && this.fetchSent === false){
-        this.fetchSent = true;
-        this.props.fetchSongNews(this.props.track.title.split(" ").join("+"))
-        .then(() => {
-          this.setState({fetchedNews: true});
-        });
-      }
+
       const bodyTag = document.getElementById('theBody');
-      if (bodyTag && !this.state.editForm) {
+      if (bodyTag) {
         const htmlLyrics = `<span>${this.state.lyrics}</span>`;
         $(bodyTag).empty();
         $(bodyTag).append($(htmlLyrics).addClass("theBody"));
@@ -92,46 +66,28 @@ export default class TrackShow extends React.Component {
   }
 
   onSave(e){
-    // document.getElementsByClassName('youTube')[0].classList.remove('display-none');
-    
+    document.getElementsByClassName('youTube')[0].classList.remove('display-none');
+
     e.preventDefault();
     this.deleteSelected();
-    let id = this.id || this.state.current_anno;
     const annotation = {
-      id: this.props.annotations[id].id,
+      id: this.props.annotations[this.id].id,
       body: document.getElementsByTagName("textarea")[0].value,
       track_id: this.state.track_id,
       anno_id: e.target.getAttribute("data-anno-id"),
       upvotes: this.state.upvotes
     }
+    this.props.updateAnnotation(annotation);
     
-    // if(this.state.current_anno){
-    //   this.id = "";
-    // }
+    let body = document.getElementsByClassName("theBody")[0].innerHTML;
+    this.props.updateTrack({
+      body: body,
+      id: this.props.track.id
+    });
     
-    this.props.updateAnnotation(annotation)
-      .then( () => {
-        // let body = document.getElementsByClassName("theBody")[0].innerHTML;
-
-        // this.props.updateTrack({
-        //   body: body,
-        //   id: this.props.track.id
-        // });
-    
-        this.setState({
-          formType: "displayAnno",
-          anno_body: document.getElementsByTagName("textarea")[0].value
-          // lyrics: body
-        })
-      
-      });
-    
-    
-
     // let annoEditor = document.getElementsByClassName('hidden')[0];
     // annoEditor.remove();
-    // this.setState({ formType: "" })
-    
+    this.setState({formType: ""})
   }
 
   embedYoutube(){
@@ -157,7 +113,7 @@ export default class TrackShow extends React.Component {
       this.setState({ formType: "" });
     }
     const selection = window.getSelection();
-    let valid = selection.anchorNode && selection.anchorNode.nodeName === "#text" && 
+    let valid = selection.anchorNode.nodeName === "#text" && 
       selection.anchorNode === selection.focusNode &&
       selection.anchorNode.parentNode === document.getElementsByClassName("theBody")[0];
     // selection.focusNode.nodeName
@@ -177,9 +133,6 @@ export default class TrackShow extends React.Component {
     }
     // let id;
     if (selection.rangeCount && selection.toString().length > 0 && valid) {
-      if (document.getElementsByClassName("hidden")[0]) {
-        this.deleteHighlighted(this.id)
-      }
       document.getElementsByClassName('youTube')[0].classList.add('display-none');
       const replacement = document.createElement('span');
       this.id = `${this.props.track.id}-${Math.random()}`;
@@ -237,16 +190,13 @@ export default class TrackShow extends React.Component {
       
       // // ReactDOM.render(<Root store={store} />, root);
       // targetDiv.appendChild(popup);
-    } else if (!e.target.classList.contains('delete-selected') &&
+    } else if ((selection.anchorNode === selection.focusNode &&
+        !e.target.classList.contains('delete-selected') &&
+        selection.toString().length > 0) ||
         selection.toString().length === 0){
-          if (document.getElementsByClassName("hidden")[0]){
-            this.deleteHighlighted(this.id)
-          }
+          
           this.getAnno(e);
         } else {
-          if (document.getElementsByClassName("hidden")[0]) {
-            this.deleteHighlighted(this.id)
-          }
           document.getElementsByClassName('youTube')[0].classList.remove('display-none');
           this.deleteSelected(true, true);
     };
@@ -255,13 +205,7 @@ export default class TrackShow extends React.Component {
 
 
  showPopup(){
-  if (!document.getElementById(this.id)) {
-    let video = document.getElementsByClassName('youTube')[0];
-    if (video) {
-      video.classList.remove('display-none');
-    }
-    return;
-  }
+  
   return(
     <ClickAwayListener onClickAway={ (e) => this.hider(e, true)}>
     <span 
@@ -279,36 +223,27 @@ export default class TrackShow extends React.Component {
   )
  }
 
-deleteHighlighted(id, noUpdate = false){
-  if (this.cancelButtonBackToDisplayAnno){
-    this.setState({formType: 'displayAnno'})
-    return;
-  }
+deleteHighlighted(id){
+  
   document.getElementsByClassName('youTube')[0].classList.remove('display-none');
   let parent = document.getElementsByClassName('theBody')[0];
   
   const oldChild = document.getElementById(id);
-  if (oldChild) {
-    const replacement = document.createTextNode(oldChild.textContent);
-    parent.replaceChild(replacement, oldChild);
-    
-    // DELETES THE FORM OFF OF THE PAGE
-    // this.deleteAPopupEditor();
+  const replacement = document.createTextNode(oldChild.textContent);
   
-    // toggles the boolean so it will be ready to allow 
-    //the next form that pops up
-    this.toggle = !this.toggle;
-  
-    if (!noUpdate) {
-      this.props.updateTrack({
-        body: parent.innerHTML,
-        id: this.state.track_id
-      }).then(this.setState({ lyrics: parent.innerHTML }))
-    }
-    // this.deleteSelected();
-  }
-  
+  parent.replaceChild(replacement, oldChild);
 
+  // DELETES THE FORM OFF OF THE PAGE
+  this.deleteAPopupEditor();
+
+  // toggles the boolean so it will be ready to allow 
+  //the next form that pops up
+  this.toggle = !this.toggle;
+  this.props.updateTrack({
+    body: parent.innerHTML,
+    id: this.state.track_id
+  }).then(this.setState({ lyrics: parent.innerHTML }))
+  // this.deleteSelected();
 }   
 
 deleteSelected(command = true, valid = false) {
@@ -339,23 +274,14 @@ hider(e, popup = false){
     if ( video ){
       video.classList.remove('display-none');
     }
-  // let lyrics;
-  // if (popup) {
-  //   // lyrics = this.pastLyrics;
-  //   this.deleteSelected(false);
-  //   lyrics = document.getElementsByClassName('theBody')[0].innerHTML; 
-  // } else {
-  //   lyrics = document.getElementsByClassName('theBody')[0].innerHTML; 
-  // }
-  
-  switch (popup) {
-    case true:
-      this.deleteSelected(false);
-    case "highlight":
-      this.deleteHighlighted(this.id, true);
+  let lyrics;
+  if (popup) {
+    // lyrics = this.pastLyrics;
+    this.deleteSelected(false);
+    lyrics = document.getElementsByClassName('theBody')[0].innerHTML; 
+  } else {
+    lyrics = document.getElementsByClassName('theBody')[0].innerHTML; 
   }
-
-  let lyrics = document.getElementsByClassName('theBody')[0].innerHTML;
 
   this.props.updateTrack({
       body: lyrics,
@@ -376,7 +302,7 @@ hider(e, popup = false){
   //   oldPopup.remove();
   // }
   
-  // let val = e.target;
+  let val = e.target;
   // if (oldForm && !this.toggle && !val.classList.contains('click-to-annotate')) {
   //   oldForm.remove();
     
@@ -389,7 +315,9 @@ hider(e, popup = false){
 // USING ONLY HTML DOM METHODS.
   annotationPopupEditor(){
     let video = document.getElementsByClassName('youTube')[0];
-    
+    if (video) {
+      video.classList.add('display-none');
+    }
 
     // REMOVES 'Start the Genius Annotation' POPUP
     // this.setState({ formType: "" });
@@ -399,45 +327,36 @@ hider(e, popup = false){
     // }
     //ADDS HIGHLIGHTING TO THE NEWLY CREATED LYRIC SPAN 
     let currentAnno = document.getElementById(this.id)
-    if (currentAnno) {
-      currentAnno.classList.add('highlight');
-      currentAnno.classList.remove('delete-selected');
-      currentAnno.classList.remove('highlight-blue');
-
-      if (video) {
-        video.classList.add('display-none');
-      }
-
-      // let anno = document.getElementById(this.id);
-      let y = window.scrollY + currentAnno.getBoundingClientRect().top;
-      let val = y - 565;
-      if ((y - 565) < 0) {
-        val = 0;
-      }
-      this.margin = val;
-      
-      const annotation = {
-        id: this.props.annotations[currentAnno.id].id,
-        track_id: this.state.track_id,
-        anno_id: this.id,
-        upvotes: this.state.upvotes
-      }
-      this.props.updateAnnotation(annotation);
-  
-      this.cancelButtonBackToDisplayAnno = false;
-
-      let body = document.getElementsByClassName("theBody")[0].innerHTML;
-      this.props.updateTrack({
-        body: body,
-        id: this.props.track.id
-      }).then( res => {
-        this.setState({ 
-          formType: "editAnno",
-          lyrics: this.props.track.body
-         });
-      })
-    }
+    currentAnno.classList.add('highlight');
+    currentAnno.classList.remove('delete-selected');
+    currentAnno.classList.remove('highlight-blue');
     
+    // let anno = document.getElementById(this.id);
+    let y = window.scrollY + currentAnno.getBoundingClientRect().top;
+    let val = y - 565;
+    if ((y - 565) < 0) {
+      val = 0;
+    }
+    this.margin = val;
+    
+    const annotation = {
+      id: this.props.annotations[currentAnno.id].id,
+      track_id: this.state.track_id,
+      anno_id: this.id,
+      upvotes: this.state.upvotes
+    }
+    this.props.updateAnnotation(annotation);
+
+    let body = document.getElementsByClassName("theBody")[0].innerHTML;
+    this.props.updateTrack({
+      body: body,
+      id: this.props.track.id
+    }).then( res => {
+      this.setState({ 
+        formType: "editAnno",
+        lyrics: this.props.track.body
+       });
+    })
 
 
 
@@ -445,39 +364,14 @@ hider(e, popup = false){
 
   showEditor(){
     
-    let id = this.id || this.state.current_anno ;
-    let annoMargin = document.getElementById(id);
-    let y;
-    if (annoMargin) {
-      y = window.scrollY + annoMargin.getBoundingClientRect().top;
-    } else {
-      y = -565;
-    }
-    let val = y - 565;
-    if ((y - 565) < 0) {
-      val = 0;
-    }
-
-    let styles = {
-      marginTop: `${val}px`,
-    };
-
-    let currentAnno = this.props.annotations[id]
-    if (currentAnno) {
-      currentAnno = currentAnno.body;
-    } else {
-      currentAnno = "";
-    }
 
     return (
-      <ClickAwayListener onClickAway={(e) => this.hider(e, "highlight")}>
+      <ClickAwayListener onClickAway={(e) => this.hider(e, true)}>
         <div
           className="hidden"
-          // style={{
-          //   marginTop: `${this.margin}px`
-          // }}
-          style={styles}
-          >
+          style={{
+            marginTop: `${this.margin}px`
+          }}>
           <img src={window.annotation_arrow} className="logo"/>
             <div className="annotation">
               <form id="editor-form">
@@ -485,9 +379,7 @@ hider(e, popup = false){
                   <textarea
                     id="editor"
                     placeholder="Don't just put the lyric in your own words-drop some knowledge!"
-                    defaultValue={currentAnno}
                   >
-                  
                   </textarea>
                   <div className="tools">
                     <div className="tools-title">
@@ -511,13 +403,13 @@ hider(e, popup = false){
                   <div className="button-div">
                     <button
                       className="annotation-save"
-                      data-anno-id={id}
+                      data-anno-id={this.id}
                       onClick={this.onSave.bind(this)}>
                       Save
                   </button>
                     <button
                       className="annotation-cancel"
-                      onClick={(e) => this.onCancel(e, id)}>
+                      onClick={this.deleteHighlighted.bind(this, this.id)}>
                       Cancel
                   </button>
                   </div>
@@ -527,13 +419,6 @@ hider(e, popup = false){
         </div>
       </ClickAwayListener>
     )
-  }
-
-  onCancel(e, id){
-    e.preventDefault();
-    // this.deleteHighlighted.bind(this, id)
-    this.deleteHighlighted(id);
-    this.hider();
   }
 
   deleteAPopupEditor(){
@@ -546,16 +431,14 @@ hider(e, popup = false){
   }
 
   getAnno(e){
-    
     e.preventDefault();
     if (e.target.id === "theBody" || e.target.id === "") {
-      return;
+      return
     } else {
       this.hider(e);
       const current_annotation = this.props.annotations[e.target.id];
       let current_annotation_marked;
       if (current_annotation) {
-        this.id = e.target.id;
         current_annotation_marked = $(marked(current_annotation.body));
         this.setState({ 
           formType: "displayAnno",
@@ -563,12 +446,10 @@ hider(e, popup = false){
           anno_body: current_annotation_marked.html()
           });
       } else {
-        debugger
-        // this.setState({
-        //   formType: "displayAnno",
-        //   current_anno: e.target.id
-        // });
-        return;
+        this.setState({
+          formType: "displayAnno",
+          current_anno: e.target.id
+        });
       }
       // this.setState({ current_anno: e.target.id });
       // const current_annotation = this.props.annotations[e.target.id];
@@ -580,19 +461,8 @@ hider(e, popup = false){
     }
   }
 
-  setFormType(e, type){
-    e.preventDefault();
-    switch (type) {
-      case "editAnno":
-        this.cancelButtonBackToDisplayAnno = true;
-        this.setState({formType: type});
-    }
-  }
-
   showAnno(){
-    let id = this.id || this.state.current_anno
-    // this.id = "";
-    let annoMargin = document.getElementById(id);
+    let annoMargin = document.getElementById(this.state.current_anno);
     let y;
     if (annoMargin) {
       y = window.scrollY + annoMargin.getBoundingClientRect().top;
@@ -623,10 +493,7 @@ hider(e, popup = false){
            
             <hr></hr>
             <div>
-              <button 
-                className="annotation-edit"
-                onClick={(e) => this.setFormType(e, "editAnno")}
-                >Edit</button>
+              <button className="annotation-edit">Edit</button>
             </div>
             <div>
               <div>
@@ -650,41 +517,18 @@ hider(e, popup = false){
     if (this.state.editForm === false) {
       this.setState({editForm: true});
     } else {
-      this.setState({
-        editForm: false,
-        shouldRenderProposal: true,
-        shouldSetFadeOut: true
-      });
-    }
-  }
-
-  renderProposal(){
-    let trackTitle;
-    if (this.props.track) {
-      trackTitle = this.props.track.title
-    }
-    if (this.state.shouldRenderProposal) {
-      let oldEditMessage = document.getElementById("editDiv");
-      if (oldEditMessage) {
-        // oldEditMessage.parentNode.removeChild(oldEditMessage);
-        oldEditMessage.style.display = null;
-      } else {
-        return <div id="editDiv">You created a lyric proposal for {trackTitle}</div>
-      }
+      this.setState({editForm: false});
     }
   }
 
   renderEditBody(){
+    const htmlLyrics = `<span>${this.state.body}</span>`;
     let ele = document.createElement('div');
-    ele.innerHTML = this.state.lyrics;
-    // debugger
-    for (let i = 0; i < ele.children.length; i++) { 
-      const replacement = document.createTextNode(ele.children[i].textContent);
-      ele.replaceChild(replacement, ele.children[i]);
-    }
+    ele.innerHTML = htmlLyrics;
     let value= ele.textContent;
+    
     return(
-      <div contentEditable="true" id="theBody">{value}</div>
+      <div contentEditable="true" id="theBody" defaultValue={value}></div>
     )
   }
 
@@ -701,29 +545,6 @@ hider(e, popup = false){
       ></p>
     )
   }
-
-  renderPicture(num){
-    let picture;
-    if (this.props.track) {
-      picture = this.props.track.song_art_url;
-    }
-    
-    if (picture) return picture;
-    if (!this.state.fetchedNews) {
-      return;
-    } else {
-      if (this.props.news.length > 0) {
-        if (!this.onesWithImg) {
-          this.onesWithImg = this.props.news[0].filter(news => news.image);
-        }
-        // let num = Math.floor(Math.random() * this.onesWithImg.length);
-        return this.onesWithImg[num] ? this.onesWithImg[num].image.contentUrl : window.smiley;
-      } else if (this.mounted){
-        return window.smiley;
-      }
-    }
-  }
-
 
   render(){
     let formOutput;
@@ -760,37 +581,11 @@ hider(e, popup = false){
     
     let youTube;
     if (this.props.track && this.props.track.youtube_url) {
-      youTube = <div className="youTube">
-        <div>Music Video</div>
-        {this.embedYoutube()}
-        </div>;
+      youTube = this.embedYoutube();
     } else {
       youTube = ""
     }
-    let trackTitle, trackArtist, trackId;
-    if (this.props.track) {
-      trackTitle = this.props.track.title
-      trackId = this.props.track.id
-    } else if (this.props.artist){
-      trackArtist = this.props.artist.name
-    }
 
-    let editOrSubmit;
-    if (this.state.editForm) {
-      editOrSubmit = "Propose This Edit"
-    } else {
-      editOrSubmit = "Edit Lyrics"
-    }
-
-    
-    // if (this.state.shouldSetFadeOut) {
-    //   let editScript = <script>
-    //     setTimeout(() => {
-    //       $("editDiv").fadeOut(300);
-    //     }, 1000);
-    //         </script>
-    //   this.state.shouldSetFadeOut = false;
-    // }
     // let clickAway;
     // if (this.state.clickAway === true){
     //   clickAway = <ClickAwayListener onClickAway={this.hider.bind(this)}>
@@ -799,72 +594,84 @@ hider(e, popup = false){
     // } else {
     //   clickAway = <div className="display-hidden" id="popup"></div>
     // }
-    return(
-      <div className="track-show-header-parent">
-        <div className="track-show-header fade-in">
-        <div className="background-img-container">
-          <img src={this.renderPicture(1)} />
-        </div>
-        <div className='shadow'>
-          <div className="inner-track-show-header">
-            <div className="outer-track-show-header-left">
-              <div className="inner-track-show-header-left">
-                <img src={this.renderPicture(2)} />
-              <div className="track-show-song-art">
+
+    
+    if (this.props.track && this.props.artist){
+     
+       return(
+         <div className="track-show-header-parent">
+           <div className="track-show-header fade-in">
+            <div className='shadow'>
+              <div className="inner-track-show-header">
+                <div className="outer-track-show-header-left">
+                  <div className="inner-track-show-header-left">
+                   <img src={this.props.track.song_art_url} />
+                  <div className="track-show-song-art">
+                  </div>
+                </div>
+                </div>
+                
+                <div className="track-show-info">
+                  <h1>{this.props.track.title}</h1>
+                  <h2>{this.props.artist.name}</h2>
+                  <div>
+                    <span>Albums</span>
+                    <ul><a href={`#/tracks/${this.props.track.id}`}>{albumsHolder}</a></ul>
+                  </div>
+                  
+                </div>
               </div>
-            </div>
-            </div>
-            
-            <div className="track-show-info">
-              <h1>{trackTitle}</h1>
-              <h2>{trackArtist}</h2>
-              <div>
-                <span>Albums</span>
-                <ul><a href={`#/tracks/${trackId}`}>{albumsHolder}</a></ul>
-              </div>
-              
+              <div className="inner-track-show-header-right"></div>
             </div>
           </div>
-          <div className="inner-track-show-header-right"></div>
-        </div>
-      </div>
-      <div className="track-show-body">
-        <div className="track-show-body-left">
-          <div className="track-show-body-left-edit">
-            <button onClick={this.showEdit.bind(this)}>{editOrSubmit}</button>
-          </div>
-          {this.renderProposal()}
-            
-          <div className="track-show-body-lyrics">
-            <pre>
-                {editBody}
-            </pre>
-              
-          </div>
-            <div className="track-show-body-end-flex">
-              
-              
-              <div className="track-show-img-button">
-                <button >
-                <img className="logo" src={window.fb} />
-                </button>
+          <div className="track-show-body">
+            <div className="track-show-body-left">
+              <div className="track-show-body-left-edit">
+                <button onClick={this.showEdit.bind(this)}>Edit Lyrics</button>
               </div>
-              <div className="track-show-body-end">
-                <button >Follow</button>
-                <button >Embed</button>
+              <div className="track-show-body-lyrics">
+                <pre>
+                   {editBody}
+                </pre>
+                 
               </div>
-              
+                <div className="track-show-body-end-flex">
+                  
+                  
+                  <div className="track-show-img-button">
+                    <button >
+                    <img className="logo" src={window.fb} />
+                    </button>
+                  </div>
+                  <div className="track-show-body-end">
+                    <button >Follow</button>
+                    <button >Embed</button>
+                  </div>
+                  
+               </div>
             </div>
+             <div className="track-show-body-right">
+                {formOutput}
+                {/* {clickAway} */}
+                <div id="popup"></div>
+
+                
+                <div className="youTube">
+                  <div>Music Video</div>
+                  {youTube}
+                </div>
+            </div>
+          </div>
         </div>
-          <div className="track-show-body-right">
-            {formOutput}
-            {/* {clickAway} */}
-            <div id="popup"></div>
-              {youTube}
-        </div>
-      </div>
-    </div>
-    )
+      )
+    } else {
+      return(
+        <div>...loading</div>
+      )
+    }
+
+    
+   
   }
 
 }

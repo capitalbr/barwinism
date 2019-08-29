@@ -1,15 +1,15 @@
 .track-show-header{
-  background-image: image-url("genius_smiley.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-size: cover;
+  // background-image: image-url("genius_smiley.png");
+  // background-size: contain;
+  // background-repeat: no-repeat;
+  // background-size: cover;
+  // background-position: center;
   height: 300px;
-  background-position: center;
   position: relative;
 }
 
 .inner-track-show-header{
-  background: rgba(0,0,0,.6);
+  background: rgba(0, 0, 0, 0.5);
   background-size: contain;
   background-repeat: no-repeat;
   background-size: cover;
@@ -30,16 +30,16 @@
 }
 
 .inner-track-show-header-left{
-  background-image: image-url("genius_smiley.png");
+  // background-image: image-url("genius_smiley.png");
+  // background-size: cover;
+  // background-repeat: no-repeat;
+  // background-position: center;
+  // background-color: #000;
   width: 220px;
   box-sizing: border-box;
   padding: 0 1rem;
-  background-repeat: no-repeat;
-  background-size: cover;
   height: 210px;
-  background-position: center;
   transform: translate(-20px, 60px);
-  background-color: #000;
   width: 100%;
   padding-bottom: 100%;
   position: relative;
@@ -56,7 +56,7 @@
 }
 
 .inner-track-show-header-left img{
-  object-fit: contain;
+  object-fit: cover;
   width: 100%;
   height: 100%;
   position: absolute;
@@ -120,3 +120,16 @@
   min-height: 67vw;
 }
 
+.background-img-container{
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  max-height: 100%;
+  overflow: hidden;
+  img{
+    zoom: 870%;
+  }
+}

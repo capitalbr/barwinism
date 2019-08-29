@@ -20,14 +20,21 @@ class SessionForm extends React.Component {
   }
   
   renderErrors() {
+    if (this.props.errors.length < 1) {
+      return;
+    }
     return (
-      <ul>
-        {this.props.errors.map((error, i) => (
-          <li key={`error-${i}`}>
-            {error}
-          </li>
-        ))}
-      </ul>
+      <div>
+        <span>Whoops</span>
+        <ul>
+          <h5>There must be some mistake</h5>
+          {this.props.errors.map((error, i) => (
+            <li key={`error-${i}`}>
+              {error}
+            </li>
+          ))}
+        </ul>
+      </div>
     );
   }
 
@@ -52,6 +59,7 @@ class SessionForm extends React.Component {
   renderSignup(){
     return(
       <form onSubmit={this.handleSubmit}>
+        <div className="errors">{this.renderErrors()}</div>
         <div>
           <label>
             USERNAME
@@ -151,6 +159,7 @@ class SessionForm extends React.Component {
         </div>
 
         <form onSubmit={this.handleSubmit}>
+          <div className="errors">{this.renderErrors()}</div>
           <div>
             <label>
             USERNAME or EMAIL
@@ -209,9 +218,8 @@ class SessionForm extends React.Component {
 
         <div className="toggle-button">{formType}</div>               
           <div>  
-           {formToggle}
+            {formToggle}
           </div>        
-        <div className="errors">{this.renderErrors()}</div>
       </div>
     )
   }  

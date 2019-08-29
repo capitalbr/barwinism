@@ -9,6 +9,14 @@ class Api::AnnotationsController < ApplicationController
     end
   end
 
+  def update
+    @anno = Annotation.find(params[:id])
+
+    if @anno.update(annotation_params)
+      render "api/annotations/show"
+    end
+  end
+
   private
   def annotation_params
     params.require(:annotation).permit(:track_id, :body, :upvotes, :anno_id)

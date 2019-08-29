@@ -13,24 +13,24 @@ class Footer extends React.Component {
       
       <div className="footer-top">
         <div>
-          <a href="#">About Genius</a>
-          <a href="#">Contributor Guidelines</a>
-          <a href="#">Press</a>
-          <a href="#">Advertise</a>
-          <a href="#">Event Space</a>
+          <a href="https://www.linkedin.com/in/bradley-b-53b118102/">About Genius</a>
+          <a href="https://www.linkedin.com/in/bradley-b-53b118102/">Contributor Guidelines</a>
+          <a href="https://www.linkedin.com/in/bradley-b-53b118102/">Press</a>
+          <a href="https://www.linkedin.com/in/bradley-b-53b118102/">Advertise</a>
+          <a href="https://www.linkedin.com/in/bradley-b-53b118102/">Event Space</a>
         </div>
         <div>
-          <a href="#">Privacy Policy</a>
-          <a href="#">Delete Account</a>
-          <a href="#">Licencing</a>
-          <a href="#">Jobs</a>
-          <a href="#">Developers</a>
-          <a href="#">Terms of Use</a>
-          <a href="#">Copyright Policy</a>
-          <a href="#">Contact Us</a>
-          <a href="#">Sign Out</a>
+          <a href="https://www.linkedin.com/in/bradley-b-53b118102/">Privacy Policy</a>
+          <a href="https://www.linkedin.com/in/bradley-b-53b118102/">Delete Account</a>
+          <a href="https://www.linkedin.com/in/bradley-b-53b118102/">Licencing</a>
+          <a href="https://www.linkedin.com/in/bradley-b-53b118102/">Jobs</a>
+          <a href="https://www.linkedin.com/in/bradley-b-53b118102/">Developers</a>
+          <a href="https://www.linkedin.com/in/bradley-b-53b118102/">Terms of Use</a>
+          <a href="https://www.linkedin.com/in/bradley-b-53b118102/">Copyright Policy</a>
+          <a href="https://www.linkedin.com/in/bradley-b-53b118102/">Contact Us</a>
+          <a href="https://www.linkedin.com/in/bradley-b-53b118102/">Sign Out</a>
         </div>
-        <div>© 2019 Barwinism Media Group Inc.</div>
+        <div>© 2019 Cleanius Media Group Inc.</div>
       </div>
        
     )

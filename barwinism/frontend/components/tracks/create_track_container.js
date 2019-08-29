@@ -4,6 +4,11 @@ import CreateTrack from "./create_track";
 import { connect } from 'react-redux';
 import { createTrack } from "../../actions/track_actions";
 
+const mapStateToProps = (state) => {
+  return ({
+    errors: state.errors.session
+  })
+}
 
 const mapDispatchToProps = (dispatch) => {
   return ({
@@ -11,4 +16,4 @@ const mapDispatchToProps = (dispatch) => {
   })
 }
 
-export default connect(null, mapDispatchToProps)(CreateTrack);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateTrack);

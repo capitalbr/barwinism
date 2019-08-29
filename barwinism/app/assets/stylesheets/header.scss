@@ -41,6 +41,7 @@ header .h-top nav a.header-top{
 
 header .h-top nav a.logo-link{
   padding: 0px;
+  text-decoration: none;
 }
 
 header .h-top nav a:hover{
@@ -94,9 +95,18 @@ form.search input{
   margin-left: 20px;
 }
 
-header img.logo{
+header div.logo{
   position: absolute;
-  transform: translate(-99px, 0px);
+  // WITH SEARCH
+  // transform: translate(-115px, 5.5px);
+  //WITHOUT SEARCH
+  transform: translate(-4px, 5.5px);
+  text-shadow: -3.2px 3.2px 1px black;
+  color: #FCFC64;
+  background: #FCFC64;
+  letter-spacing: 8px;
+  font-size: 22px;
+  font-family: arial, sans-serif;
 }
 
 .h-top2 nav{
