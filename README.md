@@ -1,9 +1,9 @@
-# Barwinism
+# Cleanius
 
 [See it live](https://barwinism.herokuapp.com/#/)
 
-Barwinism, a Genius clone, allows users to provide annotations and 
-interpretation of song lyrics, news stories, sources, poetry, and documents.
+Cleanius, a Genius clone, allows users to provide annotations and 
+interpretation of CLEAN song lyrics, news stories, sources, poetry, and documents.
 I made the backend using Ruby on Rails and PostgreSQL, while JavaScript powered by 
 React / Redux takes care of the frontend.
 
