@@ -2,6 +2,10 @@ import React from 'react';
 import marked from 'marked';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import ReactDOM from 'react-dom';
+import {
+  FacebookShareButton,
+  TwitterShareButton
+} from 'react-share';
 
 
 export default class TrackShow extends React.Component {
@@ -28,6 +32,7 @@ export default class TrackShow extends React.Component {
     this.count = 0;
     this.refresh = true;
     this.fetchSent = false;
+    this.stopRender = true;
   }
     componentDidMount(){
       this.props.fetchTrack(this.props.match.params.trackId)
@@ -53,6 +58,11 @@ export default class TrackShow extends React.Component {
         setTimeout(() => {
           $("#editDiv").fadeOut(1400);
         }, 2500);
+        if (this.stopRender) {
+          this.setState({ shouldRenderProposal: false });
+        } else {
+          this.stopRender = true;
+        }
       }
 
       if (!this.props.artist && this.props.track) {
@@ -648,13 +658,17 @@ hider(e, popup = false){
   showEdit(e){
     e.preventDefault();
     if (this.state.editForm === false) {
-      this.setState({editForm: true});
+      this.setState({
+        editForm: true
+      });
     } else {
+      this.stopRender = false;
       this.setState({
         editForm: false,
         shouldRenderProposal: true,
         shouldSetFadeOut: true
       });
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
     }
   }
 
@@ -845,13 +859,17 @@ hider(e, popup = false){
               
               
               <div className="track-show-img-button">
-                <button >
+                <FacebookShareButton
+                  // url={"localhost:3000/#" + this.props.match.url}
+                  className="fb-share-button"
+                  url="https://www.linkedin.com/in/bradley-b-53b118102/"
+                  quote={trackTitle}
+               >
                 <img className="logo" src={window.fb} />
-                </button>
+                </FacebookShareButton>
               </div>
               <div className="track-show-body-end">
-                <button >Follow</button>
-                <button >Embed</button>
+                <button >Share</button>
               </div>
               
             </div>
