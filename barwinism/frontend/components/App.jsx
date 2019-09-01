@@ -15,6 +15,7 @@ const App = () => (
   <div className="body-main-div">   
     <GreetingContainer />
     <Switch>
+      {/* <Route exact path="/wakemydyno.txt" component={}/> */}
       <ProtectedRoute exact path="/tracks/:trackId" component={TrackShowContainer}/>
       <ProtectedRoute exact path="/add-song" component={CreateTrackContainer}/>
       <ProtectedRoute exact path="/charts" component={ChartsContainer} />

@@ -208,7 +208,7 @@ export default class TrackShow extends React.Component {
       this.margin = y - 380;
 
       const annotation = {
-        body: "Your annotation is blank!",
+        body: "",
         track_id: this.state.track_id,
         anno_id: this.id,
         upvotes: this.state.upvotes
