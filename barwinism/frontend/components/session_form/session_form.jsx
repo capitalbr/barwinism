@@ -153,7 +153,7 @@ class SessionForm extends React.Component {
           <button className="button-signup google" onClick={this.guestUser.bind(this)}>
             <div>
               <i className="material-icons">email</i>
-              <p>Sign in with Google</p>
+              <p>GUEST LOGIN</p>
             </div>
           </button>
         </div>
