@@ -117,16 +117,19 @@ The 'add song' page handles the creation of multiple database entries including 
 ![add_song_page](https://user-images.githubusercontent.com/48269593/63220500-8422e500-c14e-11e9-8f27-1fb603fc074a.png)
 
 ### Technologies used
- 1.	JavaScript
- 2.	Ruby on Rails
- 3.	PostgreSQL
- 4.	HTML
- 5.	Sass / CSS3
+ *	JavaScript / Node
+ *	Ruby on Rails
+ *	PostgreSQL
+ *  Microsoft Azure
+ *  Webpack
+ *  Babel
+ *	Sass
 
 ### Libraries used:
 
 * React
 * Redux
+* Material-UI
 * jQuery (for AJAX)
 * Bcrypt for user authorization
 * Marked (A markdown parser and compiler. Built for speed)
@@ -134,11 +137,14 @@ The 'add song' page handles the creation of multiple database entries including 
 ### Features:
 
 * Sign up & log in with username & password
-* Create new tracks, albums, and artists.
-* Upload Youtube video for each track.
+* Auth and Protected Routes
 * Annotate highlighted selections as seen on Genius.com
-* Use markdown to udd pictures, links, & more to annotations.
+* Microsoft Azure's Bing News Search API to recreate Genius.com's News feature.
+* Create new tracks, albums, and artists.
+* Embedded youtube video for provided link.
+* Markdown editor to add pictures, links, & more to annotations.
 * Navigate to each track via the Charts page (index).
+* Edit lyrics and lyric annotations.
 
 ### Upcoming Features:
 
