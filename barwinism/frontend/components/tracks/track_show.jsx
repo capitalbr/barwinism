@@ -42,12 +42,6 @@ export default class TrackShow extends React.Component {
         })})
       
       document.body.scrollTop = document.documentElement.scrollTop = 0;
-        // .then(() => {
-        //   this.props.fetchSongNews(this.props.track.title.split(" ").join("+"))
-        //     .then( () => {
-        //       this.mounted = true;
-        //     });
-        // })
     }
     
 
@@ -102,7 +96,6 @@ export default class TrackShow extends React.Component {
   }
 
   onSave(e){
-    // document.getElementsByClassName('youTube')[0].classList.remove('display-none');
     
     e.preventDefault();
     this.deleteSelected();
@@ -115,33 +108,15 @@ export default class TrackShow extends React.Component {
       upvotes: this.state.upvotes
     }
     
-    // if(this.state.current_anno){
-    //   this.id = "";
-    // }
-    
     this.props.updateAnnotation(annotation)
       .then( () => {
-        // let body = document.getElementsByClassName("theBody")[0].innerHTML;
-
-        // this.props.updateTrack({
-        //   body: body,
-        //   id: this.props.track.id
-        // });
     
         this.setState({
           formType: "displayAnno",
           anno_body: document.getElementsByTagName("textarea")[0].value
-          // lyrics: body
         })
       
       });
-    
-    
-
-    // let annoEditor = document.getElementsByClassName('hidden')[0];
-    // annoEditor.remove();
-    // this.setState({ formType: "" })
-    
   }
 
   embedYoutube(){
@@ -159,10 +134,6 @@ export default class TrackShow extends React.Component {
   }  
 
   highlighter(e) {
-    // const oldPopup = document.getElementsByClassName('click-to-annotate')[0];
-    // if (oldPopup) {
-    //   oldPopup.remove();
-    // }
     if (this.state.formType !== "") {
       this.setState({ formType: "" });
     }
@@ -170,12 +141,7 @@ export default class TrackShow extends React.Component {
     let valid = selection.anchorNode && selection.anchorNode.nodeName === "#text" && 
       selection.anchorNode === selection.focusNode &&
       selection.anchorNode.parentNode === document.getElementsByClassName("theBody")[0];
-    // selection.focusNode.nodeName
-    // "#text"
-
-    // if (window.getSelection().toString().length > 0) {
-    //   document.getElementsByClassName('youTube')[0].classList.add('display-none');
-    // }
+    
     if (selection.toString().length > 0) {
       this.deleteSelected(false);
     } else {
@@ -185,7 +151,7 @@ export default class TrackShow extends React.Component {
         video.classList.remove('display-none');
       }
     }
-    // let id;
+    
     if (selection.rangeCount && selection.toString().length > 0 && valid) {
       if (document.getElementsByClassName("hidden")[0]) {
         this.deleteHighlighted(this.id)
@@ -227,26 +193,6 @@ export default class TrackShow extends React.Component {
         formType: 'displayPopup' 
       }))
 
-      // this.setState({ formType: 'displayPopup'});
-      // let popup = document.createElement('span');
-      // popup.addEventListener("click", this.annotationPopupEditor.bind(this));
-      // popup.setAttribute('class', 'click-to-annotate');
-      // let textNode = document.createTextNode("Start the Genius Annotation");
-      // popup.appendChild(textNode);
-
-      // // AFTER I SETUP THE HIDING OF THE RIGHT COLUMN ELEMENTS ON CLICK 
-      // //I'M GOING TO PUT THE 'textNode' IN THE RIGHT COLUMN
-      // let y = window.scrollY + replacement.getBoundingClientRect().top;
-      // popup.style.marginTop = `${y-380}px`;
-      // popup.style.height = 'fit-content';
-
-
-      // let right = document.getElementsByClassName('track-show-body-right');
-      // $(right).append($(popup));
-      // let targetDiv = document.getElementById("popup");
-      
-      // // ReactDOM.render(<Root store={store} />, root);
-      // targetDiv.appendChild(popup);
     } else if (!e.target.classList.contains('delete-selected') &&
         selection.toString().length === 0){
           if (document.getElementsByClassName("hidden")[0]){
@@ -302,11 +248,6 @@ deleteHighlighted(id, noUpdate = false){
     const replacement = document.createTextNode(oldChild.textContent);
     parent.replaceChild(replacement, oldChild);
     
-    // DELETES THE FORM OFF OF THE PAGE
-    // this.deleteAPopupEditor();
-  
-    // toggles the boolean so it will be ready to allow 
-    //the next form that pops up
     this.toggle = !this.toggle;
   
     if (!noUpdate) {
@@ -315,10 +256,8 @@ deleteHighlighted(id, noUpdate = false){
         id: this.state.track_id
       }).then(this.setState({ lyrics: parent.innerHTML }))
     }
-    // this.deleteSelected();
+    
   }
-  
-
 }   
 
 deleteSelected(command = true, valid = false) {
@@ -328,7 +267,6 @@ deleteSelected(command = true, valid = false) {
   
   oldChildren.each((i, child) => {
     const replacement = document.createTextNode(child.textContent);
-    // parent.replaceChild(replacement, child);
     child.parentNode.replaceChild(replacement, child);
   })
 
@@ -349,14 +287,6 @@ hider(e, popup = false){
     if ( video ){
       video.classList.remove('display-none');
     }
-  // let lyrics;
-  // if (popup) {
-  //   // lyrics = this.pastLyrics;
-  //   this.deleteSelected(false);
-  //   lyrics = document.getElementsByClassName('theBody')[0].innerHTML; 
-  // } else {
-  //   lyrics = document.getElementsByClassName('theBody')[0].innerHTML; 
-  // }
   
   switch (popup) {
     case true:
@@ -382,17 +312,8 @@ hider(e, popup = false){
   const oldForm = document.getElementsByClassName('hidden')[0];
     
   const oldPopup = document.getElementsByClassName('click-to-annotate')[0];
-  // if (oldPopup) {
-  //   oldPopup.remove();
-  // }
   
-  // let val = e.target;
-  // if (oldForm && !this.toggle && !val.classList.contains('click-to-annotate')) {
-  //   oldForm.remove();
-    
-  // }
   this.toggle = !this.toggle;
-
 }
   
 // TO PRACTICE FOR SITUATIONS WHERE I CAN'T USE JSX
@@ -400,13 +321,6 @@ hider(e, popup = false){
   annotationPopupEditor(){
     let video = document.getElementsByClassName('youTube')[0];
     
-
-    // REMOVES 'Start the Genius Annotation' POPUP
-    // this.setState({ formType: "" });
-    // const oldPopup = document.getElementsByClassName('click-to-annotate')[0];
-    // if (oldPopup) {
-    //   oldPopup.remove();
-    // }
     //ADDS HIGHLIGHTING TO THE NEWLY CREATED LYRIC SPAN 
     let currentAnno = document.getElementById(this.id)
     if (currentAnno) {
@@ -418,7 +332,6 @@ hider(e, popup = false){
         video.classList.add('display-none');
       }
 
-      // let anno = document.getElementById(this.id);
       let y = window.scrollY + currentAnno.getBoundingClientRect().top;
       let val = y - 565;
       if ((y - 565) < 0) {
@@ -483,9 +396,6 @@ hider(e, popup = false){
       <ClickAwayListener onClickAway={(e) => this.hider(e, "highlight")}>
         <div
           className="hidden"
-          // style={{
-          //   marginTop: `${this.margin}px`
-          // }}
           style={styles}
           >
           <img src={window.annotation_arrow} className="logo"/>
@@ -541,22 +451,15 @@ hider(e, popup = false){
 
   onCancel(e, id){
     e.preventDefault();
-    // this.deleteHighlighted.bind(this, id)
     this.deleteHighlighted(id);
     this.hider();
   }
 
   deleteAPopupEditor(){
     this.setState({formType: ""});
-    // let parent = document.getElementsByClassName('track-show-body-right')[0];
-    // let child = document.getElementsByClassName('hidden')[0];
-    // if (parent instanceof Node && child instanceof Node) {
-    //   parent.removeChild(child);
-    // }
   }
 
   getAnno(e){
-    
     e.preventDefault();
     if (e.target.id === "theBody" || e.target.id === "") {
       return;
@@ -574,19 +477,8 @@ hider(e, popup = false){
           });
       } else {
         debugger
-        // this.setState({
-        //   formType: "displayAnno",
-        //   current_anno: e.target.id
-        // });
         return;
       }
-      // this.setState({ current_anno: e.target.id });
-      // const current_annotation = this.props.annotations[e.target.id];
-      // let current_annotation_marked = $(marked(current_annotation.body));
-      // this.setState({
-      //   anno_body: current_annotation_marked.html()
-      // })
-   
     }
   }
 
@@ -601,7 +493,6 @@ hider(e, popup = false){
 
   showAnno(){
     let id = this.id || this.state.current_anno
-    // this.id = "";
     let annoMargin = document.getElementById(id);
     let y;
     if (annoMargin) {
@@ -680,7 +571,6 @@ hider(e, popup = false){
     if (this.state.shouldRenderProposal) {
       let oldEditMessage = document.getElementById("editDiv");
       if (oldEditMessage) {
-        // oldEditMessage.parentNode.removeChild(oldEditMessage);
         oldEditMessage.style.display = null;
       } else {
         return <div id="editDiv">You created a lyric proposal for {trackTitle}</div>
@@ -691,7 +581,6 @@ hider(e, popup = false){
   renderEditBody(){
     let ele = document.createElement('div');
     ele.innerHTML = this.state.lyrics;
-    // debugger
     for (let i = 0; i < ele.children.length; i++) { 
       const replacement = document.createTextNode(ele.children[i].textContent);
       ele.replaceChild(replacement, ele.children[i]);
@@ -702,16 +591,10 @@ hider(e, popup = false){
     )
   }
 
-  // prepareHighlighter(e){
-  //   // this.setState({ clickAway: true });
-  //   this.highlighter(e);
-  // }
-
   renderLyricBody(){
     return(
       <p id="theBody"
         onMouseUp={this.highlighter.bind(this)}
-        // onClick={this.getAnno.bind(this)}
       ></p>
     )
   }
@@ -730,7 +613,6 @@ hider(e, popup = false){
         if (!this.onesWithImg) {
           this.onesWithImg = this.props.news[0].filter(news => news.image);
         }
-        // let num = Math.floor(Math.random() * this.onesWithImg.length);
         return this.onesWithImg[num] ? this.onesWithImg[num].image.contentUrl : window.smiley;
       } else if (this.mounted){
         return window.smiley;
@@ -796,23 +678,6 @@ hider(e, popup = false){
       editOrSubmit = "Edit Lyrics"
     }
 
-    
-    // if (this.state.shouldSetFadeOut) {
-    //   let editScript = <script>
-    //     setTimeout(() => {
-    //       $("editDiv").fadeOut(300);
-    //     }, 1000);
-    //         </script>
-    //   this.state.shouldSetFadeOut = false;
-    // }
-    // let clickAway;
-    // if (this.state.clickAway === true){
-    //   clickAway = <ClickAwayListener onClickAway={this.hider.bind(this)}>
-    //       <div id="popup"></div>
-    //     </ClickAwayListener>
-    // } else {
-    //   clickAway = <div className="display-hidden" id="popup"></div>
-    // }
     return(
       <div className="track-show-header-parent">
         <div className="track-show-header fade-in">
@@ -856,11 +721,8 @@ hider(e, popup = false){
               
           </div>
             <div className="track-show-body-end-flex">
-              
-              
               <div className="track-show-img-button">
-                <FacebookShareButton
-                  // url={"localhost:3000/#" + this.props.match.url}
+                <FacebookShareButton 
                   className="fb-share-button"
                   url="https://www.linkedin.com/in/bradley-b-53b118102/"
                   quote={trackTitle}
@@ -876,7 +738,6 @@ hider(e, popup = false){
         </div>
           <div className="track-show-body-right">
             {formOutput}
-            {/* {clickAway} */}
             <div id="popup"></div>
               {youTube}
         </div>
