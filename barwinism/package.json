@@ -28,7 +28,7 @@
   },
   "scripts": {
     "postinstall": "webpack",
-    "start": "webpack --watch --mode=production",
+    "start": "webpack --config webpack.config-prod.js --mode=production",
     "dev": "webpack --watch --mode=development"
   }
 }
