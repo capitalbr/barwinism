@@ -1,6 +1,6 @@
 if (process.env.NODE_ENV === 'production') {
   module.exports = require('./keys_prod');
-  console.log("ENTERED ENVIERMENT VARIABLES CONDITION")
 } else {
+  console.log("ENTERED ENVIERMENT VARIABLES CONDITION")
   module.exports = require('./keys_dev');
 }
