@@ -16,6 +16,10 @@ export default class CreateTrack extends React.Component {
     }
   }
  
+  componentDidUpdate(){
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
+  }
+
   update(field){
     return (e) => {
       this.setState({[field]: e.target.value})
