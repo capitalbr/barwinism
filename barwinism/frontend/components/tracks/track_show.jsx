@@ -476,7 +476,6 @@ hider(e, popup = false){
           anno_body: current_annotation_marked.html()
           });
       } else {
-        debugger
         return;
       }
     }

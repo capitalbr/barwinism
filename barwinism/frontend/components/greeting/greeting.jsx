@@ -61,7 +61,6 @@ class Greeting extends React.Component {
   }
 
   render(){
-    debugger
     let navBar;
 
     if (this.props.currentUser) {
