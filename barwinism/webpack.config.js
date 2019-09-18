@@ -8,12 +8,6 @@ module.exports = {
     path: path.resolve(__dirname, 'app', 'assets', 'javascripts'),
     filename: 'bundle.js'
   },
-  // plugins: [
-  //   new webpack.DefinePlugin({
-  //     AZURE_ENDPOINT: JSON.stringify(process.env.AZURE_ENDPOINT),
-  //     AZURE_KEY: JSON.stringify(process.env.AZURE_KEY)
-  //   })
-  // ],
   module: {
     rules: [
       {
