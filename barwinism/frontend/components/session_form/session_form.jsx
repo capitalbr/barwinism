@@ -14,6 +14,11 @@ class SessionForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount(){
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
+  }
+
+
   handleSubmit(e){
     e.preventDefault();
     this.props.processForm(this.state);

@@ -49,3 +49,15 @@ table {
 	display: none;
 }
 
+.body-main{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	min-height: 100vh;
+	&-routes{
+		.auth-parent{
+			background-color: black;
+			min-height: 787px;
+		}
+	}
+}

@@ -12,7 +12,8 @@ import SplashContainer from "./splash/splash_container"
 import ChartsContainer from "./tracks/charts_container"
 
 const App = () => (
-  <div className="body-main-div">   
+  <div className="body-main">
+    <div className="body-main-routes">  
     <GreetingContainer />
     <Switch>
       <ProtectedRoute exact path="/tracks/:trackId" component={TrackShowContainer}/>
@@ -23,6 +24,7 @@ const App = () => (
       <AuthRoute exact path="/signup" component={SignupFormContainer} />
       <Redirect to="/"/>
     </Switch>
+    </div> 
     <FooterContainer />
   </div>
 );
