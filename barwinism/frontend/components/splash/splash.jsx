@@ -15,7 +15,9 @@ export default class Splash extends React.Component {
   }
 
   componentDidUpdate() {
- 
+    if (this.props.history.location.search.slice(1) === "charts") {
+      document.body.scrollTop = document.documentElement.scrollTop = 1000;
+    }
   }
 
   renderNews() {

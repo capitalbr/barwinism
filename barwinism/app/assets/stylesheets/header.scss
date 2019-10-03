@@ -128,6 +128,20 @@ header div.logo{
   vertical-align: center;
   color: white;
   justify-content: space-around;
+  ul{
+    width: 800px;
+    display: flex;
+    justify-content: center;
+    margin-right: 30px;
+    .first-li{
+      border: none;
+    }
+    li{
+      margin-left: 20px;
+      border-left: 2px solid white;
+      padding-left: 20px;
+    }
+  }
 }
 
 header .h-top nav a.header-bottom{

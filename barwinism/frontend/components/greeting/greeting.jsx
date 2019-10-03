@@ -7,7 +7,6 @@ class Greeting extends React.Component {
     this.state = {query: ""}
   }
 
-  
   update(e){
     e.preventDefault();
     this.setState({query: e.target.value});
@@ -36,7 +35,15 @@ class Greeting extends React.Component {
           {links}
         </div>
         <div className="header-container-bottom">
-          <div><ul><li><Link className="header-bottom" onClick={this.props.clearErrors} to="/add-song">ADD A SONG</Link></li></ul></div>
+          <div>
+            <ul>
+              <li 
+                className="first-li">
+                  <Link className="header-bottom" to="/?charts">CHARTS</Link>
+              </li>
+              <li><Link className="header-bottom" onClick={this.props.clearErrors} to="/add-song">ADD A SONG</Link></li>
+            </ul>
+          </div>
         </div>
       </nav>
     )
