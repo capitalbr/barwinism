@@ -132,14 +132,15 @@ header div.logo{
     width: 800px;
     display: flex;
     justify-content: center;
-    margin-right: 30px;
+    margin-right: 62px;
     .first-li{
       border: none;
     }
     li{
-      margin-left: 20px;
-      border-left: 2px solid white;
-      padding-left: 20px;
+      margin-left: 40px;
+      border-left: 1px solid white;
+      padding-left: 40px;
+      height: fit-content;
     }
   }
 }
